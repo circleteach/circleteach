@@ -9,13 +9,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import {MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule} from '@angular/material';
 import { LayoutComponent } from './layout/layout.component';
-import {RouterModule, Routes} from '@angular/router';
 import { HomeComponent } from './home/home.component';
-
-const routes: Routes = [
-  { path: 'home', component: HomeComponent},
-  { path: '', redirectTo: '/home', pathMatch: 'full'},
-];
 
 
 @NgModule({
@@ -31,7 +25,6 @@ const routes: Routes = [
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}),
     MatToolbarModule,
     MatIconModule,
     MatSidenavModule,
