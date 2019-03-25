@@ -24,6 +24,13 @@ $primary: mat-color($mat-blue-gray, 700);
 $accent: mat-color($mat-blue, 500);
 $warn: mat-color($mat-red, 500);
 
+@mixin md-icon-size($size: 24px) {
+  font-size: $size;
+  height: $size;
+  width: $size;
+  line-height: $size;
+}
+
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.

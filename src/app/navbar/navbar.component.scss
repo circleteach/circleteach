@@ -20,6 +20,11 @@ mat-toolbar {
   border-radius: 3px;
 }
 
+mat-icon {
+  padding-top: 7px;
+  @include md-icon-size(32px);
+}
+
 @media(max-width: 959px) {
   mat-toolbar {
     border-radius: 0px;
