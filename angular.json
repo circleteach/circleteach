@@ -138,5 +138,10 @@
       }
     }
   },
-  "defaultProject": "circleteach"
+  "defaultProject": "circleteach",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

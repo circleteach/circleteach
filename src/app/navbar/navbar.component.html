@@ -1,0 +1,37 @@
+<mat-toolbar color="primary">
+  <div fxHide.gt-xs>
+    <button mat-icon-button (click)="onToggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+<!--  TODO Put logo here-->
+  <div>
+    <a routerLink="/home">CircleTeach</a>
+  </div>
+<!--  TODO Put Search bar here-->
+  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+    <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+      <li>
+        <a routerLink="/notifications">
+          <mat-icon>notifications</mat-icon>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/messages">
+          <mat-icon>mail</mat-icon>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/profile">
+<!--          TODO Replace this with profile picture-->
+          <mat-icon>person</mat-icon>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/settings">
+          <mat-icon>settings</mat-icon>
+        </a>
+      </li>
+    </ul>
+  </div>
+</mat-toolbar>

@@ -1,0 +1,27 @@
+@import "~@angular/material/theming";
+@import '~src/styles';
+
+a {
+  text-decoration: none;
+  color: mat-color($app-accent, 50);
+}
+
+a:hover, a:active {
+  color: mat-color($app-accent, 400);
+}
+
+.navigation-items {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+mat-toolbar {
+  border-radius: 3px;
+}
+
+@media(max-width: 959px) {
+  mat-toolbar {
+    border-radius: 0px;
+  }
+}
