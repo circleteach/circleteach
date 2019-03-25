@@ -8,7 +8,7 @@ import {LoggedOutGuard} from './loggedout.guard';
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [LoggedInGuard]},
   { path: 'login', component: LoginComponent, canActivate: [LoggedOutGuard]},
-  { path: 'signup', redirectTo: 'login'},
+  { path: 'signup', redirectTo: 'login', canActivate: [LoggedOutGuard]},
   { path: '', redirectTo: '/login', pathMatch: 'full'},
 ];
 
