@@ -7,7 +7,8 @@ import {AngularFirestore} from '@angular/fire/firestore';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'CircleTeach';
+  title = 'circleteach';
+
   constructor(db: AngularFirestore) {
   }
 }
