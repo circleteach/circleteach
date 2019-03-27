@@ -16,6 +16,7 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import { LoginComponent } from './login/login.component';
+import { PostsComponent } from './posts/posts.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { LoginComponent } from './login/login.component';
     SidenavComponent,
     LayoutComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,
