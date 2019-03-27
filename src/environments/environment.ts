@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebaseConfig : {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    databaseURL: "YOUR_DATABASE_URL",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID"
+    apiKey: 'AIzaSyABu03NWuTeDJnKNmBt-uM2AtVqjYrR3c4',
+    authDomain: 'circle-teach.firebaseapp.com',
+    databaseURL: 'https://circle-teach.firebaseio.com',
+    projectId: 'circle-teach',
+    storageBucket: 'circle-teach.appspot.com',
+    messagingSenderId: '669217475143'
   }
 };
 
