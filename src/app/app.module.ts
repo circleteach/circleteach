@@ -27,6 +27,7 @@ import { LoginComponent } from './login/login.component';
 import { PostsComponent } from './posts/posts.component';
 import { UserSearchComponent } from './user-search/user-search.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AuthenticationService} from './authentication.service';
 
 
 @NgModule({

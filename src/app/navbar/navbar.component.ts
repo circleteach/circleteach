@@ -1,5 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AuthenticationService} from '../authentication.service';
+import {StorageService} from '../storage.service';
+import {EMPTY, empty, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -9,10 +11,17 @@ import {AuthenticationService} from '../authentication.service';
 export class NavbarComponent implements OnInit {
 
   @Output() public sidenavToggle = new EventEmitter();
+  private profileURL: Observable<string | null>;
+  private url = '../../assets/img/circle-teach-logo.png';
 
-  constructor(private auth: AuthenticationService) { }
+  constructor(private auth: AuthenticationService, private storage: StorageService) { }
 
   ngOnInit() {
+    if (this.auth.getIconUrl() == null) {
+      this.profileURL = EMPTY;
+    } else {
+      this.profileURL = this.storage.getProfilePicture(this.auth.getIconUrl());
+    }
   }
 
   public onToggleSidenav() {

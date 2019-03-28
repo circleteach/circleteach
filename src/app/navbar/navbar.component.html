@@ -53,8 +53,12 @@
       </li>
       <li>
         <a routerLink="/profile">
-          <!-- TODO Replace this with profile picture-->
-          <mat-icon>person</mat-icon>
+          <div class="profile-image-container" *ngIf="profileURL | async; let url">
+            <img [src]="url" width="auto" height="40" alt="Profile Image">
+          </div>
+          <div class="profile-image-container" *ngIf="(profileURL | async) == null">
+            <mat-icon>person</mat-icon>
+          </div>
         </a>
       </li>
       <li>

@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   constructor(private auth: AuthenticationService) { }
 
   ngOnInit() {
+    this.signupFailed = false;
   }
 
   getNameErrorMessage() {
