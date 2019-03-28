@@ -17,6 +17,7 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import { LoginComponent } from './login/login.component';
 import { PostsComponent } from './posts/posts.component';
+import { UserSearchComponent } from './user-search/user-search.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { PostsComponent } from './posts/posts.component';
     LayoutComponent,
     HomeComponent,
     LoginComponent,
-    PostsComponent
+    PostsComponent,
+    UserSearchComponent
   ],
   imports: [
     BrowserModule,
