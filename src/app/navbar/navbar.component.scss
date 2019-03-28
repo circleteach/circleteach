@@ -1,23 +1,32 @@
 @import "~@angular/material/theming";
-@import '~src/styles';
+@import "~src/styles";
 
 a {
   text-decoration: none;
   color: mat-color($app-accent, 50);
 }
 
-a:hover, a:active {
-  color: mat-color($app-accent, 400);
+a:hover,
+a:active {
+  color: white;
+}
+
+.brand-items {
+  list-style-type: none;
+  padding: 1;
+  margin: 0;
+  padding-top: 10px;
 }
 
 .navigation-items {
   list-style-type: none;
-  padding: 0;
+  padding: 1;
   margin: 0;
+  opacity: 0.9;
 }
 
 mat-toolbar {
-  border-radius: 3px;
+  border-radius: 0px;
 }
 
 mat-icon {
@@ -25,7 +34,7 @@ mat-icon {
   @include md-icon-size(32px);
 }
 
-@media(max-width: 959px) {
+@media (max-width: 959px) {
   mat-toolbar {
     border-radius: 0px;
   }

@@ -1,14 +1,43 @@
 <mat-toolbar color="primary">
+  <!-- small menu bar smaller screen -->
   <div fxHide.gt-xs>
     <button mat-icon-button (click)="onToggleSidenav()">
       <mat-icon>menu</mat-icon>
     </button>
   </div>
-<!--  TODO Put logo here-->
-  <div>
-    <a routerLink="/home">CircleTeach</a>
+  <div fxFlex fxLayout fxLayoutAlign="start">
+    <ul fxLayout fxLayoutGap="20px" class="brand-items">
+      <li>
+        <a routerLink="/home">
+          <img
+            src="../../assets/img/circle-teach-logo.png"
+            width="auto"
+            height="45"
+          />
+        </a>
+      </li>
+      <li>
+        <img
+          src="../../assets/img/white-divider.png"
+          width="auto"
+          height="45"
+        />
+      </li>
+      <li>
+        <a routerLink="/home">
+          <img
+            src="../../assets/img/circle-teach-wrote.png"
+            width="auto"
+            height="40"
+          />
+        </a>
+      </li>
+    </ul>
   </div>
-<!--  TODO Put Search bar here-->
+
+  <!--  TODO Put Search bar here-->
+
+  <!-- full nav bar for larger screen -->
   <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
     <ul fxLayout fxLayoutGap="20px" class="navigation-items">
       <li>
@@ -18,12 +47,12 @@
       </li>
       <li>
         <a routerLink="/messages">
-          <mat-icon>mail</mat-icon>
+          <mat-icon>messages</mat-icon>
         </a>
       </li>
       <li>
         <a routerLink="/profile">
-<!--          TODO Replace this with profile picture-->
+          <!-- TODO Replace this with profile picture-->
           <mat-icon>person</mat-icon>
         </a>
       </li>
