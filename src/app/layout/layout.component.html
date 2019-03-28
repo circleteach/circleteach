@@ -6,9 +6,7 @@
       </mat-sidenav>
       <mat-sidenav-content>
         <app-navbar (sidenavToggle)="sidenav.toggle()"></app-navbar>
-        <main>
-          <router-outlet></router-outlet>
-        </main>
+        <ng-content></ng-content>
       </mat-sidenav-content>
     </mat-sidenav-container>
   </div>

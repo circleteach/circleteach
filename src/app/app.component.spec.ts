@@ -16,6 +16,8 @@ import {SidenavComponent} from './sidenav/sidenav.component';
 import {LayoutComponent} from './layout/layout.component';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
+import {UserSearchComponent} from './user-search/user-search.component';
+import {PostsComponent} from './posts/posts.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -42,7 +44,9 @@ describe('AppComponent', () => {
         SidenavComponent,
         LayoutComponent,
         HomeComponent,
-        LoginComponent
+        LoginComponent,
+        UserSearchComponent,
+        PostsComponent,
       ],
     }).compileComponents();
   }));
