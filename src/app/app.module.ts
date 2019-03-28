@@ -32,6 +32,7 @@ import { ProfileComponent } from "./profile/profile.component";
 import { UserSearchComponent } from "./user-search/user-search.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { PersonalinfoComponent } from "./personalinfo/personalinfo.component";
+import { ActivitylogComponent } from './activitylog/activitylog.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { PersonalinfoComponent } from "./personalinfo/personalinfo.component";
     PostsComponent,
     UserSearchComponent,
     ProfileComponent,
-    PersonalinfoComponent
+    PersonalinfoComponent,
+    ActivitylogComponent
   ],
   imports: [
     BrowserModule,
