@@ -48,31 +48,35 @@
         </ul>
       </div>
     </mat-toolbar>
-    <div class="signup-container">
-      <h2 class="mat-display-1">Sign up to CircleTeach!</h2>
-      <h3 id="normal" *ngIf="!this.failed" class="mat-subheading-1">Join and improve educational for all today!</h3>
-      <h3 *ngIf="signupFailed" class="mat-subheading-1">Failed to sign up!</h3>
-      <mat-form-field appearance="outline">
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="Enter your name" [formControl]="signupName">
-        <mat-error *ngIf="signupName.invalid">{{getNameErrorMessage()}}</mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="Enter your email" [formControl]="signupEmail">
-        <mat-error *ngIf="signupName.invalid">{{getEmailErrorMessage()}}</mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input matInput placeholder="Enter your password" [type]="signupPassHide ? 'password' : 'text'" [formControl]="signupPassword">
-        <mat-icon matSuffix (click)="signupPassHide = !signupPassHide">{{signupPassHide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        <mat-error *ngIf="signupName.invalid">{{getPasswordErrorMessage()}}</mat-error>
-      </mat-form-field>
+    <section fxLayout="column">
+      <div fxFlexAlign="center">
+        <div class="signup-container" style="padding-top: 2em;">
+          <h2 class="mat-display-1">Sign up to CircleTeach!</h2>
+          <h3 id="normal" *ngIf="!this.failed" class="mat-subheading-1">Join and improve educational for all today!</h3>
+          <h3 *ngIf="signupFailed" class="mat-subheading-1">Failed to sign up!</h3>
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Enter your name" [formControl]="signupName">
+            <mat-error *ngIf="signupName.invalid">{{getNameErrorMessage()}}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Enter your email" [formControl]="signupEmail">
+            <mat-error *ngIf="signupName.invalid">{{getEmailErrorMessage()}}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Enter your password" [type]="signupPassHide ? 'password' : 'text'" [formControl]="signupPassword">
+            <mat-icon matSuffix (click)="signupPassHide = !signupPassHide">{{signupPassHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-error *ngIf="signupName.invalid">{{getPasswordErrorMessage()}}</mat-error>
+          </mat-form-field>
 
-      <div class="button-row">
-        <button mat-button color="primary" *ngIf="!signupEmail.valid || !signupPassword.valid || !signupName.valid" disabled >Sign Up</button>
-        <button mat-button (keyup.end)="finalSignUp()" color="primary" *ngIf="signupEmail.valid && signupPassword.valid && signupPassword.valid" (click)="finalSignUp()">Sign Up</button>
+          <div class="button-row">
+            <button mat-button color="primary" *ngIf="!signupEmail.valid || !signupPassword.valid || !signupName.valid" disabled >Sign Up</button>
+            <button mat-button (keyup.end)="finalSignUp()" color="primary" *ngIf="signupEmail.valid && signupPassword.valid && signupPassword.valid" (click)="finalSignUp()">Sign Up</button>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   </div>
 </div>

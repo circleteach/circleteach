@@ -31,3 +31,25 @@ mat-toolbar {
   border-radius: 0px;
 }
 
+.mat-display-1 {
+  margin-bottom: 0;
+}
+
+h3.mat-subheading-1 {
+  color: mat-color($app-primary, 300);
+}
+
+#normal {
+  color: mat-color($app-accent, 400);
+}
+
+.signup-container {
+  flex-direction: column;
+
+}
+
+.signup-container > * {
+  width: 100%;
+}
+
+
