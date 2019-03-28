@@ -1,3 +1,39 @@
-<p>
-  posts works!
-</p>
+<div id="postCont" gdAreas="profImage userInfo userInfo postAge  | content content content content  | tags  postInfo postInfo postInfo">
+
+  <div id="profImgContainer" gdArea="profImage">
+    <img id="profImg" src="../../assets/uwath2018.png" style="background-color: blue" alt="Profile Image" height="70px" width="70px">
+  </div>
+
+  <div id="userInfo" gdArea="userInfo">
+      <h2>{{userName}}</h2>
+      <p>{{userTitle}}</p>
+  </div>
+
+  <div id="postAge" gdArea="postAge">
+      <p>{{postAge}}</p>
+  </div>
+
+  <div id="content" gdArea="content">
+      <p>{{postContent}}</p>
+  </div>
+
+  <div id="tagsCont" style="width: 200px; height: 75px;" gdArea="tags">
+    
+  </div>
+
+  <div id="postInfo" gdArea="postInfo">
+      <div class="inline" id="starBtn">
+          <button mat-button>Star</button>
+        </div>
+      <div class="inline" id="stars">
+          <p>{{stars}}</p>
+      </div>
+      <div class="inline" id="commentBtn">
+        <button mat-button>Comment</button>
+      </div>
+      <div class="inline" id="downloadBtn">
+          <button mat-button>Download</button>
+      </div>
+  </div>
+
+</div>

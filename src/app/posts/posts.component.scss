@@ -1,0 +1,53 @@
+#postCont{
+    border-radius: 50px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+}
+#userInfo{
+    margin-left: -12vw;
+    p{
+        color: grey;
+    }
+    h2{
+        margin-top: 3vh;
+        margin-bottom: -1vh;
+    }
+}
+#postAge{
+    margin-left: -5wv;
+    margin-top: 5.5vh;
+}
+
+#profImg{
+    border-radius: 100%;
+    border-style: solid;
+    border-color: limegreen;
+    margin-top: 1.8vh;
+    margin-left: 2vw;
+}
+#content{
+    margin-left: 10%;
+}
+
+#tagsCont{
+    margin-left: 3vw;
+    border-radius: 50px;
+    border-style: solid;
+    border-color: lightskyblue;
+    margin-bottom: 1vh;
+}
+
+#postInfo{
+    margin-left: 20vw;
+    margin-top: 4vh;
+    p{
+        margin-top: 1.1vh;
+    }
+}
+
+.inline{
+    float: left;
+    margin-right: 5vw;
+}
+
