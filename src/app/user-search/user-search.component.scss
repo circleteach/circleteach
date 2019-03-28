@@ -1,7 +1,12 @@
-#searchInp{
-    width: 30vw;
-    height: 3vh;
-    font-size: 1rem;
-    border-radius: 25px;
-    padding-left: 10px;
+#searchInp {
+  width: 20vw;
+  height: 3vh;
+  font-size: 1rem;
+  border-radius: 15px;
+  border: 0.9px;
+  padding-left: 10px;
+}
+#searchInp:focus,
+input:focus {
+  outline: none;
 }
