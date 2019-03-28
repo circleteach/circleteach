@@ -1,3 +1,54 @@
-<p>
-  login works!
-</p>
+<div fxLayout="row wrap" fxLayoutAlign="center center" class="layout-wrapper">
+  <div fxFlex="100%" fxFlex.lt-md="100%" class="flex-wrapper">
+    <mat-toolbar color="primary">
+      <div fxFlex fxLayout fxLayoutAlign="start">
+        <ul fxLayout fxLayoutGap="20px" class="brand-items">
+          <li>
+              <img
+                src="../../assets/img/circle-teach-logo.png"
+                width="auto"
+                height="45"
+              />
+          </li>
+          <li>
+            <img
+              src="../../assets/img/white-divider.png"
+              width="auto"
+              height="45"
+            />
+          </li>
+          <li>
+              <img
+                src="../../assets/img/circle-teach-wrote.png"
+                width="auto"
+                height="40"
+              />
+          </li>
+        </ul>
+      </div>
+
+      <!-- full nav bar for larger screen -->
+      <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+        <ul fxLayout fxLayoutGap="10px" class="navigation-items" style="padding-top: 5px; padding-bottom: 5px;">
+          <li>
+            <mat-form-field appearance="fill">
+              <input matInput placeholder="Enter Email" [formControl]="loginEmail">
+            </mat-form-field>
+          </li>
+          <li>
+            <mat-form-field appearance="fill">
+              <input matInput placeholder="Enter Password" [type]="loginPassHide ? 'password' : 'text'" [formControl]="loginPassword">
+              <mat-icon matSuffix (click)="loginPassHide = !loginPassHide">{{loginPassHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </mat-form-field>
+          </li>
+          <li style="padding-top: 29px;">
+            <button mat-raised-button color="accent" *ngIf="!loginEmail.valid || !loginPassword.valid" disabled >Log in</button>
+            <button mat-raised-button (keyup.enter)="auth.login(loginEmail.value, loginPassword.value)" color="accent"
+                    *ngIf="loginEmail.valid && loginPassword.valid" (click)="auth.login(loginEmail.value, loginPassword.value)">Log in</button>
+          </li>
+        </ul>
+      </div>
+    </mat-toolbar>
+
+  </div>
+</div>

@@ -1,0 +1,33 @@
+.layout-wrapper{
+  height: 100%;
+}
+
+.flex-wrapper{
+  height: 100%;
+}
+
+main {
+  padding: 10px;
+}
+
+@import "~@angular/material/theming";
+@import "~src/styles";
+
+.brand-items {
+  list-style-type: none;
+  padding: 1;
+  margin: 0;
+  padding-top: 10px;
+}
+
+.navigation-items {
+  list-style-type: none;
+  padding: 1;
+  margin: 0;
+  opacity: 0.9;
+}
+
+mat-toolbar {
+  border-radius: 0px;
+}
+

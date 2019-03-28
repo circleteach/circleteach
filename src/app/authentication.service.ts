@@ -13,4 +13,8 @@ export class AuthenticationService {
     return true; // TODO Get this actually working
   }
 
+  login(email: string, password: string) {
+    // TODO
+  }
+
 }

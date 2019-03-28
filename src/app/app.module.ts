@@ -7,7 +7,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
-import {MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatToolbarModule
+} from '@angular/material';
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
 import {AngularFireModule} from '@angular/fire';
@@ -18,6 +26,7 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
 import { LoginComponent } from './login/login.component';
 import { PostsComponent } from './posts/posts.component';
 import { UserSearchComponent } from './user-search/user-search.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -41,11 +50,16 @@ import { UserSearchComponent } from './user-search/user-search.component';
     MatSidenavModule,
     MatButtonModule,
     MatListModule,
+    MatSelectModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig, 'circleteach'),
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
   ],
+  exports: [AppRoutingModule],
   providers: [AngularFirestore],
   bootstrap: [AppComponent]
 })
