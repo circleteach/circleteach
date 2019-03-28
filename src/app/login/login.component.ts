@@ -12,9 +12,30 @@ export class LoginComponent implements OnInit {
   loginEmail = new FormControl('', [Validators.required, Validators.email]);
   loginPassword = new FormControl('', [Validators.required]);
 
+  signupFailed = false;
+  signupPassHide = true;
+  signupEmail = new FormControl('', [Validators.required, Validators.email]);
+  signupPassword = new FormControl('', [Validators.required, Validators.minLength(6)]);
+  signupName = new FormControl('', [Validators.required]);
+
   constructor(private auth: AuthenticationService) { }
 
   ngOnInit() {
   }
 
+  getNameErrorMessage() {
+
+  }
+
+  getEmailErrorMessage() {
+
+  }
+
+  getPasswordErrorMessage() {
+
+  }
+
+  finalSignUp() {
+
+  }
 }
