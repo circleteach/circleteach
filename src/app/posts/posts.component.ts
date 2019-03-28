@@ -7,41 +7,41 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PostsComponent implements OnInit {
 
+  // TODO Input Decorator once we get data model
+
+  userName = 'Jay Example';
+  userTitle = 'Example grade Example at Example School';
+  postAge = '2 Days ago';
+  postContent = 'Some days I just feel like, Example. Then I go Example and keep exampling myself. Everyday all day!';
+  stars = 52;
+
   constructor() { }
 
   ngOnInit() {
   }
 
-  //TODO Input Decorator once we get data model
+  // run this command before ending 3/27/2019
+  // ng config schematics.@schematics/angular:component.styleext scss
 
-  private userName: string = "Jay Example";
-  private userTitle: string = "Example grade Example at Example School";
-  private postAge: string = "2 Days ago";
-  private postContent: string = "Some days I just feel like, Example. Then I go Example and keep exampling myself. Everyday all day!";
-  private stars: number = 52;
-
-  //RUn this command before ending 3/27/2019
-  //ng config schematics.@schematics/angular:component.styleext scss
-
-  starClick(){
+  starClick() {
 
   }
 
-  commentClick(){
+  commentClick() {
 
   }
 
-  downloadClick(){
+  downloadClick() {
 
   }
 
-  //Navigate to user page on profile image or name click
-  profileClick(){
+  // Navigate to user page on profile image or name click
+  profileClick() {
 
   }
 
-  //TODO after tag functionality is built
-  tagClick(){
+  // TODO after tag functionality is built
+  tagClick() {
 
   }
 }

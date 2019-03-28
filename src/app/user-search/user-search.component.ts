@@ -12,8 +12,8 @@ export class UserSearchComponent implements OnInit {
   ngOnInit() {
   }
 
-  //TODO
-  onType(){
+  // TODO
+  onType() {
 
   }
 
