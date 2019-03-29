@@ -1,5 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { MatCardModule } from '@angular/material/card';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -32,6 +34,7 @@ import { ProfileComponent } from "./profile/profile.component";
 import { UserSearchComponent } from "./user-search/user-search.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { PersonalinfoComponent } from "./personalinfo/personalinfo.component";
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -44,12 +47,15 @@ import { PersonalinfoComponent } from "./personalinfo/personalinfo.component";
     PostsComponent,
     UserSearchComponent,
     ProfileComponent,
-    PersonalinfoComponent
+    PersonalinfoComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatCardModule,
+    MatSlideToggleModule,
     FlexLayoutModule,
     MatToolbarModule,
     MatIconModule,

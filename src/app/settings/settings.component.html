@@ -1,0 +1,34 @@
+<app-layout>
+  <main>
+
+    <mat-card>
+      <div fxFlex fxLayout fxLayoutAlign="center">
+        <h2>Settings</h2>
+      </div>
+    </mat-card>
+
+    <mat-card class="settings-card" >
+      <h3 fxLayoutAlign="center">Change Password</h3> <hr>
+      <div fxLayoutAlign="center">
+        <mat-card-content>
+          <label class="label">Type your current password</label> <br>
+          <input class="box" type="text" placeholder="Enter Current Password"> <br> <br>
+          <label class="label">Type your new password</label> <br>
+          <input class="box" type="text" placeholder="Enter New Password"> <br> <br>
+          <label class="label">Retype your new password</label> <br>
+          <input class="box" type="text" placeholder="Re-enter New Password"> <br> <br>
+          <div fxLayoutAlign="center" ><button class="button" (click)="changePass()">Submit</button></div>
+        </mat-card-content>
+      </div>
+    </mat-card>
+    
+    <mat-card class="settings-card">
+        <h3 fxLayoutAlign="center">Site Preferences</h3> <hr>
+        <mat-card-subtitle fxLayoutAlign="center">Profile Information Visibilty (Public by Default)</mat-card-subtitle>
+        <div class="slider">
+          <mat-slide-toggle color='primary'>Circle Only</mat-slide-toggle>
+        </div>
+    </mat-card>
+
+  </main>
+</app-layout>
