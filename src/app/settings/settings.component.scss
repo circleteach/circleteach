@@ -21,14 +21,21 @@
 .label{
     display: block;
     text-align: center;
-    margin-left: 10px;
 }
 
 .button{
     width: 10vw;
     height: 3vh;
     background-color: lightskyblue;
-    margin-left: 10px;
+    border-radius: 15px;
+    border: none;
+    ;
+}
+
+.logout-button{
+    width: 15vw;
+    height: 4vh;
+    background-color: lightskyblue;
     border-radius: 15px;
     border: none;
     ;

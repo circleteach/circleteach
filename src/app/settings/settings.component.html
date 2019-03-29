@@ -7,6 +7,11 @@
       </div>
     </mat-card>
 
+    <mat-card class="settings-card">
+      <div fxLayoutAlign="center" ><button class="logout-button" (click)="doLogout()"><b>Log Out</b></button></div>
+      <p>{{logoutMessage}}</p>
+    </mat-card>
+
     <mat-card class="settings-card" >
       <h3 fxLayoutAlign="center">Change Password</h3> <hr>
       <div fxLayoutAlign="center">
@@ -29,9 +34,6 @@
           <mat-slide-toggle color='primary'>Circle Only</mat-slide-toggle>
         </div>
     </mat-card>
-
-    <div fxLayoutAlign="center" ><button class="button" (click)="doLogout()">Log Out</button></div>
-    <p>{{logoutMessage}}</p>
 
   </main>
 </app-layout>
