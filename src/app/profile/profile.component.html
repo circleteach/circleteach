@@ -1,6 +1,15 @@
 <app-layout>
   <main>
-    <app-personalinfo></app-personalinfo>
-    <app-profiledetails></app-profiledetails>
+    <mat-card-content>
+      <div fxLayout.gt-xs="row" fxLayout="column" fxLayoutGap="16px">
+        <div fxFlex.gt-xs="50%" fxFlex>
+          <app-personalinfo></app-personalinfo>
+          <app-profiledetails></app-profiledetails>
+        </div>
+        <div fxFlex.gt-xs="50%" fxFlex>
+          <app-posts></app-posts>
+        </div>
+      </div>
+    </mat-card-content>
   </main>
 </app-layout>
