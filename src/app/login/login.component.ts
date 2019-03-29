@@ -41,9 +41,8 @@ export class LoginComponent implements OnInit {
   }
 
   doSignup() {
-    this.auth.signup(this.signupEmail.value, this.signupPassword.value);  //automatically signed in
-    this.statusMessage = this.auth.isLoggedIn ? "Sign Up Completed" : "Sign Up Failed";
+    this.auth.signup(this.signupEmail.value, this.signupPassword.value, this.signupName.value);  // automatically signed in
+    this.statusMessage = this.auth.isLoggedIn ? 'Sign Up Completed' : 'Sign Up Failed';
   }
 
-  
 }

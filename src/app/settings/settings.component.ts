@@ -16,9 +16,9 @@ export class SettingsComponent implements OnInit {
     this.logoutMessage = '';
   }
 
-  doLogout () {
+  doLogout() {
     this.auth.logout();
-    this.logoutMessage = this.auth.isLoggedIn ? "Log Out Failed" : "Log Out Successful";;
+    this.logoutMessage = this.auth.isLoggedIn ? 'Log Out Failed' : 'Log Out Successful';
   }
 
 }
