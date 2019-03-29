@@ -19,9 +19,9 @@ export class PostsComponent implements OnInit {
   stars = 52;
 
   // Actual Data Fields
-  private posts: Post[];
+  posts: Post[];
   private isStared = false;
-  private canWritePost = true;
+  canWritePost = true;
 
   constructor(private postService: PostsService) { }
 

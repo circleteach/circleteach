@@ -21,4 +21,7 @@ export class SettingsComponent implements OnInit {
     this.logoutMessage = this.auth.isLoggedIn ? 'Log Out Failed' : 'Log Out Successful';
   }
 
+  changePass() {
+    // TODO
+  }
 }
