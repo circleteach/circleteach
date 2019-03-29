@@ -73,7 +73,8 @@
 
           <div class="button-row">
             <button mat-button color="primary" *ngIf="!signupEmail.valid || !signupPassword.valid || !signupName.valid" disabled >Sign Up</button>
-            <button mat-button (keyup.end)="finalSignUp()" color="primary" *ngIf="signupEmail.valid && signupPassword.valid && signupPassword.valid" (click)="finalSignUp()">Sign Up</button>
+            <button mat-button (keyup.end)="doSignup()" color="primary" *ngIf="signupEmail.valid && signupPassword.valid && signupPassword.valid" (click)="doSignup()">Sign Up</button>
+            <p>{{statusMessage}}</p>
           </div>
         </div>
       </div>

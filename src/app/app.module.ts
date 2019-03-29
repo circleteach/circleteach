@@ -66,7 +66,7 @@ import { SettingsComponent } from './settings/settings.component';
     MatInputModule,
     ReactiveFormsModule,
     FormsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig, "circleteach"),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule

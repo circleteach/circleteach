@@ -28,19 +28,24 @@ export class AuthenticationService {
   }
 
   isLoggedIn(): boolean {
-    // return this.userDetails != null; TODO Uncomment this once can signup and login
-    // Set this to true to default to logged in and show feed
-    // Set this to false if you want to go to the login page
-    return true; // TODO Get this actually working
+    return this.userDetails != null; 
   }
 
   login(email: string, password: string) {
-    // const credential = firebase.auth.EmailAuthProvider.credential(email, password);
-    return firebase.auth().signInWithEmailAndPassword(email, password);
-      /*.catch(error => {
-        // const errorCode = error.code;
-        return error.message;
-      });*/
+    return firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      return errorMessage;
+    }) .then((res) => this.router.navigate(['/home']));
+  }
+
+  signup(email: string, password: string) {
+    return firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      return errorMessage;
+    }).then((res) => this.router.navigate(['/home']));
   }
 
   /* If we ever want to add login with Google
@@ -52,8 +57,12 @@ export class AuthenticationService {
   */
 
   logout() {
-    this.firebaseAuth.auth.signOut()
-      .then((res) => this.router.navigate(['/login']));
+    return this.firebaseAuth.auth.signOut().catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      return errorMessage;
+    }).then((res) => this.router.navigate(['/login']));
   }
 
   getIconUrl(): string {
