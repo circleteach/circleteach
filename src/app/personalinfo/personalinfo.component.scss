@@ -1,0 +1,37 @@
+@import "~@angular/material/theming";
+@import "~src/styles";
+
+#personalInfoCont {
+  border-radius: 70px;
+  border-style: solid;
+  border-color: grey;
+  border-width: 0.5px;
+  background-color: mat-color($app-primary, 700);
+  width: 50%;
+  margin-left: 50px;
+  height: 180px;
+  margin-top: 20px;
+}
+#userInfo {
+  margin-left: 10px;
+  p {
+    color: whitesmoke;
+  }
+  h2 {
+    color: whitesmoke;
+    margin-top: 10vh;
+    margin-bottom: -1vh;
+  }
+}
+
+#profImg {
+  border-radius: 100%;
+  border-style: solid;
+  border-color: mat-color($app-accent, 500);
+  margin-top: 2.8vh;
+  margin-left: 4vw;
+}
+.inline {
+  float: left;
+  margin-right: 5vw;
+}

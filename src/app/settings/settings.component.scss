@@ -1,0 +1,39 @@
+@import "~@angular/material/theming";
+@import "~src/styles";
+
+.settings-card {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 100px;
+    background-color: mat-color($app-accent, 50);
+  }
+
+.box{
+    display: block;
+    text-align: center;
+    width: 20vw;
+    height: 3vh;
+    font-size: 1rem;
+    border-radius: 15px;
+    outline: none;
+}
+
+.label{
+    display: block;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.button{
+    width: 10vw;
+    height: 3vh;
+    background-color: lightskyblue;
+    margin-left: 10px;
+    border-radius: 15px;
+    border: none;
+    ;
+}
+
+.slider{
+    text-align: center;
+}

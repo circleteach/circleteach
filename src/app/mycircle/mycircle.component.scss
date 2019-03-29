@@ -3,7 +3,11 @@
     border-style: solid;
     border-color: black;
     border-width: 1px;
-    margin: 10%;
+    width: 50%;
+    margin-left: 50px;
+    height: 800px;
+    margin-top: 20px;
+    margin-bottom: 50px;
 }
 
 #label{
@@ -14,6 +18,18 @@
     text-align: center;
     display: table;
     margin: 0 auto;
+}
+
+#b1 {
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    background-color: lightskyblue;
+}
+
+#b2 {
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    background-color: rgba($color: lightskyblue, $alpha: 0.3)
 }
 
 .label{

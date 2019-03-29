@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./personalinfo.component.scss']
 })
 export class PersonalinfoComponent implements OnInit {
+  // TODO Input Decorator once we get data model
 
-  constructor() { }
+  userName = 'Jay Example';
+  userTitle = 'Example grade Example at Example School';
 
-  ngOnInit() {
-  }
+  constructor() {}
 
+  ngOnInit() {}
 }

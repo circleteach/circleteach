@@ -11,8 +11,8 @@ import {EMPTY, empty, Observable} from 'rxjs';
 export class NavbarComponent implements OnInit {
 
   @Output() public sidenavToggle = new EventEmitter();
-  private profileURL: Observable<string | null>;
-  private url = '../../assets/img/circle-teach-logo.png';
+  profileURL: Observable<string | null>;
+  url = '../../assets/img/circle-teach-logo.png';
 
   constructor(private auth: AuthenticationService, private storage: StorageService) { }
 
