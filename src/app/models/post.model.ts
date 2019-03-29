@@ -1,5 +1,3 @@
-//Post Model create by Jay, defines f
-
 import { Time } from '@angular/common';
 
 export class Post {
