@@ -33,6 +33,7 @@ import { UserSearchComponent } from "./user-search/user-search.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { PersonalinfoComponent } from "./personalinfo/personalinfo.component";
 import { ActivitylogComponent } from './activitylog/activitylog.component';
+import { MycircleComponent } from './mycircle/mycircle.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ActivitylogComponent } from './activitylog/activitylog.component';
     UserSearchComponent,
     ProfileComponent,
     PersonalinfoComponent,
-    ActivitylogComponent
+    ActivitylogComponent,
+    MycircleComponent
   ],
   imports: [
     BrowserModule,
