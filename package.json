@@ -23,6 +23,7 @@
     "@angular/platform-browser": "^7.2.11",
     "@angular/platform-browser-dynamic": "^7.2.11",
     "@angular/router": "^7.2.11",
+    "@material/layout-grid": "^0.41.0",
     "core-js": "^2.5.4",
     "firebase": "^5.9.2",
     "hammerjs": "^2.0.8",

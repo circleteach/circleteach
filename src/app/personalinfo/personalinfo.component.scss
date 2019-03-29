@@ -8,18 +8,23 @@
   border-width: 0.5px;
   background-color: mat-color($app-primary, 700);
   width: 50%;
-  margin-left: 50px;
+  margin-left: 30px;
   height: 180px;
   margin-top: 20px;
 }
 #userInfo {
   margin-left: 10px;
-  p {
+  margin-right: 10px;
+  .user-name {
+    font-size: 25px;
     color: whitesmoke;
+    font-weight: normal;
+    margin-top: 11vh;
   }
-  h2 {
+  .user-title {
     color: whitesmoke;
-    margin-top: 10vh;
+    font-weight: normal;
+    margin-top: 5px;
     margin-bottom: -1vh;
   }
 }
