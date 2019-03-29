@@ -19,4 +19,4 @@ script:
   - ng test
 
 after_success:
-  - firebase deploy --token $FIREBASE_TOKEN
+  - ./deploy-command.sh
