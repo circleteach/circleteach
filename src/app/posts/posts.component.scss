@@ -1,4 +1,8 @@
+@import "~@angular/material/theming";
+@import "~src/styles";
+
 #postCont{
+    margin-top: 2vh;
     border-radius: 50px;
     border-style: solid;
     border-color: black;
@@ -22,7 +26,7 @@
 #profImg{
     border-radius: 100%;
     border-style: solid;
-    border-color: limegreen;
+    border-color: mat-color($app-accent,500);
     margin-top: 1.8vh;
     margin-left: 2vw;
 }
@@ -34,7 +38,7 @@
     margin-left: 3vw;
     border-radius: 50px;
     border-style: solid;
-    border-color: lightskyblue;
+    border-color: mat-color($app-primary,500);
     margin-bottom: 1vh;
 }
 

@@ -1,39 +1,115 @@
-<div id="postCont" gdAreas="profImage userInfo userInfo postAge  | content content content content  | tags  postInfo postInfo postInfo">
+<div id="postsList" *ngFor="let post of posts">
+  <div  id="postCont"
+    gdAreas="profImage userInfo userInfo postAge  | content content content content  | tags  postInfo postInfo postInfo">
+
+    <div id="profImgContainer" gdArea="profImage">
+      <img id="profImg" src="../../assets/uwath2018.png" style="background-color: blue" alt="Profile Image"
+        height="70px" width="70px">
+    </div>
+
+    <div id="userInfo" gdArea="userInfo">
+      <h2>{{post.id}}</h2>
+      <p>{{userTitle}}</p>
+    </div>
+
+    <div id="postAge" gdArea="postAge">
+      <p>{{post.time}}</p>
+    </div>
+
+    <div id="content" gdArea="content">
+      <p>{{post.conetent}}</p>
+    </div>
+
+    <div id="tagsCont" style="width: 200px; height: 75px;" gdArea="tags">
+    </div>
+
+    <div id="postInfo" gdArea="postInfo">
+      <div class="inline" id="starBtn">
+
+        <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.13 28.86">
+          <defs>
+            <style>
+              .cls-1 {
+                fill: #fbb03b;
+                stroke: #fbb03b;
+                stroke-miterlimit: 10;
+              }
+            </style>
+          </defs>
+          <title>star-filled</title>
+          <path class="cls-1"
+            d="M17.41,3l3.28,6.64a1.6,1.6,0,0,0,1.19.87l7.33,1.06a1.58,1.58,0,0,1,.88,2.69l-5.31,5.17a1.59,1.59,0,0,0-.45,1.4l1.25,7.3a1.58,1.58,0,0,1-2.29,1.67L16.73,26.3a1.57,1.57,0,0,0-1.46,0L8.71,29.75a1.58,1.58,0,0,1-2.29-1.67l1.25-7.3a1.59,1.59,0,0,0-.45-1.4L1.91,14.21a1.58,1.58,0,0,1,.88-2.69l7.33-1.06a1.6,1.6,0,0,0,1.19-.87L14.59,3A1.57,1.57,0,0,1,17.41,3Z"
+            transform="translate(-0.93 -1.57)" />
+        </svg>
+
+        <button mat-button (click)="starClick()">Star</button>
+      </div>
+      <div class="inline" id="stars">
+        <p>{{post.stars}}</p>
+      </div>
+      <div class="inline" id="commentBtn">
+          <svg id="Layer_1" data-name="Layer 1" 
+          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31.05 22.08">
+          <defs>
+              <style>.cls-1,.cls-3{fill:#f3f3f3;}.cls-1{stroke:#010101;stroke-miterlimit:10;stroke-width:0.5px;}.cls-2{font-size:11.68px;fill:#010101;font-family:MyriadPro-Regular, Myriad Pro;}</style>
+          </defs>
+          <title>comment</title>
+          <path class="cls-1" d="M10.69,23.38,2.28,25.91A1.21,1.21,0,0,1,.76,24.47l2-8.54a1.21,1.21,0,0,1,2-.6l6.39,6A1.19,1.19,0,0,1,10.69,23.38Z" transform="translate(-0.47 -4.13)"/>
+          <ellipse class="cls-1" cx="16.2" cy="11.01" rx="14.6" ry="10.76"/>
+          <text class="cls-2" transform="translate(12.17 11.88)">...</text>
+          <ellipse class="cls-3" cx="3.06" cy="15.9" rx="1.46" ry="3.13"/>
+          <ellipse class="cls-3" cx="5.56" cy="17.15" rx="1.46" ry="3.13"/>
+          <ellipse class="cls-3" cx="7.65" cy="16.94" rx="2.29" ry="2.92"/>
+      </svg>
+        <button mat-button (click)="commentClick()">Comment</button>
+      </div>
+      <div class="inline" id="downloadBtn">
+          
+        <button mat-button (click)="downloadClick()">Download</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXAMPLE OF STYLING-->
+<div id="postCont"
+  gdAreas="profImage userInfo userInfo postAge  | content content content content  | tags  postInfo postInfo postInfo">
 
   <div id="profImgContainer" gdArea="profImage">
-    <img id="profImg" src="../../assets/uwath2018.png" style="background-color: blue" alt="Profile Image" height="70px" width="70px">
+    <img id="profImg" src="../../assets/uwath2018.png" style="background-color: blue" alt="Profile Image" height="70px"
+      width="70px">
   </div>
 
   <div id="userInfo" gdArea="userInfo">
-      <h2>{{userName}}</h2>
-      <p>{{userTitle}}</p>
+    <h2>{{userName}}</h2>
+    <p>{{userTitle}}</p>
   </div>
 
   <div id="postAge" gdArea="postAge">
-      <p>{{postAge}}</p>
+    <p>{{postAge}}</p>
   </div>
 
   <div id="content" gdArea="content">
-      <p>{{postContent}}</p>
+    <p>{{postContent}}</p>
   </div>
 
   <div id="tagsCont" style="width: 200px; height: 75px;" gdArea="tags">
-    
+
   </div>
 
   <div id="postInfo" gdArea="postInfo">
-      <div class="inline" id="starBtn">
-          <button mat-button>Star</button>
-        </div>
-      <div class="inline" id="stars">
-          <p>{{stars}}</p>
-      </div>
-      <div class="inline" id="commentBtn">
-        <button mat-button>Comment</button>
-      </div>
-      <div class="inline" id="downloadBtn">
-          <button mat-button>Download</button>
-      </div>
+    <div class="inline" id="starBtn">
+      <button mat-button>Star</button>
+    </div>
+    <div class="inline" id="stars">
+      <p>{{stars}}</p>
+    </div>
+    <div class="inline" id="commentBtn">
+      <button mat-button>Comment</button>
+    </div>
+    <div class="inline" id="downloadBtn">
+      <button mat-button>Download</button>
+    </div>
   </div>
 
 </div>
