@@ -25,15 +25,15 @@ import { environment } from '../environments/environment';
 import {
   AngularFirestore,
   AngularFirestoreModule
-} from "@angular/fire/firestore";
-import { AngularFireStorageModule } from "@angular/fire/storage";
-import { AngularFireAuthModule } from "@angular/fire/auth";
-import { LoginComponent } from "./login/login.component";
-import { PostsComponent } from "./posts/posts.component";
-import { ProfileComponent } from "./profile/profile.component";
-import { UserSearchComponent } from "./user-search/user-search.component";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { PersonalinfoComponent } from "./personalinfo/personalinfo.component";
+} from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { LoginComponent } from './login/login.component';
+import { PostsComponent } from './posts/posts.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UserSearchComponent } from './user-search/user-search.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PersonalinfoComponent } from './personalinfo/personalinfo.component';
 import { ActivitylogComponent } from './activitylog/activitylog.component';
 import { MycircleComponent } from './mycircle/mycircle.component';
 import { SettingsComponent } from './settings/settings.component';
