@@ -1,6 +1,7 @@
 # Circleteach
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.2.
+Follow the instructions below to learn how to run and test our project. You will need to have 
+Node installed and while in the project, install the necessary packages with `npm install`.
 
 ## Development server
 
