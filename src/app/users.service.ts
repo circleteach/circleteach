@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreDocument, DocumentReference} from '@angular/fire/firestore';
+import {take} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -28,17 +29,20 @@ export class UsersService {
     });
   }
 
-  getDisplayName(userID: string): string | null {
-    this.firebaseStorage.firestore.collection('users').doc(userID).get().then(doc => {
+  getDisplayName(userID: string): string {
+    const docRef = this.firebaseStorage.firestore.collection('users').doc(userID);
+
+    docRef.get().then(doc => {
       if (doc.exists) {
-        return doc.data().name;
+        return doc.get('name');
       } else {
         console.log('No such document!');
       }
-    }).catch(error => {
-      console.log('Error getting document: ', error);
+    }).catch(e => {
+      console.log('Error getting document: ', e);
     });
-    return null;
+
+    return 'Missing Name';
   }
 
   getGroups(userID: string): DocumentReference[] {

@@ -1,0 +1,57 @@
+#mycircle{
+    border-radius: 50px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    width: 50%;
+    margin-left: 50px;
+    height: 800px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+#label{
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    width: 100%;
+    border-bottom: solid black 1px;
+    text-align: center;
+    display: table;
+    margin: 0 auto;
+}
+
+#b1 {
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    background-color: lightskyblue;
+}
+
+#b2 {
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    background-color: rgba($color: lightskyblue, $alpha: 0.3)
+}
+
+.label{
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    width: 100%;
+    border-bottom: solid black 1px;
+    text-align: center;
+    display: table;
+    margin: 0 auto;
+}
+
+.contentbutton{
+    width: 50%;
+}
+
+.wrapper *{
+    overflow-y: scroll;
+    height: 100px;
+    border-bottom: solid black 1px;
+}
+
+.circlecontent > *{
+    margin: 10%;
+}

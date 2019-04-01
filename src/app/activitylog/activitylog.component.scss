@@ -1,0 +1,51 @@
+#activitylog{
+    border-radius: 50px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    width: 40%;
+    position: absolute;
+    right: 3%;
+    top: 120px;
+    height: 1000px; 
+    margin-bottom: 50px;
+}
+
+#label{
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    width: 100%;
+    border-bottom: solid black 1px;
+    text-align: center;
+    display: table;
+    margin: 0 auto;
+}
+
+#b1 {
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    background-color: lightskyblue;
+}
+
+#b2 {
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    background-color: rgba($color: lightskyblue, $alpha: 0.3)
+}
+
+.contentbutton{
+    width: 50%;
+}
+
+.wrapper *{
+    margin: 5%;
+    overflow-y: scroll;
+    height: 865px;
+    border: 1px solid lightslategray;
+}
+
+.activitycontent > *{
+    margin: 10%;
+    width: 10px;
+    height: 50px;
+}
