@@ -1,26 +1,41 @@
 <div id="activitylog">
-
-<div id="label">
-  <!--Presumably 'Posts' and 'Stars' are buttons that
+  <div id="label">
+    <!--Presumably 'Posts' and 'Stars' are buttons that
   enable the user to choose between displaying their recent posts
   vs. other people's posts that they've starred...-->
-    <button mat-button id="b1" class="contentbutton">
+    <!-- <button mat-button-toggle id="b1" class="contentbutton">
       <h2>Posts</h2>
     </button>
-    <button mat-button id="b2" class="contentbutton">
+    <button mat-button-toggle id="b2" class="contentbutton">
       <h2>Stars</h2>
-    </button>
-</div>
-
-<div class="wrapper">
-  <div id="activitycontent" class="activitycontent">
-    <!--Want to populate this section with a list of recent posts-->
-    <!--For now, putting in placeholder posts...-->
-    <app-posts></app-posts>
-    <app-posts></app-posts>
-    <app-posts></app-posts>
+    </button> -->
+    <mat-button-toggle-group [value]="toggle" (change)="toggleView($event)">
+      <mat-button-toggle
+        [value]="true"
+        class="b1"
+        value="true"
+        disableRipple="true"
+      >
+        <h2 class="profile">Posts</h2>
+      </mat-button-toggle>
+      <mat-button-toggle
+        [value]="false"
+        class="b2"
+        value="false"
+        disableRipple="true"
+      >
+        <h2 class="circle">Stars</h2>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
   </div>
-</div>
 
-
+  <div class="wrapper">
+    <div id="activitycontent" class="activitycontent">
+      <!--Want to populate this section with a list of recent posts-->
+      <!--For now, putting in placeholder posts...-->
+      <app-posts></app-posts>
+      <app-posts></app-posts>
+      <app-posts></app-posts>
+    </div>
+  </div>
 </div>

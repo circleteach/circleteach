@@ -1,28 +1,114 @@
 <div id="mycircle">
-
-  <div id="label" class="label">
+  <div class="label">
     <!--Presumably 'Profile' and 'My Circle' are buttons that
     enable the user to choose between displaying their profile
     information vs. users in their circle...-->
-      <button mat-button id="b1" class="contentbutton">
-        <h2>Profile</h2>
-      </button>
-      <button mat-button id="b2" class="contentbutton">
-        <h2>My Circle</h2>
-      </button>
+
+    <!-- <mat-button-toggle-group #group="matButtonToggleGroup"> -->
+    <mat-button-toggle-group [value]="toggle" (change)="toggleView($event)">
+      <mat-button-toggle
+        [value]="true"
+        class="b1"
+        value="true"
+        disableRipple="true"
+      >
+        <h2 class="profile">Profile</h2>
+      </mat-button-toggle>
+      <mat-button-toggle
+        [value]="false"
+        class="b2"
+        value="false"
+        disableRipple="true"
+      >
+        <h2 class="circle">My Circle</h2>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
   </div>
-  
-  <div class="wrapper">
-    <div id="circlecontent" class="label">
-      <!--Want to populate this section with either profile information or 
-      users in their circle-->
-      <!--For now, putting in placeholder sections...-->
-        <p>Certifications</p>
-        <p>Education</p>
-        <p>Experience</p>
-        <p>Skills & Training</p>
+
+  <!-- show profile details if it is toggled -->
+
+  <div *ngIf="toggle">
+    <div id="profileDetailsCont">
+      <!-- Certifications -->
+      <div class="detail-title">Certifications</div>
+      <div
+        class="container"
+        fxLayout="column"
+        fxLayout.xs="column"
+        fxLayoutAlign="left"
+        fxLayoutGap="10px"
+        fxLayoutGap.xs="10px"
+      >
+        <div class="item item-1" fxFlex="25%">{{ certification }}</div>
+        <div class="item item-2" fxFlex="25%">{{ certificationState }}</div>
+        <div class="item item-3" fxFlex="25%">{{ certificationDate }}</div>
+      </div>
+      <hr class="full-divider" />
+      <!-- Education -->
+      <div class="detail-title">Education</div>
+      <div
+        class="container"
+        fxLayout="column"
+        fxLayout.xs="column"
+        fxLayoutAlign="left"
+        fxLayoutGap="10px"
+        fxLayoutGap.xs="10px"
+      >
+        <div class="item item-1" fxFlex="25%">{{ institution }}</div>
+        <div class="item item-2" fxFlex="25%">{{ fieldsOfStudy }}</div>
+        <div class="item item-3" fxFlex="25%">{{ datesEnrolled }}</div>
+        <div class="item item-4" fxFlex="25%">
+          <ul class="a">
+            <li>{{ description }}</li>
+          </ul>
+        </div>
+      </div>
+      <hr class="full-divider" />
+      <!-- Experience -->
+      <div class="detail-title">Experience</div>
+      <div
+        class="container"
+        fxLayout="column"
+        fxLayout.xs="column"
+        fxLayoutAlign="left"
+        fxLayoutGap="10px"
+        fxLayoutGap.xs="10px"
+      >
+        <div class="item item-1" fxFlex="25%">{{ jobTitle }}</div>
+        <div class="item item-2" fxFlex="25%">{{ jobLocation }}</div>
+        <div class="item item-3" fxFlex="25%">{{ jobDates }}</div>
+        <div class="item item-4" fxFlex="25%">
+          <ul class="a">
+            <li>{{ jobDescription }}</li>
+          </ul>
+        </div>
+      </div>
+      <hr class="full-divider" />
+
+      <!-- Skills & Trainings -->
+      <div class="detail-title">Skills & Trainings</div>
+      <div
+        class="container"
+        fxLayout="column"
+        fxLayout.xs="column"
+        fxLayoutAlign="left"
+        fxLayoutGap="10px"
+        fxLayoutGap.xs="10px"
+      >
+        <div class="item item-4" fxFlex="25%">
+          <ul class="a">
+            <li>{{ skill1 }}</li>
+            <li>{{ skill2 }}</li>
+            <li>{{ skill3 }}</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
-  
-  
+  <div *ngIf="!toggle">
+    Add list of users in their circle here
+    <div id="circlecontent">
+      <!--Want to populate this section with users in their circle -->
+    </div>
   </div>
+</div>

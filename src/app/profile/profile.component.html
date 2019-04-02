@@ -1,8 +1,15 @@
 <app-layout>
-  <main>
-    <p>Welcome to your profile page!</p>
-    <app-personalinfo></app-personalinfo>
-    <app-mycircle></app-mycircle>
-    <app-activitylog></app-activitylog>
+  <main class="body">
+    <mat-card-content>
+      <div fxLayout.gt-xs="row" fxLayout="column" fxLayoutGap="1px">
+        <div fxFlex.gt-xs="50%" fxFlex>
+          <app-personalinfo></app-personalinfo>
+          <app-mycircle></app-mycircle>
+        </div>
+        <div fxFlex.gt-s="50%" fxFlex>
+          <app-activitylog></app-activitylog>
+        </div>
+      </div>
+    </mat-card-content>
   </main>
 </app-layout>

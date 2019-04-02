@@ -2,7 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { MatCardModule } from "@angular/material/card";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -61,6 +61,7 @@ import { ProfiledetailsComponent } from "./profiledetails/profiledetails.compone
     BrowserAnimationsModule,
     MatCardModule,
     MatSlideToggleModule,
+    MatButtonToggleModule,
     FlexLayoutModule,
     MatToolbarModule,
     MatIconModule,

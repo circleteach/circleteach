@@ -1,51 +1,131 @@
-#activitylog{
-    border-radius: 50px;
-    border-style: solid;
-    border-color: black;
-    border-width: 1px;
-    width: 40%;
-    position: absolute;
-    right: 3%;
-    top: 120px;
-    height: 1000px; 
-    margin-bottom: 50px;
+@import "~@angular/material/theming";
+@import "~src/styles";
+
+#activitylog {
+  background-color: white;
+  border-radius: 50px;
+  border-style: solid;
+  border-color: lightgray;
+  border-width: 0.5px;
+  width: 40%;
+  position: absolute;
+  right: 3%;
+  margin-top: 20px;
+  height: 1000px;
+  margin-bottom: 50px;
+  //   margin-right: 20px;
 }
 
-#label{
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
-    width: 100%;
-    border-bottom: solid black 1px;
-    text-align: center;
-    display: table;
-    margin: 0 auto;
+// #label {
+//   width: 100%;
+//   text-align: center;
+//   display: table;
+//   margin: 1 auto;
+//   border-bottom: solid lightgray 0.5px;
+// }
+
+// #b1 {
+//   border-top-left-radius: 50px;
+//   // background-color: mat-color($app-primary, 600);
+//   color: mat-color($app-primary, 600);
+//   font-size: 13px;
+//   font-weight: lighter;
+// }
+// #b1:focus,
+// input:focus {
+//   outline: none;
+// }
+
+// #b2 {
+//   border-top-right-radius: 50px;
+//   font-size: 13px;
+//   font-weight: lighter;
+// }
+// #b2:focus,
+// input:focus {
+//   outline: none;
+// }
+
+// .contentbutton {
+//   width: 50%;
+// }
+
+.mat-button-toggle-group {
+  width: 100%;
+  border: none;
+  margin: auto;
+  border-bottom: solid lightgray 0.5px;
+  height: 50px;
 }
 
-#b1 {
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
-    background-color: lightskyblue;
+.profile {
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
 }
 
-#b2 {
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
-    background-color: rgba($color: lightskyblue, $alpha: 0.3)
+.circle {
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
 }
 
-.contentbutton{
-    width: 50%;
+.mat-button-toggle:hover {
+  color: mat-color($app-primary, 600);
+  box-shadow: none;
 }
 
-.wrapper *{
-    margin: 5%;
-    overflow-y: scroll;
-    height: 865px;
-    border: 1px solid lightslategray;
+.mat-button-toggle:active {
+  color: mat-color($app-primary, 600);
 }
 
-.activitycontent > *{
-    margin: 10%;
-    width: 10px;
-    height: 50px;
+.mat-button-toggle-checked {
+  background-color: white;
+  color: mat-color($app-primary, 600) !important;
+}
+
+.b1 {
+  border-top-left-radius: 50px;
+  font-size: 13px;
+  font-weight: lighter;
+  width: 50%;
+}
+.b1:focus,
+input:focus {
+  outline: none;
+}
+
+.b2 {
+  border-top-right-radius: 50px;
+  //background-color: white;
+  font-size: 13px;
+  font-weight: lighter;
+  width: 50%;
+  display: table-cell;
+  vertical-align: middle;
+}
+.b2:focus,
+input:focus {
+  outline: none;
+}
+
+.label {
+  width: 100%;
+  // border-bottom: solid lightgray 0.5px;
+  text-align: center;
+  margin: 1 auto;
+}
+
+.wrapper * {
+  margin: 5%;
+  overflow-y: scroll;
+  //border-radius: 50px;
+  height: 865px;
+  //border: 1px solid lightslategray;
+}
+
+.activitycontent > * {
+  margin: 10%;
+  width: 10px;
+  height: 50px;
 }

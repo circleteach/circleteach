@@ -1,14 +1,18 @@
 @import "~@angular/material/theming";
 @import "~src/styles";
 
-#postsCont {
-  border-radius: 70px;
-  border-style: solid;
-  border-color: grey;
-  border-width: 0.5px;
-  width: 100%;
-  margin-right: 30px;
-  height: auto;
-  margin-top: 60px;
-  margin-bottom: 20px;
+// #postsCont {
+//   border-radius: 70px;
+//   border-style: solid;
+//   border-color: grey;
+//   border-width: 0.5px;
+//   width: 100%;
+//   margin-right: 30px;
+//   height: auto;
+//   margin-top: 60px;
+//   margin-bottom: 20px;
+// }
+
+.body {
+  background-color: #f2f6ff;
 }
