@@ -1,10 +1,5 @@
 <div id="mycircle">
   <div class="label">
-    <!--Presumably 'Profile' and 'My Circle' are buttons that
-    enable the user to choose between displaying their profile
-    information vs. users in their circle...-->
-
-    <!-- <mat-button-toggle-group #group="matButtonToggleGroup"> -->
     <mat-button-toggle-group [value]="toggle" (change)="toggleView($event)">
       <mat-button-toggle
         [value]="true"
@@ -106,9 +101,11 @@
     </div>
   </div>
   <div *ngIf="!toggle">
-    Add list of users in their circle here
     <div id="circlecontent">
-      <!--Want to populate this section with users in their circle -->
+      Add list of users in their circle here
+
+      <!-- temporarily testing profile details firebase connection here -->
+      {{ profileDetails }}
     </div>
   </div>
 </div>

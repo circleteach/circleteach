@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MatButtonToggleChange } from "@angular/material";
+import { ProfileDetailsService } from "../services/profile-details.service";
+import { ProfileDetails } from "../models/profileDetails.model";
 
 @Component({
   selector: "app-mycircle",
@@ -7,7 +9,6 @@ import { MatButtonToggleChange } from "@angular/material";
   styleUrls: ["./mycircle.component.scss"]
 })
 export class MycircleComponent implements OnInit {
-  toggle: boolean = true;
   // Example Fields
   certification = "K-6";
   certificationState = "Wisconsin";
@@ -26,9 +27,27 @@ export class MycircleComponent implements OnInit {
   skill2 = "Guided Math";
   skill3 = "Reading Circles";
 
-  constructor() {}
+  // Actual Data Fields
+  toggle: boolean = true;
 
-  ngOnInit() {}
+  // delete later, not sure best way to hold data (and it is only getting an empty object currently)
+  profileDetails = ProfileDetails[0];
+
+  constructor(private profileDetailsService: ProfileDetailsService) {}
+
+  // Gets data from professionalInfo Collection (and jobCollection)
+
+  ngOnInit() {
+    this.profileDetailsService.getProfileDetails().subscribe(data => {
+      this.profileDetails = data.map(e => {
+        return {
+          // just puts everything into an object
+          ...e.payload.doc.data()
+        } as ProfileDetails;
+      });
+      this.profileDetails = data;
+    });
+  }
 
   toggleView(change: MatButtonToggleChange) {
     this.toggle = change.value;

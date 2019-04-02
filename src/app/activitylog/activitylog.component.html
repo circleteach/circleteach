@@ -1,14 +1,5 @@
 <div id="activitylog">
   <div id="label">
-    <!--Presumably 'Posts' and 'Stars' are buttons that
-  enable the user to choose between displaying their recent posts
-  vs. other people's posts that they've starred...-->
-    <!-- <button mat-button-toggle id="b1" class="contentbutton">
-      <h2>Posts</h2>
-    </button>
-    <button mat-button-toggle id="b2" class="contentbutton">
-      <h2>Stars</h2>
-    </button> -->
     <mat-button-toggle-group [value]="toggle" (change)="toggleView($event)">
       <mat-button-toggle
         [value]="true"
@@ -29,13 +20,23 @@
     </mat-button-toggle-group>
   </div>
 
-  <div class="wrapper">
-    <div id="activitycontent" class="activitycontent">
-      <!--Want to populate this section with a list of recent posts-->
-      <!--For now, putting in placeholder posts...-->
-      <app-posts></app-posts>
-      <app-posts></app-posts>
-      <app-posts></app-posts>
+  <div *ngIf="toggle">
+    <div class="wrapper">
+      <div id="activitycontent" class="activitycontent">
+        <!--Populate with list of users Recent Posts-->
+        <app-posts></app-posts>
+        <app-posts></app-posts>
+        <app-posts></app-posts>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!toggle">
+    <div class="wrapper">
+      <div id="activitycontent" class="activitycontent">
+        <!--Populate with list of users Starred Posts-->
+        <app-posts></app-posts>
+      </div>
     </div>
   </div>
 </div>
