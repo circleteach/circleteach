@@ -43,6 +43,7 @@ export class AuthenticationService {
     return firebase.auth().createUserWithEmailAndPassword(email, password).catch(error => {
       // Handle Errors here.
       const errorCode = error.code;
+      alert(error.message);
       return error.message;
     }).then((res) => {
       res.user.updateProfile({displayName: name, photoURL: null});
