@@ -11,7 +11,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import {
-  MatButtonModule,
+  MatButtonModule, MatButtonToggleModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
@@ -52,6 +52,7 @@ describe('AppComponent', () => {
         MatIconModule,
         MatSidenavModule,
         MatButtonModule,
+        MatButtonToggleModule,
         MatListModule,
         MatSelectModule,
         MatInputModule,
@@ -76,7 +77,7 @@ describe('AppComponent', () => {
         PersonalinfoComponent,
         ActivitylogComponent,
         MycircleComponent,
-        SettingsComponent
+        SettingsComponent,
       ]
     }).compileComponents();
   }));
