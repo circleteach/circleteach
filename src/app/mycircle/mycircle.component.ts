@@ -28,7 +28,7 @@ export class MycircleComponent implements OnInit {
   skill3 = "Reading Circles";
 
   // Actual Data Fields
-  toggle: boolean = true;
+  toggle = true;
 
   // delete later, not sure best way to hold data (and it is only getting an empty object currently)
   profileDetails = ProfileDetails[0];
