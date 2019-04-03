@@ -19,6 +19,7 @@ import {AppModule} from '../app.module';
 import {RouterTestingModule} from '@angular/router/testing';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
+import {MockComponent} from 'ng-mocks';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
@@ -29,26 +30,14 @@ describe('SettingsComponent', () => {
       imports: [
         MatCardModule,
         MatSlideToggleModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatListModule,
-        MatToolbarModule,
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFireAuthModule,
         AngularFirestoreModule,
         RouterTestingModule,
-        AppModule, // TODO Fix proper component embedding to solely test this component and fix declarations
       ],
       declarations: [
-        /*
         SettingsComponent,
-        LayoutComponent,
-        SidenavComponent,
-        NavbarComponent,
-        UserSearchComponent,
-        HomeComponent,
-        LoginComponent,
-        ProfileComponent,*/
+        MockComponent(LayoutComponent),
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [AngularFireAuth, AngularFirestore]
