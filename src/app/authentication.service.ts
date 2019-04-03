@@ -34,8 +34,9 @@ export class AuthenticationService {
   login(email: string, password: string) {
     return firebase.auth().signInWithEmailAndPassword(email, password).catch(error => {
       const errorCode = error.code;
+      alert(error.message);
       return error.message;
-    }) .then((res) => this.router.navigate(['/home']));
+    }).then((res) => this.router.navigate(['/home']));
   }
 
   signup(email: string, password: string, name: string) {

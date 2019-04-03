@@ -34,11 +34,11 @@
     </div>
 
     <div id="postAge" gdArea="postAge">
-      <p>{{post.time}}</p>
+      <p>{{post.time.seconds * 1000 | date:'short'}}</p>
     </div>
 
     <div id="content" gdArea="content">
-      <p>{{post.conetent}}</p>
+      <p>{{post.content}}</p>
     </div>
 
     <div id="tagsCont" style="width: 200px; height: 75px;" gdArea="tags">
