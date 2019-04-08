@@ -9,13 +9,13 @@ export class StorageService {
 
   constructor(private storage: AngularFireStorage) { }
 
-  getProfilePicture(userID: string): Observable<string | null> {
-    const pathRef = this.storage.ref('profile-pictures/' + userID);
+  getStorageFromLink(link: string): Observable<string | null> {
+    const pathRef = this.storage.ref(link);
     return pathRef.getDownloadURL();
   }
 
-  uploadProfilePicture(userID: string, event) {
-    const pathRef = this.storage.ref('profile-pictures/' + userID);
+  uploadProfilePicture(link: string, event) {
+    const pathRef = this.storage.ref(link);
     pathRef.put(event.target.files[0]);
   }
 }
