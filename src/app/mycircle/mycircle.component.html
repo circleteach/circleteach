@@ -105,7 +105,13 @@
       Add list of users in their circle here
 
       <!-- temporarily testing profile details firebase connection here -->
+      <tbody>
+        <tr *ngFor="let det of profileDetails">
+          <td>{{ profileDetails.certifications }}</td>
+        </tr>
+      </tbody>
       {{ profileDetails }}
+      {{ items }}
     </div>
   </div>
 </div>

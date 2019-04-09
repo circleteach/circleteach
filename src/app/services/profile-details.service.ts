@@ -11,6 +11,14 @@ export class ProfileDetailsService {
 
   // CRUD Read
   getProfileDetails() {
-    return this.firestore.collection("professionalInfo").snapshotChanges();
+    // returns an observable with document info and id associated
+
+    // "example" for now.. but should be logged in user's ID
+    return (
+      this.firestore
+        .collection("professionalInfo")
+        // .doc("example")
+        .snapshotChanges()
+    );
   }
 }

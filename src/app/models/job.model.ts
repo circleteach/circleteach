@@ -1,11 +1,14 @@
-import { Time } from "@angular/common";
+import { Deserializable } from "./deserializable.model";
 
-export class Job {
+export class Job implements Deserializable {
   public description: string;
-  // change to timestamp?
-  public startTime: string;
-  // change to timestamp?
-  public endTime: string;
+  public startTime: Date;
+  public endTime: Date;
   public location: string;
   public position: string;
+
+  deserialize(input: any): this {
+    Object.assign(this, input);
+    return this;
+  }
 }

@@ -32,20 +32,25 @@ export class MycircleComponent implements OnInit {
 
   // delete later, not sure best way to hold data (and it is only getting an empty object currently)
   profileDetails = ProfileDetails[0];
+  profileDets: ProfileDetails[];
+  items: Array<any>;
 
   constructor(private profileDetailsService: ProfileDetailsService) {}
 
   // Gets data from professionalInfo Collection (and jobCollection)
 
   ngOnInit() {
+    // subscribe to observable which was returned
     this.profileDetailsService.getProfileDetails().subscribe(data => {
-      this.profileDetails = data.map(e => {
+      this.profileDetails = data.map(item => {
         return {
           // just puts everything into an object
-          ...e.payload.doc.data()
+          // id: item.payload.doc.id,
+          ...item.payload.doc.data()
         } as ProfileDetails;
       });
       this.profileDetails = data;
+      console.log(this.profileDetails);
     });
   }
 
