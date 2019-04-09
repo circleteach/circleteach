@@ -37,6 +37,7 @@ import { PersonalinfoComponent } from "./personalinfo/personalinfo.component";
 import { ActivitylogComponent } from "./activitylog/activitylog.component";
 import { MycircleComponent } from "./mycircle/mycircle.component";
 import { SettingsComponent } from "./settings/settings.component";
+import { MessagingComponent } from './messaging/messaging.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { SettingsComponent } from "./settings/settings.component";
     PersonalinfoComponent,
     ActivitylogComponent,
     MycircleComponent,
-    SettingsComponent
+    SettingsComponent,
+    MessagingComponent
   ],
   imports: [
     BrowserModule,

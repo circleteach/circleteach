@@ -1,0 +1,111 @@
+@import "~@angular/material/theming";
+@import "~src/styles";
+
+
+.inline {
+    float: left;
+    margin-right: 0vw;
+  }
+  
+  #messagesCont {
+    width: 50vw;
+    height: 80vh;
+  }
+
+  #usersCont {
+    width: 30vw;
+    height: 80vh;
+  }
+
+  #messages{
+      height: 78%;
+  }
+
+  .border{
+      border-style: solid;
+      border-width: 1px;
+      border-color: grey;
+      border-radius: 50px;
+  }
+
+  #searchInp{
+      width: 27vw;
+      height: 5vh;
+      font-size: 1.2em;
+      margin-left: 1.2vw;
+      margin-top: 1vh;
+  }
+
+  #messageTitle{
+      margin-left: 21vw;
+      margin-top: 1.5vh;
+  }
+
+  #proImg {
+    border-radius: 100%;
+    border-style: solid;
+    border-color: mat-color($app-accent, 500);
+    margin-left: 1vw;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+  }
+
+  #uInfoCont{
+      margin-left: -5vw;
+  }
+
+  #userList{
+      margin-top: 2vh;
+      :hover{
+        border-style: solid;
+        border-color: mat-color($app-accent, 500);
+        border-width: 1px;
+      }
+      :active{
+        background-color: lightblue;
+        
+      }
+  }
+
+  #messageInp{
+      float: right;
+      margin-right: 2vw;
+      width: 20vw;
+      height: 8vh;
+  }
+
+  main{
+      margin-left: 10vw;
+      margin-top: 3vh;
+  }
+
+  #submitBtn{
+      float:right;
+      margin-right: 2vw;
+      width: 8vw;
+      height: 8vh;
+      font-size: 1.3em;
+  }
+
+  .messageRight{
+     background-color: mat-color($app-primary, 500);
+     color: white;
+     border-radius: 20px;
+     padding-top: 1vh;
+     padding-bottom: 1vh;
+     padding-left: 1vw;
+     padding-right: 1vw;
+     max-width: 45%;
+     margin-left: 50%;
+  }
+
+  .messageLeft{
+    background-color: lightgrey;
+    border-radius: 20px;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    max-width: 45%;
+    margin-left: 2.5%;
+  }
