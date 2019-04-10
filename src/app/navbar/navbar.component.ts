@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AuthenticationService} from '../authentication.service';
 import {StorageService} from '../storage.service';
 import {EMPTY, empty, Observable} from 'rxjs';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-navbar',
@@ -14,14 +15,28 @@ export class NavbarComponent implements OnInit {
   profileURL: Observable<string | null>;
   url = '../../assets/img/circle-teach-logo.png';
 
-  constructor(private auth: AuthenticationService, private storage: StorageService) { }
+  constructor(private firebaseAuth: AngularFireAuth, private auth: AuthenticationService, private storage: StorageService) { }
 
   ngOnInit() {
     if (this.auth.getIconUrl() == null) {
       this.profileURL = EMPTY;
     } else {
-      this.profileURL = this.storage.getProfilePicture(this.auth.getIconUrl());
+      this.profileURL = this.storage.getStorageFromLink(this.auth.getIconUrl());
     }
+
+    this.firebaseAuth.authState.subscribe(
+      (user) => {
+        if (user) {
+          if (user.photoURL != null) {
+            this.profileURL = this.storage.getStorageFromLink(user.photoURL);
+          } else {
+            this.profileURL = EMPTY;
+          }
+        } else {
+          this.profileURL = EMPTY;
+        }
+      }
+    );
   }
 
   public onToggleSidenav() {

@@ -1,4 +1,4 @@
-<div id="personalInfoCont" gdAreas="profImage userInfo userInfo">
+<div id="personalInfoCont" gdAreas="profImage userInfo addCircle">
   <div id="profImgContainer" gdArea="profImage">
     <img
       id="profImg"
@@ -13,4 +13,14 @@
     <div class="user-name">{{ userName }}</div>
     <div class="user-title">{{ userTitle }}</div>
   </div>
+
+  <div id="addFriend" gdArea="addCircle">
+    <button mat-fab *ngIf="friends" [color]="'myfriend'" (click)="toggleFriend()">
+      <mat-icon>person</mat-icon>
+    </button>
+    <button mat-fab *ngIf="!friends" [color]="'notfriend'" (click)= "toggleFriend()">
+      <mat-icon>person_add</mat-icon>
+    </button>
+  </div>
+
 </div>

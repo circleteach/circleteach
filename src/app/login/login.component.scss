@@ -43,6 +43,10 @@ h3.mat-subheading-1 {
   color: mat-color($app-accent, 400);
 }
 
+#signupFailed {
+  color: mat-color($app-warn, 400);
+}
+
 .signup-container {
   flex-direction: column;
 

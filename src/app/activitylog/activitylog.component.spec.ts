@@ -5,6 +5,7 @@ import {PostsComponent} from '../posts/posts.component';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../environments/environment';
 import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
+import {MatButtonToggleModule} from '@angular/material';
 
 describe('ActivitylogComponent', () => {
   let component: ActivitylogComponent;
@@ -12,7 +13,11 @@ describe('ActivitylogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [AngularFireModule.initializeApp(environment.firebaseConfig), AngularFirestoreModule],
+      imports: [
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFirestoreModule,
+        MatButtonToggleModule,
+      ],
       declarations: [
         ActivitylogComponent,
         PostsComponent

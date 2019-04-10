@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PostsComponent } from './posts.component';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../environments/environment';
-import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 
 describe('PostsComponent', () => {
@@ -17,7 +17,8 @@ describe('PostsComponent', () => {
         AngularFirestoreModule,
       ],
       declarations: [ PostsComponent ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+      providers: [AngularFirestore]
     })
     .compileComponents();
   }));

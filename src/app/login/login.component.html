@@ -53,7 +53,7 @@
         <div class="signup-container" style="padding-top: 2em;">
           <h2 class="mat-display-1">Sign up to CircleTeach!</h2>
           <h3 id="normal" *ngIf="!signupFailed" class="mat-subheading-1">Join and improve educational for all today!</h3>
-          <h3 *ngIf="signupFailed" class="mat-subheading-1">Failed to sign up!</h3>
+          <h3 id="signupfailed" *ngIf="signupFailed" class="mat-subheading-1">Failed to sign up!</h3>
           <mat-form-field appearance="outline">
             <mat-label>Name</mat-label>
             <input matInput placeholder="Enter your name" [formControl]="signupName">
@@ -74,7 +74,6 @@
           <div class="button-row">
             <button mat-button color="primary" *ngIf="!signupEmail.valid || !signupPassword.valid || !signupName.valid" disabled >Sign Up</button>
             <button mat-button (keyup.end)="doSignup()" color="primary" *ngIf="signupEmail.valid && signupPassword.valid && signupPassword.valid" (click)="doSignup()">Sign Up</button>
-            <p>{{statusMessage}}</p>
           </div>
         </div>
       </div>

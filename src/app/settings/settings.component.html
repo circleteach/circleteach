@@ -17,16 +17,16 @@
       <div fxLayoutAlign="center">
         <mat-card-content>
           <label class="label">Type your current password</label> <br>
-          <input class="box" type="text" placeholder="Enter Current Password"> <br> 
+          <input class="box" type="password" [(ngModel)]="oldPassword" placeholder="Enter Current Password"> <br> 
           <label class="label">Type your new password</label> <br>
-          <input class="box" type="text" placeholder="Enter New Password"> <br> 
+          <input class="box" type="password" [(ngModel)]="newPasswordConfirm" placeholder="Enter New Password"> <br> 
           <label class="label">Retype your new password</label> <br>
-          <input class="box" type="text" placeholder="Re-enter New Password"> <br> 
+          <input class="box" type="password" [(ngModel)]="newPassword" placeholder="Re-enter New Password"> <br> 
           <div fxLayoutAlign="center" ><button class="button" (click)="changePass()">Submit</button></div>
         </mat-card-content>
       </div>
     </mat-card>
-    
+
     <mat-card class="settings-card">
         <h3 fxLayoutAlign="center">Site Preferences</h3> <hr>
         <mat-card-subtitle fxLayoutAlign="center">Profile Information Visibilty (Public by Default)</mat-card-subtitle>

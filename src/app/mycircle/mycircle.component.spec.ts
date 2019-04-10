@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MycircleComponent } from './mycircle.component';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../../environments/environment';
+import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
+import {MatButtonToggleModule} from '@angular/material';
 
 describe('MycircleComponent', () => {
   let component: MycircleComponent;
@@ -8,7 +12,17 @@ describe('MycircleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MycircleComponent ]
+      imports: [
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFirestoreModule,
+        MatButtonToggleModule,
+      ],
+      declarations: [
+        MycircleComponent
+      ],
+      providers: [
+        AngularFirestore
+      ]
     })
     .compileComponents();
   }));

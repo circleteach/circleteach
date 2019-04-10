@@ -7,7 +7,7 @@ import { MatButtonToggleChange } from "@angular/material";
   styleUrls: ["./activitylog.component.scss"]
 })
 export class ActivitylogComponent implements OnInit {
-  toggle: boolean = true;
+  toggle = true;
 
   constructor() {}
 

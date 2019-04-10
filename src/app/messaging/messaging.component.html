@@ -1,0 +1,37 @@
+<app-layout>
+  <main>
+    <div id="usersCont" class="inline border">
+      <input id="searchInp" class="border" type="text" placeholder="Search Messages" />
+
+      <div id="userList">
+        <div gdAreas="proImg uInfo date">
+          <img gdArea="proImg" id="proImg" src="../../assets/uwath2018.png" style="background-color: blue"
+            alt="Profile Image" height="80px" width="80px">
+
+          <div id="uInfoCont" gdArea="uInfo">
+            <h3>{{exampleName}}</h3>
+            <p>{{exampleMessageSnip}}</p>
+          </div>
+
+          <p id="date" gdArea="date">
+            {{exDateStub}}
+          </p>
+        </div>
+      </div>
+
+    </div>
+    <div id="messagesCont" class="inline border">
+      <h3 id="messageTitle">{{messageTitle}}</h3>
+
+      <div id="messages"> <!-- Use an NG for here-->
+        <p class="messageRight">Hi I'm the right hand message (user message)</p> <!-- Use an NG if to decide if message is right alligned or left-->
+        <p class="messageLeft">Hi im the left message (response)</p>
+      </div>
+
+      <button mat-button (click)="messageSubmit()" id="submitBtn" class="border" >Send</button>
+
+      <input id="messageInp" class="border" type="text" placeholder="Type a Message..." />
+    </div>
+
+  </main>
+</app-layout>
