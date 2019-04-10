@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from '../authentication.service';
 import { MatSnackBar } from '@angular/material';
+import { ObserversModule } from '@angular/cdk/observers';
 
 @Component({
   selector: 'app-settings',
@@ -14,8 +15,7 @@ export class SettingsComponent implements OnInit {
   newPassword = '';
   newPasswordConfirm = '';
   userEmail = '';
-  authCheck: object;
-
+  
   constructor(private auth: AuthenticationService, private snackbar: MatSnackBar) { }
 
   ngOnInit() {
@@ -27,23 +27,25 @@ export class SettingsComponent implements OnInit {
     this.logoutMessage = this.auth.isLoggedIn ? 'Log Out Failed' : 'Log Out Successful';
   }
 
-
   changePass() {
     this.userEmail = this.auth.getEmail();
-    this.authCheck = this.auth.reAuthenticate(this.userEmail, this.oldPassword);
-    if(this.authCheck != null){
-      if (this.newPassword != this.newPasswordConfirm){
-        this.snackbar.open("PASSWORDS DO NOT MATCH!", 'X', { duration: 3000}); 
+
+    this.auth.reAuthenticate(this.userEmail, this.oldPassword).subscribe(
+    success => {
+      if(this.newPassword != this.newPasswordConfirm){
+        this.snackbar.open("NEW PASSWORDS DO NOT MATCH", 'X', { duration: 3000});
       }
-      if (this.newPassword.length < 6){
-        this.snackbar.open("PASSWORDS MUST BE AT LEAST 6 CHARACTERS!", 'X', { duration: 3000});
+      else if(this.newPassword.length < 6){
+        this.snackbar.open("PASSWORDS MUST BE AT LEAST 6 CHARACTERS", 'X', { duration: 3000});
       }
       else{
+        this.snackbar.open("SUCCESS!", 'X', { duration: 3000});
         this.auth.changePassword(this.newPassword);
       }
-    }
-    else{
-      this.snackbar.open("CURRENT PASSWORD IS INCORRECT", 'X', { duration: 3000});
-    }
+    },
+    error => { 
+      this.snackbar.open("CURRENT PASSWORD IS INCORRECT", 'X', { duration: 3000}); }
+    );
   }
+
 }
