@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { MatCardModule } from "@angular/material/card";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -62,6 +63,7 @@ import { MessagingComponent } from './messaging/messaging.component';
     BrowserAnimationsModule,
     MatCardModule,
     MatSlideToggleModule,
+    MatSnackBarModule,
     MatButtonToggleModule,
     FlexLayoutModule,
     MatToolbarModule,

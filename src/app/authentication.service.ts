@@ -68,6 +68,32 @@ export class AuthenticationService {
     }).then((res) => this.router.navigate(['/login']));
   }
 
+  getEmail(): string {
+    return this.userDetails.email;
+  }
+
+  changePassword(newPassword: string){
+    const cpUser = firebase.auth().currentUser;
+    return cpUser.updatePassword(newPassword).then((res) => this.router.navigate(['/home']));
+  }
+
+  reAuthenticate(email: string, oldPassword: string){
+    const cpUser = firebase.auth().currentUser;
+    const credentials = firebase.auth.EmailAuthProvider.credential(email, oldPassword);
+
+    return cpUser.reauthenticateAndRetrieveDataWithCredential(credentials).then(function(result){
+      return result.credential;
+    }).catch(error => { return null});
+
+    // if (credential != null){
+    //   return "yes"
+    // }
+    // else{
+    //   return "no"
+    // }
+
+  }
+
   getIconUrl(): string {
     if (this.userDetails != null) {
       if (this.userDetails.photoURL !== '') {
