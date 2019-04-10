@@ -40,18 +40,18 @@ export class MycircleComponent implements OnInit {
   // Gets data from professionalInfo Collection (and jobCollection)
 
   ngOnInit() {
-    // subscribe to observable which was returned
-    this.profileDetailsService.getProfileDetails().subscribe(data => {
-      this.profileDetails = data.map(item => {
-        return {
-          // just puts everything into an object
-          // id: item.payload.doc.id,
-          ...item.payload.doc.data()
-        } as ProfileDetails;
-      });
-      this.profileDetails = data;
-      console.log(this.profileDetails);
-    });
+    // // subscribe to observable which was returned
+    // this.profileDetailsService.getProfileDetails().subscribe(data => {
+    //   this.profileDetails = data.map(item => {
+    //     return {
+    //       // just puts everything into an object
+    //       // id: item.payload.doc.id,
+    //       ...item.payload.doc.data()
+    //     } as ProfileDetails;
+    //   });
+    //   this.profileDetails = data;
+    //   console.log(this.profileDetails);
+    // });
   }
 
   toggleView(change: MatButtonToggleChange) {

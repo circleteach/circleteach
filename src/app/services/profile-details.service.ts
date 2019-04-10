@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
-
-import { ProfileDetails } from "../models/profileDetails.model";
+import { AngularFireAuth } from "@angular/fire/auth";
+// maybe later instead
+import { AuthenticationService } from "../authentication.service";
 
 @Injectable({
   providedIn: "root"
@@ -11,14 +12,6 @@ export class ProfileDetailsService {
 
   // CRUD Read
   getProfileDetails() {
-    // returns an observable with document info and id associated
-
-    // "example" for now.. but should be logged in user's ID
-    return (
-      this.firestore
-        .collection("professionalInfo")
-        // .doc("example")
-        .snapshotChanges()
-    );
+    // return this.firestore.collection("users").snapshotChanges();
   }
 }
