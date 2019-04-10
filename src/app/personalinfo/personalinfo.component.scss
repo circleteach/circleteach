@@ -38,3 +38,16 @@
   margin-right: 30px;
   margin-bottom: 16px;
 }
+
+#addFriend {
+  margin-top: 20px;
+  margin-right: 20px;
+}
+  
+.mat-myfriend{
+  background-color: mat-color($app-accent, 400);
+}
+
+.mat-notfriend{
+  background-color: white;
+}
