@@ -79,15 +79,15 @@ export class AuthenticationService {
     return this.userDetails.email;
   }
 
-  changePassword(newPassword: string){
+  changePassword(newPassword: string) {
     const cpUser = firebase.auth().currentUser;
     return cpUser.updatePassword(newPassword).then((res) => this.router.navigate(['/home']));
   }
 
-  reAuthenticate(email: string, oldPassword: string): Observable<boolean>{
+  reAuthenticate(email: string, oldPassword: string): Observable<boolean> {
     const cpUser = firebase.auth().currentUser;
     const credentials = firebase.auth.EmailAuthProvider.credential(email, oldPassword);
-    //Observable to make sure reAuthentication is done
+    // Observable to make sure reAuthentication is done
     return new Observable(observer => {
       cpUser.reauthenticateAndRetrieveDataWithCredential(credentials).catch(error => {
         console.log(error.code);
@@ -107,6 +107,13 @@ export class AuthenticationService {
       }
     }
     return null;
+  }
+
+  updateIconUrl(profileImage: string) {
+    if (this.userDetails != null) {
+      this.userDetails.updateProfile({photoURL: profileImage});
+      this.userService.setProfileImage(this.userDetails.uid, profileImage);
+    }
   }
 
   getUserId(): string {

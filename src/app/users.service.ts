@@ -24,8 +24,15 @@ export class UsersService {
       name: displayName,
       posts: [],
       professionalInfo: null,
+      profileImage: null,
       settings: null,
       starredPosts: []
+    });
+  }
+
+  setProfileImage(userID: string, profileImageURL: string) {
+    this.firebaseStorage.firestore.collection('users').doc(userID).update({
+      profileImage: profileImageURL
     });
   }
 
