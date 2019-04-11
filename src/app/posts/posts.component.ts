@@ -2,8 +2,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import { PostsService } from '../services/posts.service';
 import { Post } from '../models/post.model';
 import { Comment } from '../models/comment.model';
-import { StorageService } from '../storage.service';
 import { Timestamp } from 'rxjs/internal/operators/timestamp';
+import { AuthenticationService } from '../authentication.service';
+import { Users } from '../models/users.model';
+import { User } from 'firebase';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+
 
 
 @Component({
@@ -21,7 +27,7 @@ export class PostsComponent implements OnInit {
   stars = 52;
   //END Example Fields
   
-  posts: Post[]; //Stores list of posts
+  posts: postWithMeta[]; //Stores list of posts
   comments: Comment[]; //Stores list of comments per each post
 
   @Input('canwritepost') canWritePost: Boolean;   //Toggles write posts section
@@ -32,21 +38,37 @@ export class PostsComponent implements OnInit {
   private newCommentInp; //Bound text field for write comment
   private tagsInp; //Bound text filed for input of tags with post
 
-  constructor(private postService: PostsService) { 
+  constructor(private postService: PostsService, private authService: AuthenticationService) { 
     console.log(this.canWritePost);
     console.log(this.activityLogView);
   }
 
   // Gets unfiltered list of all posts, proof of concept for subscribing to collection
   ngOnInit() {
-    this.postService.getPosts().subscribe(data => {
+    this.postService.getPosts().subscribe(data => { //This is how to get data from a collection
       this.posts = data.map(e => {
         return {
           id: e.payload.doc.id,
           ...e.payload.doc.data()
-        } as Post;
+        } as postWithMeta;
+      });
+      
+      //Within the subscribe to getPosts(), i'm calling my seccond data retrieval function
+      //in this forEach loop, getting a document for each post object
+      this.posts.forEach(post => {
+        this.getPostUser(post);
       });
     });
+  }
+
+  getPostUser(post:postWithMeta){
+    let user: Users = new Users;
+       this.postService.getPostUserData(post.id).pipe(map(action =>{  //This is how to get data from a document
+        user = action.payload.data() as Users;
+        user.id = action.payload.id;
+      })).subscribe(f =>{
+          post.name = user.name;
+      });
   }
 
   //----------- Methods for Post Body ------------//
@@ -120,7 +142,7 @@ export class PostsComponent implements OnInit {
       let newPost = new Post;
       newPost.content = this.newPostInp;
       newPost.time = Date.now();
-      newPost.user = "Example User";
+      newPost.user = this.authService.getUserId();
       newPost.showComments = false;
       newPost.stars = 0;
 
@@ -144,3 +166,8 @@ export class PostsComponent implements OnInit {
   //------------ Methods for Comments ------------//
 }
 
+class postWithMeta extends Post{
+    public name: string;
+    public profImg;
+    public profInfo;
+}
