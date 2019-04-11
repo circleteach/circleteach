@@ -1,39 +1,29 @@
 import { Component, OnInit } from "@angular/core";
 import { ProfileDetailsService } from "../services/profile-details.service";
-import { User } from "../models/user.model";
+import { Users } from "../models/users.model";
 import { StorageService } from "../storage.service";
 import { AuthenticationService } from "../authentication.service";
 import { UsersService } from "../users.service";
 import { Observable } from "rxjs";
 import { AngularFireAuth } from "@angular/fire/auth";
-import {
-  AngularFirestore,
-  AngularFirestoreDocument
-} from "@angular/fire/firestore";
 import { Data } from "@angular/router";
 
 @Component({
-  selector: "app-personalinfo",
-  templateUrl: "./personalinfo.component.html",
-  styleUrls: ["./personalinfo.component.scss"]
+  selector: "app-basicinfo",
+  templateUrl: "./basicinfo.component.html",
+  styleUrls: ["./basicinfo.component.scss"]
 })
-export class PersonalinfoComponent implements OnInit {
+export class BasicinfoComponent implements OnInit {
   // TODO Input Decorator once we get data model
 
   // Example Fields
   friends = false;
-
-  // get from users collection, professionalInfo field (use position with most recent endtime)
   userTitle = "Example Grade Example at Example School";
-
-  // get from users collection
   userName = "jay";
-
-  // default image.. will be overwritten
+  // Default Picture
   profileImg = "../../assets/img/default-profile-picture.png";
-
   // Actual Data Fields
-  basics: User[];
+  basics: Users[];
   stuff: Observable<any[]>;
   id;
   userDetails;
@@ -44,7 +34,7 @@ export class PersonalinfoComponent implements OnInit {
   constructor(
     private ProfileDetailsService: ProfileDetailsService,
     private firebaseAuth: AngularFireAuth,
-    private auth: AuthenticationService,
+    private authService: AuthenticationService,
     private userService: UsersService
   ) {
     this.user = firebaseAuth.authState;
@@ -52,17 +42,16 @@ export class PersonalinfoComponent implements OnInit {
 
   // Gets list of basic information for now
   ngOnInit() {
-    // get id from authentication
-    // could also use : this.id = this.user.getUser(this.id).id;
-    this.id = this.auth.getUserId();
-    // get display name using id
+    // get id from authentication... could also use : this.id = this.user.getUser(this.id).id;
+    this.id = this.authService.getUserId();
+    console.log("id: " + this.id);
 
     // this.user.getDisplayName(this.id).subscribe(data => {
     //   this.userName = data;
     // }
 
     this.userDetails = this.userService.getUser(this.id);
-    console.log(this.userDetails);
+    console.log("userDetails: " + this.userDetails);
 
     // this.user.getUser(this.id).subscribe(data => {
     //   // this.test = data.payload.data();
@@ -74,25 +63,11 @@ export class PersonalinfoComponent implements OnInit {
     //   // });
 
     // });
-    this.userService.getUser(this.id).subscribe(data => {
-      this.basics = data.map(e => {
-        return {
-          // id: e.payload.doc.id,
-          ...e.payload.doc.data()
-        } as User;
-      });
-    });
 
-    console.log("basics:" + this.basics);
+    this.userDetails = this.userService.getDisplayName(this.id);
+    console.log("dets: " + this.userDetails);
 
-    //this.postService.getPosts().subscribe(data => {
-
-    this.userName = this.userService.getDisplayName(this.id);
-
-    console.log(this.userName);
-
-    // not sure how to access profile image exac
-    // this.profileImg = this.auth.getIconUrl();
+    console.log("userName: " + this.userName);
   }
 
   toggleFriend() {
