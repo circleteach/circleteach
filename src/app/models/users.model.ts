@@ -1,6 +1,7 @@
 import * as firebase from 'firebase';
 
 export class Users {
+  public id: string;
   public connections: string[];
   public groups: firebase.firestore.DocumentReference[];
   public name: string;
