@@ -1,7 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SettingsComponent } from './settings.component';
-import {MatCardModule, MatIconModule, MatListModule, MatSidenavModule, MatSlideToggleModule, MatToolbarModule} from '@angular/material';
+import {
+  MatCardModule,
+  MatIconModule,
+  MatListModule,
+  MatSidenavModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatToolbarModule
+} from '@angular/material';
 import {LayoutComponent} from '../layout/layout.component';
 import {SidenavComponent} from '../sidenav/sidenav.component';
 import {NavbarComponent} from '../navbar/navbar.component';
@@ -30,6 +38,7 @@ describe('SettingsComponent', () => {
       imports: [
         MatCardModule,
         MatSlideToggleModule,
+        MatSnackBarModule,
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFireAuthModule,
         AngularFirestoreModule,

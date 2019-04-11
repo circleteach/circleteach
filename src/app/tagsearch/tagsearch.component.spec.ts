@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TagsearchComponent } from './tagsearch.component';
+import {MatChipsModule, MatIconModule, MatInputModule} from '@angular/material';
+import {FormsModule} from '@angular/forms';
 
 describe('TagsearchComponent', () => {
   let component: TagsearchComponent;
@@ -8,6 +10,12 @@ describe('TagsearchComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MatIconModule,
+        MatChipsModule,
+        MatInputModule,
+        FormsModule,
+      ],
       declarations: [ TagsearchComponent ]
     })
     .compileComponents();

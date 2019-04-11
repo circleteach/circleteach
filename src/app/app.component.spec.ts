@@ -11,7 +11,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import {
-  MatButtonModule, MatButtonToggleModule,
+  MatButtonModule, MatButtonToggleModule, MatChipsModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
@@ -37,6 +37,8 @@ import { PersonalinfoComponent } from './personalinfo/personalinfo.component';
 import { ActivitylogComponent } from './activitylog/activitylog.component';
 import { MycircleComponent } from './mycircle/mycircle.component';
 import { SettingsComponent } from './settings/settings.component';
+import {MessagingComponent} from './messaging/messaging.component';
+import {TagsearchComponent} from './tagsearch/tagsearch.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -53,6 +55,7 @@ describe('AppComponent', () => {
         MatSidenavModule,
         MatButtonModule,
         MatButtonToggleModule,
+        MatChipsModule,
         MatListModule,
         MatSelectModule,
         MatInputModule,
@@ -78,6 +81,8 @@ describe('AppComponent', () => {
         ActivitylogComponent,
         MycircleComponent,
         SettingsComponent,
+        MessagingComponent,
+        TagsearchComponent,
       ]
     }).compileComponents();
   }));
