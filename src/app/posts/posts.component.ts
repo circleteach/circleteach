@@ -1,18 +1,9 @@
-<<<<<<< HEAD
 import { Component, OnInit, Input } from "@angular/core";
 import { PostsService } from "../services/posts.service";
 import { Post } from "../models/post.model";
 import { Comment } from "../models/comment.model";
 import { StorageService } from "../storage.service";
-=======
-import { Component, OnInit, Input } from '@angular/core';
-import { PostsService } from '../services/posts.service';
-import { Post } from '../models/post.model';
-import { Comment } from '../models/comment.model';
-import { StorageService } from '../storage.service';
-import { Timestamp } from 'rxjs/internal/operators/timestamp';
-
->>>>>>> dev
+import { Timestamp } from "rxjs/internal/operators/timestamp";
 
 @Component({
   selector: "app-posts",
@@ -27,37 +18,23 @@ export class PostsComponent implements OnInit {
   postContent =
     "Some days I just feel like, Example. Then I go Example and keep exampling myself. Everyday all day!";
   stars = 52;
-<<<<<<< HEAD
-
-  // Actual Data Fields
-  posts: Post[];
-  comments: Comment[];
-  private isStared = false;
-
-  //Toggles write posts section
-  canWritePost = true;
-  activityLogView = false;
-
-  constructor(private postService: PostsService) {}
-=======
   //END Example Fields
-  
+
   posts: Post[]; //Stores list of posts
   comments: Comment[]; //Stores list of comments per each post
 
-  @Input('canwritepost') canWritePost: Boolean;   //Toggles write posts section
-  @Input('activitylogview') activityLogView: Boolean; //Toggles Activity log view
+  @Input("canwritepost") canWritePost: Boolean; //Toggles write posts section
+  @Input("activitylogview") activityLogView: Boolean; //Toggles Activity log view
 
   private isStared = false; //Have you starred the post
   private newPostInp; //Bound text field for write post
   private newCommentInp; //Bound text field for write comment
   private tagsInp; //Bound text filed for input of tags with post
 
-  constructor(private postService: PostsService) { 
+  constructor(private postService: PostsService) {
     console.log(this.canWritePost);
     console.log(this.activityLogView);
   }
->>>>>>> dev
 
   // Gets unfiltered list of all posts, proof of concept for subscribing to collection
   ngOnInit() {
@@ -75,11 +52,11 @@ export class PostsComponent implements OnInit {
 
   //Adds or removes from posts star count, changes Icon appearance
   starClick(post: Post) {
-    if(!this.isStared){
+    if (!this.isStared) {
       post.stars += 1;
       this.postService.updatePost(post);
       this.isStared = true;
-    }else if(this.isStared){
+    } else if (this.isStared) {
       post.stars -= 1;
       this.postService.updatePost(post);
       this.isStared = false;
@@ -101,29 +78,20 @@ export class PostsComponent implements OnInit {
   }
 
   //TODO Uploads comment given body and user info
-<<<<<<< HEAD
-  submitCommentClick() {}
-
-  // TODO downloads content of post
-  downloadClick() {}
-=======
-  submitCommentClick(post: Post){
-    if(this.newCommentInp != "" && this.newCommentInp != null){
-      let newComment: Comment = new Comment;
+  submitCommentClick(post: Post) {
+    if (this.newCommentInp != "" && this.newCommentInp != null) {
+      let newComment: Comment = new Comment();
       newComment.content = this.newCommentInp;
       newComment.user = "Example User";
 
-      this.postService.createComments(newComment,post);
+      this.postService.createComments(newComment, post);
       console.log("Uploaded new Comment");
-      this.newCommentInp ="";
+      this.newCommentInp = "";
     }
   }
 
   // TODO downloads content of post
-  downloadClick() {
-  
-  }
->>>>>>> dev
+  downloadClick() {}
 
   // TODO Navigate to user page on profile image or name click
   profileClick() {}
@@ -136,15 +104,11 @@ export class PostsComponent implements OnInit {
   // TODO Allows content to be uploaded to post
   uploadClick() {}
 
-<<<<<<< HEAD
-  // TODO Validates content and creates a new post for the user
-  postClick() {}
-=======
   //Validates content and creates a new post for the user
   //TODO: Linke to User, Tags
   postClick() {
-    if(this.newPostInp != "" && this.newPostInp != null){
-      let newPost = new Post;
+    if (this.newPostInp != "" && this.newPostInp != null) {
+      let newPost = new Post();
       newPost.content = this.newPostInp;
       newPost.time = Date.now();
       newPost.user = "Example User";
@@ -155,21 +119,13 @@ export class PostsComponent implements OnInit {
       console.log("Uploaded Post");
       this.newPostInp = "";
     }
-
   }
->>>>>>> dev
 
   // TODO toggles the sort by options
   sortClick() {}
 
   // TODO toggles the posts by options
-<<<<<<< HEAD
   postsByClick() {}
-=======
-  postsByClick() {
-
-  }
 
   //------------ Methods for Comments ------------//
->>>>>>> dev
 }
