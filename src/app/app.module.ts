@@ -4,6 +4,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatChipsModule } from '@angular/material/chips';
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -39,6 +40,8 @@ import { ActivitylogComponent } from "./activitylog/activitylog.component";
 import { MycircleComponent } from "./mycircle/mycircle.component";
 import { SettingsComponent } from "./settings/settings.component";
 import { MessagingComponent } from './messaging/messaging.component';
+import { TagsearchComponent } from './tagsearch/tagsearch.component';
+
 
 @NgModule({
   declarations: [
@@ -55,7 +58,8 @@ import { MessagingComponent } from './messaging/messaging.component';
     ActivitylogComponent,
     MycircleComponent,
     SettingsComponent,
-    MessagingComponent
+    MessagingComponent,
+    TagsearchComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +67,7 @@ import { MessagingComponent } from './messaging/messaging.component';
     BrowserAnimationsModule,
     MatCardModule,
     MatSlideToggleModule,
+    MatChipsModule,
     MatSnackBarModule,
     MatButtonToggleModule,
     FlexLayoutModule,

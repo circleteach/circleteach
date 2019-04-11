@@ -1,0 +1,20 @@
+<div fxLayoutAlign="center">
+  <input 
+    class="inputBox" 
+    [(ngModel)]="currTag"
+    type="text" 
+    placeholder="Search Tags" 
+    (keydown.enter)="addTag()"
+  >
+</div>
+<div fxLayoutAlign="center">
+  <mat-chip-list class="mat-chip-list-stacked">
+      <mat-basic-chip *ngFor="let tag of tags" (removed)="remove(tag)">
+        <mat-icon matChipRemove>cancel</mat-icon>
+        <div class="vert">
+          {{tag}}
+        </div>
+      </mat-basic-chip>
+  </mat-chip-list>
+</div>
+
