@@ -4,6 +4,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import * as firebase from "firebase/app";
 import { Router } from "@angular/router";
 import { UsersService } from "./users.service";
+import { log } from "util";
 
 @Injectable({
   providedIn: "root"
@@ -22,6 +23,7 @@ export class AuthenticationService {
     this.user.subscribe(user => {
       if (user) {
         this.userDetails = user;
+        this.router.navigate(["/home"]);
       } else {
         this.userDetails = null;
       }
@@ -41,7 +43,9 @@ export class AuthenticationService {
         alert(error.message);
         return error.message;
       })
-      .then(res => this.router.navigate(["/home"]));
+      .then(res => {
+        // this.router.navigate(['/home'])
+      });
   }
 
   signup(email: string, password: string, name: string) {
@@ -55,11 +59,14 @@ export class AuthenticationService {
         return error.message;
       })
       .then(res => {
-        res.user.updateProfile({
-          displayName: name,
-          photoURL: null
-        });
+        res.user.updateProfile({ displayName: name, photoURL: null });
         this.userService.setupUserDocument(res.user.uid, name);
+        firebase
+          .auth()
+          .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+          .catch(error => {
+            log(error.message);
+          });
         this.router.navigate(["/home"]);
       });
   }
