@@ -14,6 +14,11 @@ export class PostsService {
     return this.firestore.collection("posts").snapshotChanges();
   }
 
+  //Subcollection get comments
+  getComments(post: Post){
+    return this.firestore.collection("posts/" + post.id +"/comments").snapshotChanges();
+  }
+
   // CRUD Create
   createPost(post: Post) {
     return this.firestore.collection("posts").add(post);

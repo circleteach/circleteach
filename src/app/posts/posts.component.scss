@@ -113,7 +113,7 @@
 }
 
 #postInfo {
-  margin-left: 20vw;
+  margin-left: 15vw;
   margin-top: 4vh;
   p {
     margin-top: 1.1vh;
@@ -128,4 +128,40 @@
 #starDisp {
   margin-left: -2vw;
   padding-top: 2vh;
+}
+
+.postInfoEle{
+  margin-left: 3vw;
+}
+
+#commentCont{
+  width: 80%;
+  margin-left: 10%;
+  margin-bottom: 2vh;
+}
+
+#comment{
+  margin-top: 1vh;
+  border-radius: 50px;
+  border-style: solid;
+  border-color: mat-color($app-primary, 500);
+  border-width: 1px;
+
+  p{
+    margin-left: 5vw;
+    width: 500px;
+  }
+}
+
+#commentUserName{
+  margin-left: -7.3vw;
+  margin-top: 3.5vh;
+}
+
+#commInp{
+  
+}
+
+#commSubBtn{
+  margin-left: 1vw;
 }
