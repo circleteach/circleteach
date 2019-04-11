@@ -57,7 +57,7 @@ export class AuthenticationService {
       .then(res => {
         res.user.updateProfile({
           displayName: name,
-          photoURL: "../assets/img/default-profile-picture.png"
+          photoURL: null
         });
         this.userService.setupUserDocument(res.user.uid, name);
         this.router.navigate(["/home"]);
