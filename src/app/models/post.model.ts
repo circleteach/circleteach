@@ -1,4 +1,5 @@
 import { Time } from '@angular/common';
+import { Comment } from './comment.model'
 import * as firebase from 'firebase';
 
 export class Post {
@@ -10,4 +11,5 @@ export class Post {
     public tags;
     public time: firebase.firestore.Timestamp;
     public user: string;
+    public showComments: boolean = false;
 }
