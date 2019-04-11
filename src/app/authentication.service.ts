@@ -107,7 +107,7 @@ export class AuthenticationService {
       email,
       oldPassword
     );
-    //Observable to make sure reAuthentication is done
+    // Observable to make sure reAuthentication is done
     return new Observable(observer => {
       cpUser
         .reauthenticateAndRetrieveDataWithCredential(credentials)
@@ -130,6 +130,13 @@ export class AuthenticationService {
       }
     }
     return null;
+  }
+
+  updateIconUrl(profileImage: string) {
+    if (this.userDetails != null) {
+      this.userDetails.updateProfile({ photoURL: profileImage });
+      this.userService.setProfileImage(this.userDetails.uid, profileImage);
+    }
   }
 
   getUserId(): string {

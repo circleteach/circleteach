@@ -46,30 +46,41 @@ export class UsersService {
         name: displayName,
         posts: [],
         professionalInfo: null,
+        profileImage: null,
         settings: null,
         starredPosts: []
       });
   }
 
-  // getDisplayName(userID: string): string {
-  //   const docRef = this.firebaseStorage.firestore
-  //     .collection("users")
-  //     .doc(userID);
-  //   docRef
-  //     .get()
-  //     .then(doc => {
-  //       if (doc.exists) {
-  //         console.log(doc.get("name: " + name));
-  //         return doc.get("name");
-  //       } else {
-  //         console.log("No such document!");
-  //       }
-  //     })
-  //     .catch(e => {
-  //       console.log("Error getting document: ", e);
-  //     });
-  //   return "Missing Name";
-  // }
+  setProfileImage(userID: string, profileImageURL: string) {
+    this.firebaseStorage.firestore
+      .collection("users")
+      .doc(userID)
+      .update({
+        profileImage: profileImageURL
+      });
+  }
+
+  getDisplayName(userID: string): string {
+    const docRef = this.firebaseStorage.firestore
+      .collection("users")
+      .doc(userID);
+
+    docRef
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          return doc.get("name");
+        } else {
+          console.log("No such document!");
+        }
+      })
+      .catch(e => {
+        console.log("Error getting document: ", e);
+      });
+
+    return "Missing Name";
+  }
 
   getGroups(userID: string): DocumentReference[] {
     this.firebaseStorage.firestore

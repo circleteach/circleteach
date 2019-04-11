@@ -15,6 +15,10 @@ export class PostsService {
     return this.firestore.collection("posts").snapshotChanges();
   }
 
+  getPostUserData(postId: string){
+    return this.firestore.doc("users/" + postId).snapshotChanges();
+  }
+
   //Subcollection get comments
   getComments(post: Post){
     return this.firestore.collection("posts/" + post.id +"/comments").snapshotChanges();
