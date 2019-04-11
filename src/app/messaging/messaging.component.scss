@@ -15,10 +15,13 @@
   #usersCont {
     width: 30vw;
     height: 80vh;
+    padding: 10px;
+    overflow: scroll;
   }
 
   #messages{
       height: 78%;
+      overflow: scroll;
   }
 
   .border{
@@ -48,6 +51,7 @@
     margin-left: 1vw;
     margin-top: 1vh;
     margin-bottom: 1vh;
+    margin-right: 1vw;
   }
 
   #uInfoCont{
@@ -56,6 +60,8 @@
 
   #userList{
       margin-top: 2vh;
+      padding: 15px;
+      overflow:scroll;
       :hover{
         border-style: solid;
         border-color: mat-color($app-accent, 500);
