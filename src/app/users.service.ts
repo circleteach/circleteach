@@ -89,44 +89,27 @@ export class UsersService {
     return [];
   }
 
-  // getProfessionalInfo(userID: string): Observable<DocumentReference> {
-  //   var val;
-  //   this.firebaseStorage.firestore
-  //     .collection("users")
-  //     .doc(userID)
-  //     .get()
-  //     .then(doc => {
-  //       if (doc.exists) {
-  //         console.log(new Observable(doc.data().professionalInfo));
-  //         return new Observable(doc.data().professionalInfo);
-  //       } else {
-  //         console.log("No such document!");
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log("Error getting document: ", error);
-  //     });
-  //   return;
-  // }
-
-  getProfessionalInfo(userID: string): Observable<CollectionReference> {
+  getProfessionalInfo(userID: string): Observable<DocumentReference> {
     this.firebaseStorage.firestore
       .collection("users")
       .doc(userID)
       .get()
       .then(doc => {
+        console.log("made it");
         if (doc.exists) {
           this.firebaseStorage.firestore
             .collection("users")
             .doc(userID)
+            //.collection("professionalInfo")
             .onSnapshot(doc => {
-              console.log(doc.data().professionalInfo);
+              console.log("data" + doc.data().professionalInfo);
               // return doc.data().professionalInfo;
-              console.log(doc.data());
-              return new Observable<CollectionReference>(
+              console.log("2nd print" + doc.data());
+              return new Observable<DocumentReference>(
                 doc.data().professionalInfo
               );
             });
+          // .snapShotChanges();
         } else {
           console.log("No such document!");
         }
@@ -136,4 +119,42 @@ export class UsersService {
       });
     return;
   }
+
+  // getProfessionalInfo(userID: string) {
+  //   this.firebaseStorage.firestore;
+  //       .collection("users")
+  //       .doc(userID)
+  //       .get()
+  //       .then(doc => {
+  //   return this.firestore
+  //     .collection("users")
+  //     .doc(userID)
+  //     .snapshotChanges();
+
+  //   return this.firebaseStorage.firestore
+  //     .collection("users")
+  //     .doc(userID)
+  //     .get()
+  //     .then(doc => {
+  //       if (doc.exists) {
+  //         this.firebaseStorage.firestore.collection("users").doc(userID);
+  //         // comment here
+  //         // .onSnapshot(doc => {
+  //         //   console.log(doc.data().professionalInfo);
+  //         //   // return doc.data().professionalInfo;
+  //         //   console.log(doc.data());
+  //         //   return new Observable<CollectionReference>(
+  //         //     doc.data().professionalInfo
+  //         //   );
+  //         // });
+  //         // .snapShotChanges();
+  //       } else {
+  //         console.log("No such document!");
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.log("Error getting document: ", error);
+  //     });
+  //   // return;
+  // }
 }

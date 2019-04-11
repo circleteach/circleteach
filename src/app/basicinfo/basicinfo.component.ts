@@ -7,7 +7,7 @@ import { UsersService } from "../users.service";
 import { Observable } from "rxjs";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Data } from "@angular/router";
-
+import { ProfileDetails } from "../models/profileDetails.model";
 @Component({
   selector: "app-basicinfo",
   templateUrl: "./basicinfo.component.html",
@@ -27,6 +27,7 @@ export class BasicinfoComponent implements OnInit {
   // testing things
   basics: Users[];
   stuff: Observable<any[]>;
+  info: ProfileDetails;
   userDetails;
   test;
 
@@ -49,12 +50,20 @@ export class BasicinfoComponent implements OnInit {
 
     let check = this.usersService.getProfessionalInfo(this.id);
     // printing false but should print true
-    console.log(check instanceof Observable);
+    // console.log(check instanceof Observable);
     // printing undefined
+    // check.subscribe();
     console.log("check: " + check);
 
-    // error thrown when subscribe is called
+    // check.subscribe();
+
     this.usersService.getProfessionalInfo(this.id).subscribe(data => {
+      console.log(data);
+      // this.info = data.map(e =>) {
+      //   return {
+      //     id: e.payload.doc.id,
+      //     ...e.payload.doc.data()
+      //   } as ProfileDetails
       console.log("data" + data.get());
       //snapshot.forEach(thing => {
       //console.log(thing.data());
