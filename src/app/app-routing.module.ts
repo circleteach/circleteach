@@ -9,7 +9,8 @@ import { SettingsComponent } from './settings/settings.component';
 import { MessagingComponent } from './messaging/messaging.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent, canActivate: [LoggedInGuard] },
+  { path: 'home', component: HomeComponent},
+  //Put this back ^ canActivate: [LoggedInGuard]  jay
   // TODO: change to profile/:id
   {
     path: 'profile',

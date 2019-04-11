@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PostsService } from '../services/posts.service';
 import { Post } from '../models/post.model';
+import { Comment } from '../models/comment.model';
 import { StorageService } from '../storage.service';
 
 
@@ -11,7 +12,7 @@ import { StorageService } from '../storage.service';
 })
 export class PostsComponent implements OnInit {
 
-  // Example Fields
+  //Example Fields
   userName = 'Jay Example';
   userTitle = 'Example grade Example at Example School';
   postAge = '2 Days ago';
@@ -20,8 +21,12 @@ export class PostsComponent implements OnInit {
 
   // Actual Data Fields
   posts: Post[];
+  comments: Comment[];
   private isStared = false;
+
+  //Toggles write posts section
   canWritePost = true;
+  activityLogView = false;
 
   constructor(private postService: PostsService) { }
 
@@ -44,8 +49,22 @@ export class PostsComponent implements OnInit {
     this.postService.updatePost(post);
   }
 
-  // TODO Allows viewing of comments, opens comment creation UI
-  commentClick() {
+  //Allows viewing of comments, opens comment creation UI
+  commentClick(post: Post) {
+      post.showComments = (!post.showComments);
+
+      this.postService.getComments(post).subscribe(data => {
+        this.comments = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data()
+          } as Comment;
+        });
+      });
+  }
+
+  //TODO Uploads comment given body and user info
+  submitCommentClick(){
 
   }
 
@@ -86,3 +105,4 @@ export class PostsComponent implements OnInit {
 
   }
 }
+
