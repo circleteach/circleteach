@@ -128,4 +128,8 @@ export class AuthenticationService {
   getUserId(): string {
     return this.userDetails.uid;
   }
+
+  getDisplayName(): string {
+    return this.userDetails.displayName;
+  }
 }

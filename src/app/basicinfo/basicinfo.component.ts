@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { ProfileDetailsService } from "../services/profile-details.service";
 import { Users } from "../models/users.model";
 import { StorageService } from "../storage.service";
@@ -15,59 +15,50 @@ import { Data } from "@angular/router";
 })
 export class BasicinfoComponent implements OnInit {
   // TODO Input Decorator once we get data model
-
   // Example Fields
-  friends = false;
   userTitle = "Example Grade Example at Example School";
-  userName = "jay";
-  // Default Picture
-  profileImg = "../../assets/img/default-profile-picture.png";
+
   // Actual Data Fields
+  userName;
+  profileImg = "../../assets/img/default-profile-picture.png";
+  id;
+  friends = false; // TODO: implement functionality
+
+  // testing things
   basics: Users[];
   stuff: Observable<any[]>;
-  id;
   userDetails;
   test;
 
   private user: Observable<firebase.User>;
   //private ProfileDetailsService
   constructor(
-    private ProfileDetailsService: ProfileDetailsService,
     private firebaseAuth: AngularFireAuth,
     private authService: AuthenticationService,
-    private userService: UsersService
+    private usersService: UsersService
   ) {
     this.user = firebaseAuth.authState;
   }
 
   // Gets list of basic information for now
   ngOnInit() {
-    // get id from authentication... could also use : this.id = this.user.getUser(this.id).id;
+    // Get ID from auth
     this.id = this.authService.getUserId();
-    console.log("id: " + this.id);
+    // get display name from auth
+    this.userName = this.authService.getDisplayName();
 
-    // this.user.getDisplayName(this.id).subscribe(data => {
-    //   this.userName = data;
-    // }
+    let check = this.usersService.getProfessionalInfo(this.id);
+    // printing false but should print true
+    console.log(check instanceof Observable);
+    // printing undefined
+    console.log("check: " + check);
 
-    this.userDetails = this.userService.getUser(this.id);
-    console.log("userDetails: " + this.userDetails);
-
-    // this.user.getUser(this.id).subscribe(data => {
-    //   // this.test = data.payload.data();
-    //   // console.log("test:" + this.test);
-    //   // this.basics = data.map(e => {
-    //   //   return {
-    //   //     ...e.payload.doc.data()
-    //   //   } as User;
-    //   // });
-
-    // });
-
-    this.userDetails = this.userService.getDisplayName(this.id);
-    console.log("dets: " + this.userDetails);
-
-    console.log("userName: " + this.userName);
+    // error thrown when subscribe is called
+    this.usersService.getProfessionalInfo(this.id).subscribe(data => {
+      console.log("data" + data.get());
+      //snapshot.forEach(thing => {
+      //console.log(thing.data());
+    });
   }
 
   toggleFriend() {
