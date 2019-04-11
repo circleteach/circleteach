@@ -9,7 +9,7 @@ export class Post {
     public content;
     public stars: number;
     public tags;
-    public time: firebase.firestore.Timestamp;
+    public time: number;
     public user: string;
-    public showComments: boolean = false;
+    public showComments: boolean;
 }
