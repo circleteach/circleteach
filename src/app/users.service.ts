@@ -21,7 +21,7 @@ export class UsersService {
   ) {}
 
   /// Use this if you want to listen to changes live
-  getUser(userID: string): DocumentReference {
+  getUserDoc(userID: string): DocumentReference {
     return this.firestore.firestore.collection("users").doc(userID);
   }
 
@@ -117,4 +117,23 @@ export class UsersService {
     }
     return doc.snapshotChanges();
   }
+
+   /* // CRUD Read
+    getUserDoc(userID: string) {
+      return this.firebaseStorage.doc("users/" + userID).snapshotChanges();
+    }
+*/
+    getGroupsSnapshot(userID: string) {
+      return this.firestore
+        .collection("users")
+        .doc(userID)
+        .snapshotChanges()
+    }
+
+    getUser(userID: string): Observable<Action<DocumentSnapshot<any>>> {
+      return this.firestore
+        .collection("users")
+        .doc(userID)
+        .snapshotChanges()
+    }
 }
