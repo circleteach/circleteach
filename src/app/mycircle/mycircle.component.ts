@@ -2,11 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { MatButtonToggleChange } from "@angular/material";
 import { ProfileDetails } from "../models/profileDetails.model";
 import { AuthenticationService } from "../authentication.service";
-import { Users } from "../models/users.model";
+import { Job } from "../models/job.model";
 import { UsersService } from "../users.service";
-import {EMPTY, Observable} from 'rxjs';
+import { EMPTY, Observable } from "rxjs";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { map } from "rxjs/operators";
+import { map, concat } from "rxjs/operators";
 
 @Component({
   selector: "app-mycircle",
@@ -14,30 +14,29 @@ import { map } from "rxjs/operators";
   styleUrls: ["./mycircle.component.scss"]
 })
 export class MycircleComponent implements OnInit {
-  // Example Fields
-  certification = "K-6";
-  certificationState = "Wisconsin";
-  certificationDate = "May 2018";
-  institution = "UW-Madison";
-  fieldsOfStudy = "Elementary Education and Spanish";
-  datesEnrolled = "August 2014 - May 2018";
-  description = "Joined a couple clubs";
-
-  jobTitle = "1st Grade Teacher";
-  jobLocation = "Ridge Point Elementary";
-  jobDates = "June 2018 - Present";
-  jobDescription = "Teach kids how to read and write and do math and science";
-
-  skill1 = "Guided Reading";
-  skill2 = "Guided Math";
-  skill3 = "Reading Circles";
-
-  // Actual Data Fields
-  toggle = true;
-  id;
+  // Data Fields
   info: ProfileDetails = new ProfileDetails();
+  job: Job = new Job();
   skills: string[];
   certifications: string[];
+
+  institution = "";
+  fieldsOfStudy = "";
+  educationStart = "";
+  educationEnd = "";
+  educationDates = "";
+  educationDescription = "";
+
+  jobTitle = "";
+  jobLocation = "";
+  jobStart = "";
+  jobEnd = "";
+  jobDates = "";
+  jobDescription = "";
+
+  // other fields used
+  toggle = true;
+  id;
 
   constructor(
     private firebaseAuth: AngularFireAuth,
@@ -46,28 +45,58 @@ export class MycircleComponent implements OnInit {
   ) {
     // TODO: If you need to access the user, access it from auth service
   }
-
-  // Gets data from professionalInfo Collection
-
   ngOnInit() {
     // Get ID from auth
     if (this.authService.getUserId() != null) {
       this.id = this.authService.getUserId();
     }
-    // get profile details
+
+    // Get Skills and Certifications
     const snapshot = this.usersService.getProfessionalInfo(this.id);
     if (snapshot !== EMPTY && snapshot !== undefined) {
-      snapshot.pipe(map(doc => {
-          this.info = doc.payload.data() as ProfileDetails;
-        })).subscribe(f => {
+      snapshot
+        .pipe(
+          map(doc => {
+            this.info = doc.payload.data() as ProfileDetails;
+          })
+        )
+        .subscribe(f => {
           this.skills = this.info.skills;
           this.certifications = this.info.certifications;
-      });
+        });
     }
+
+    // Get Education and Experiences
+    this.usersService
+      .getJobInfo()
+      .pipe(
+        map(doc => {
+          this.job = doc.payload.data() as Job;
+          console.log("data: " + doc.payload.data());
+        })
+      )
+      .subscribe(f => {
+        // Education Fields
+        this.institution = this.job.location;
+        this.fieldsOfStudy = this.job.fieldOfStudy;
+        this.educationDescription = this.job.description;
+        this.educationStart = this.job.startTime;
+        this.educationEnd = this.job.endTime;
+        this.educationDates = this.educationStart.concat(
+          " - ",
+          this.educationEnd
+        );
+        // Job Fields
+        this.jobTitle = this.job.position;
+        this.jobLocation = this.job.location;
+        this.jobDescription = this.job.description;
+        this.jobStart = this.job.startTime;
+        this.jobEnd = this.job.endTime;
+        this.jobDates = this.jobStart.concat(" - ", this.jobEnd);
+      });
   }
 
   toggleView(change: MatButtonToggleChange) {
     this.toggle = change.value;
   }
-
 }

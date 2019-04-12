@@ -123,17 +123,40 @@ export class UsersService {
       return this.firebaseStorage.doc("users/" + userID).snapshotChanges();
     }
 */
-    getGroupsSnapshot(userID: string) {
-      return this.firestore
-        .collection("users")
-        .doc(userID)
-        .snapshotChanges()
-    }
+  getGroupsSnapshot(userID: string) {
+    return this.firestore
+      .collection("users")
+      .doc(userID)
+      .snapshotChanges()
+  }
 
-    getUser(userID: string): Observable<Action<DocumentSnapshot<any>>> {
-      return this.firestore
-        .collection("users")
-        .doc(userID)
-        .snapshotChanges()
-    }
+  getUser(userID: string): Observable<Action<DocumentSnapshot<any>>> {
+    return this.firestore
+      .collection("users")
+      .doc(userID)
+      .snapshotChanges()
+  }
+  
+  getJobInfo() {
+    // TODO want "example" to be referencing the document ID that we pass will in
+    console.log(this.firestore.doc("jobCollection/" + "example"));
+    return this.firestore.doc("jobCollection/" + "example").snapshotChanges();
+  }  
+  
+  // getInfo(userID: string) {
+  //   // this.firestore.ca
+  //   this.firestore.child('users').orderByChild('user').equalTo(userID).on("value", function(snapshot) {
+  //     console.log(snapshot.val());
+  //     snapshot.forEach(function(data) {
+  //         console.log(data.key);
+  //     });
+  //   });
+//}
+
+  
+
+  // getPostUserData(postId: string){
+  //   return this.firestore.doc("users/" + postId).snapshotChanges();
+  // }
+
 }

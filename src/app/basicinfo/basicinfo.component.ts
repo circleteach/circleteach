@@ -8,6 +8,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { Data } from "@angular/router";
 import { ProfileDetails } from "../models/profileDetails.model";
 import { map } from "rxjs/operators";
+import { Job } from "../models/job.model";
 
 @Component({
   selector: "app-basicinfo",
@@ -15,9 +16,8 @@ import { map } from "rxjs/operators";
   styleUrls: ["./basicinfo.component.scss"]
 })
 export class BasicinfoComponent implements OnInit {
-  // TODO Input Decorator once we get data model
-  // Example Fields
-  userTitle = "Example Grade Example at Example School";
+  job: Job = new Job();
+  jobTitle = "";
 
   // Actual Data Fields
   userName;
@@ -48,22 +48,36 @@ export class BasicinfoComponent implements OnInit {
       this.id = this.authService.getUserId();
     }
 
-    // get userName
+    this.userName = this.authService.getDisplayName();
+
+    // // Get Display Name
+    // this.usersService
+    //   .getBasicInfo(this.id)
+    //   .pipe(
+    //     map(doc => {
+    //       this.profile = doc.payload.data() as Users;
+    //       console.log("data" + doc.payload.data());
+    //     })
+    //   )
+    //   .subscribe(f => {
+    //     this.userName = this.profile.name;
+    //     console.log("userName: " + this.userName);
+    //   });
+
+    // Get Education and Experiences
     this.usersService
-      .getBasicInfo(this.id)
+      .getJobInfo()
       .pipe(
         map(doc => {
-          this.profile = doc.payload.data() as Users;
-          console.log("data" + doc.payload.data());
+          this.job = doc.payload.data() as Job;
+          console.log("data: " + doc.payload.data());
         })
       )
       .subscribe(f => {
-        this.userName = this.profile.name;
-        console.log("userName: " + this.userName);
+        // Job Title
+        this.jobTitle = this.job.position;
       });
   }
-
-  // TODO get professionalInfo for current job title display
 
   toggleFriend() {
     if (this.friends) {

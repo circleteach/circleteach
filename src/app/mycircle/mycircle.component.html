@@ -34,9 +34,11 @@
         fxLayoutGap="10px"
         fxLayoutGap.xs="10px"
       >
-        <div class="item item-1" fxFlex="25%">{{ certifications[0] }}</div>
-        <div class="item item-2" fxFlex="25%">{{ certificationState }}</div>
-        <div class="item item-3" fxFlex="25%">{{ certificationDate }}</div>
+        <div class="item item-1" fxFlex="25%"><ul class="a">
+            <li *ngFor="let certification of certifications">
+                {{ certification }}
+            </li>
+          </ul></div>
       </div>
       <hr class="full-divider" />
       <!-- Education -->
@@ -51,10 +53,10 @@
       >
         <div class="item item-1" fxFlex="25%">{{ institution }}</div>
         <div class="item item-2" fxFlex="25%">{{ fieldsOfStudy }}</div>
-        <div class="item item-3" fxFlex="25%">{{ datesEnrolled }}</div>
+        <div class="item item-3" fxFlex="25%">{{ educationDates }}</div>
         <div class="item item-4" fxFlex="25%">
           <ul class="a">
-            <li>{{ description }}</li>
+            <li>{{ educationDescription }}</li>
           </ul>
         </div>
       </div>
@@ -92,9 +94,9 @@
       >
         <div class="item item-4" fxFlex="25%">
           <ul class="a">
-            <li>{{ skills[0] }}</li>
-            <li>{{ skills[1] }}</li>
-            <li>{{ skills[2] }}</li>
+            <li *ngFor="let skill of skills">
+                {{ skill }}
+            </li>
           </ul>
         </div>
       </div>
@@ -103,15 +105,6 @@
   <div *ngIf="!toggle">
     <div id="circlecontent">
       Add list of users in their circle here
-
-      <!-- temporarily testing profile details firebase connection here -->
-      <tbody>
-        <tr *ngFor="let det of profileDetails">
-          <td>{{ profileDetails.certifications }}</td>
-        </tr>
-      </tbody>
-      {{ profileDetails }}
-      {{ items }}
     </div>
   </div>
 </div>
