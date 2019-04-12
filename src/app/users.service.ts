@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import {EMPTY, Observable} from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
   DocumentReference,
-  CollectionReference
-} from "@angular/fire/firestore";
+  CollectionReference, DocumentSnapshot, Action
+} from '@angular/fire/firestore';
 
 import { take } from "rxjs/operators";
 import { from } from "rxjs";
@@ -17,19 +17,17 @@ import { validateBasis } from "@angular/flex-layout";
 })
 export class UsersService {
   constructor(
-    private firebaseStorage: AngularFirestore,
     private firestore: AngularFirestore
   ) {}
 
   /// Use this if you want to listen to changes live
   getUser(userID: string): DocumentReference {
-    return this.firebaseStorage.firestore.collection("users").doc(userID);
+    return this.firestore.firestore.collection("users").doc(userID);
   }
 
   // Set's up user's document in firestore
   setupUserDocument(userID: string, displayName: string) {
-    // TODO Hook up signup to this
-    this.firebaseStorage.firestore
+    this.firestore.firestore
       .collection("users")
       .doc(userID)
       .set({
@@ -45,7 +43,7 @@ export class UsersService {
   }
 
   setProfileImage(userID: string, profileImageURL: string) {
-    this.firebaseStorage.firestore
+    this.firestore.firestore
       .collection("users")
       .doc(userID)
       .update({
@@ -53,8 +51,42 @@ export class UsersService {
       });
   }
 
+  getProfileImage(userID: string): Promise<string | null> {
+    return this.firestore.firestore
+      .collection('users')
+      .doc(userID)
+      .get().then(doc => {
+        if (doc.exists) {
+          return doc.data().profileImage;
+        } else {
+          console.log("Failed to retrieve profile image url from user.");
+          return null;
+        }
+      }).catch(error => {
+        console.log("Failed to retrieve profile image url from user due to error.");
+        return null;
+      });
+  }
+
+  getDisplayName(userID: string): Promise<string | null> {
+    return this.firestore.firestore
+      .collection('users')
+      .doc(userID)
+      .get().then(doc => {
+        if (doc.exists) {
+          return doc.data().name;
+        } else {
+          console.log("Failed to retrieve display name from user.");
+          return null;
+        }
+      }).catch(error => {
+        console.log("Failed to retrieve display name from user due to error.");
+        return null;
+      });
+  }
+
   getGroups(userID: string): DocumentReference[] {
-    this.firebaseStorage.firestore
+    this.firestore.firestore
       .collection("users")
       .doc(userID)
       .get()
@@ -78,8 +110,12 @@ export class UsersService {
       .snapshotChanges();
   }
 
-  getProfessionalInfo(userID: string) {
-    return this.firestore.doc("professionalInfo/" + userID).snapshotChanges();
+  getProfessionalInfo(userID: string): Observable<Action<DocumentSnapshot<any>>> {
+    const doc = this.firestore.doc("professionalInfo/" + userID);
+    if (doc == null || doc === undefined) {
+      return EMPTY;
+    }
+    return doc.snapshotChanges();
   }
 
   getJobInfo() {

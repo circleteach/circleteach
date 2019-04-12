@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { AngularFireAuth } from "@angular/fire/auth";
+import {Injectable, NgZone} from '@angular/core';
+import {Observable} from 'rxjs';
+import {AngularFireAuth} from '@angular/fire/auth';
 import * as firebase from "firebase/app";
-import { Router } from "@angular/router";
-import { UsersService } from "./users.service";
-import { log } from "util";
+import {Router} from '@angular/router';
+import {UsersService} from './users.service';
+import {log} from 'util';
 
 @Injectable({
   providedIn: "root"
@@ -13,21 +13,19 @@ export class AuthenticationService {
   private user: Observable<firebase.User>;
   private userDetails: firebase.User = null;
 
-  constructor(
-    private firebaseAuth: AngularFireAuth,
-    private router: Router,
-    private userService: UsersService
-  ) {
+  constructor(private firebaseAuth: AngularFireAuth, public router: Router, private userService: UsersService,
+              private ngZone: NgZone) {
     this.user = firebaseAuth.authState;
 
-    this.user.subscribe(user => {
-      if (user) {
-        this.userDetails = user;
-        this.router.navigate(["/home"]);
-      } else {
-        this.userDetails = null;
-      }
-    });
+    this.user.subscribe(
+      (user) => {
+        if (user) {
+          this.userDetails = user;
+        } else {
+          this.userDetails = null;
+          this.router.navigate(['/login']);
+        }
+      });
   }
 
   isLoggedIn(): boolean {
@@ -44,7 +42,7 @@ export class AuthenticationService {
         return error.message;
       })
       .then(res => {
-        // this.router.navigate(['/home'])
+        this.router.navigate(['/home']);
       });
   }
 
@@ -80,14 +78,13 @@ export class AuthenticationService {
   */
 
   logout() {
-    return this.firebaseAuth.auth
-      .signOut()
-      .catch(error => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        return error.message;
-      })
-      .then(res => this.router.navigate(["/login"]));
+    return this.firebaseAuth.auth.signOut().catch(error => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      return error.message;
+    }).then((res) => this.ngZone.run(() => {
+      // this.router.navigate(['/login']);
+    }));
   }
 
   getEmail(): string {
@@ -139,8 +136,12 @@ export class AuthenticationService {
     }
   }
 
-  getUserId(): string {
-    return this.userDetails.uid;
+  getUserId(): string | null {
+    if (this.userDetails != null) {
+      return this.userDetails.uid;
+    } else {
+      return null;
+    }
   }
 
   getDisplayName(): string {

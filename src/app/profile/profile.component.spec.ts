@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProfileComponent } from './profile.component';
-import {PersonalinfoComponent} from '../personalinfo/personalinfo.component';
 import {ActivitylogComponent} from '../activitylog/activitylog.component';
 import {LayoutComponent} from '../layout/layout.component';
 import {MycircleComponent} from '../mycircle/mycircle.component';
@@ -13,6 +12,7 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {MockComponent} from 'ng-mocks';
+import {BasicinfoComponent} from '../basicinfo/basicinfo.component';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -31,7 +31,7 @@ describe('ProfileComponent', () => {
         ProfileComponent,
         MockComponent(LayoutComponent),
         MockComponent(PostsComponent),
-        MockComponent(PersonalinfoComponent),
+        MockComponent(BasicinfoComponent),
         MockComponent(MycircleComponent),
         MockComponent(ActivitylogComponent),
       ],

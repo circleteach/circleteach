@@ -20,10 +20,18 @@ describe('UsersService', () => {
     expect(service).toBeTruthy();
   });
 
-  /* TODO Fix user service get display name method
+  it ('The specified account should have the specified link as its profile image', () => {
+    const fixture: UsersService = TestBed.get(UsersService);
+    fixture.getProfileImage('8C4CDYnHEDYVe2aHemmf8iRvTgf1').then(result => {
+      expect(result).toEqual('gs://circle-teach.appspot.com/profile-pictures/8C4CDYnHEDYVe2aHemmf8iRvTgf1.jpg');
+    }).catch();
+  });
+
   it(`the specified account should have the display name 'Parker Testing'`, () => {
     const fixture = TestBed.get(UsersService);
-    expect(fixture.getDisplayName('8C4CDYnHEDYVe2aHemmf8iRvTgf1')).toEqual('Parker Testing');
+    fixture.getDisplayName('8C4CDYnHEDYVe2aHemmf8iRvTgf1').then(result => {
+      expect(result).toEqual('Parker Testing');
+    }).catch();
   });
-  */
+
 });

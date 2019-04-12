@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
+    "lh": "lighthousebot",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -49,6 +50,7 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "lighthousebot": "git+https://github.com/GoogleChromeLabs/lighthousebot.git",
     "protractor": "~5.4.0",
     "puppeteer": "^1.14.0",
     "ts-node": "~7.0.0",

@@ -9,8 +9,8 @@ export class StorageService {
 
   constructor(private storage: AngularFireStorage) { }
 
-  getStorageFromLink(link: string): Observable<string | null> {
-    const pathRef = this.storage.ref(link);
+  getStorageFromLink(link: string): Promise<string | null> {
+    const pathRef = this.storage.storage.refFromURL(link);
     return pathRef.getDownloadURL();
   }
 

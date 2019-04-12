@@ -33,12 +33,12 @@ import { PostsComponent } from './posts/posts.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UserSearchComponent } from './user-search/user-search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PersonalinfoComponent } from './personalinfo/personalinfo.component';
 import { ActivitylogComponent } from './activitylog/activitylog.component';
 import { MycircleComponent } from './mycircle/mycircle.component';
 import { SettingsComponent } from './settings/settings.component';
 import {MessagingComponent} from './messaging/messaging.component';
 import {TagsearchComponent} from './tagsearch/tagsearch.component';
+import {BasicinfoComponent} from './basicinfo/basicinfo.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -77,7 +77,7 @@ describe('AppComponent', () => {
         PostsComponent,
         UserSearchComponent,
         ProfileComponent,
-        PersonalinfoComponent,
+        BasicinfoComponent,
         ActivitylogComponent,
         MycircleComponent,
         SettingsComponent,
