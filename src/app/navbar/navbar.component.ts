@@ -12,28 +12,43 @@ import {AngularFireAuth} from '@angular/fire/auth';
 export class NavbarComponent implements OnInit {
 
   @Output() public sidenavToggle = new EventEmitter();
-  profileURL: Observable<string | null>;
+  profileURL: string | null;
   url = '../../assets/img/circle-teach-logo.png';
 
-  constructor(private firebaseAuth: AngularFireAuth, private auth: AuthenticationService, private storage: StorageService) { }
+  constructor(private firebaseAuth: AngularFireAuth, private auth: AuthenticationService, private storage: StorageService) {
+
+  }
 
   ngOnInit() {
     if (this.auth.getIconUrl() == null) {
-      this.profileURL = EMPTY;
+      this.profileURL = null;
     } else {
-      this.profileURL = this.storage.getStorageFromLink(this.auth.getIconUrl());
+      this.storage.getStorageFromLink(this.auth.getIconUrl()).then(result => {
+        if (result === '' || result === undefined) {
+          this.profileURL = null;
+        } else {
+          console.log("Hello1!" + result);
+          this.profileURL = result;
+        }
+      });
     }
 
     this.firebaseAuth.authState.subscribe(
       (user) => {
         if (user) {
           if (user.photoURL != null) {
-            this.profileURL = this.storage.getStorageFromLink(user.photoURL);
+            this.storage.getStorageFromLink(user.photoURL).then(result => {
+              if (result === '' || result === undefined) {
+                this.profileURL = null;
+              } else {
+                this.profileURL = result;
+              }
+            });
           } else {
-            this.profileURL = EMPTY;
+            this.profileURL = null;
           }
         } else {
-          this.profileURL = EMPTY;
+          this.profileURL = null;
         }
       }
     );
