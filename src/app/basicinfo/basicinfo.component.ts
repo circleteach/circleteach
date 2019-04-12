@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { ProfileDetailsService } from "../services/profile-details.service";
 import { Users } from "../models/users.model";
 import { StorageService } from "../storage.service";
 import { AuthenticationService } from "../authentication.service";
@@ -8,6 +7,8 @@ import { Observable } from "rxjs";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Data } from "@angular/router";
 import { ProfileDetails } from "../models/profileDetails.model";
+import { map } from "rxjs/operators";
+
 @Component({
   selector: "app-basicinfo",
   templateUrl: "./basicinfo.component.html",
@@ -22,12 +23,12 @@ export class BasicinfoComponent implements OnInit {
   userName;
   profileImg = "../../assets/img/default-profile-picture.png";
   id;
+  skills: string[];
   friends = false; // TODO: implement functionality
 
   // testing things
-  basics: Users[];
-  stuff: Observable<any[]>;
-  info: ProfileDetails;
+  info: ProfileDetails = new ProfileDetails();
+  profile: Users = new Users();
   userDetails;
   test;
 
@@ -41,34 +42,26 @@ export class BasicinfoComponent implements OnInit {
     this.user = firebaseAuth.authState;
   }
 
-  // Gets list of basic information for now
   ngOnInit() {
     // Get ID from auth
     this.id = this.authService.getUserId();
-    // get display name from auth
-    this.userName = this.authService.getDisplayName();
 
-    let check = this.usersService.getProfessionalInfo(this.id);
-    // printing false but should print true
-    // console.log(check instanceof Observable);
-    // printing undefined
-    // check.subscribe();
-    console.log("check: " + check);
-
-    // check.subscribe();
-
-    this.usersService.getProfessionalInfo(this.id).subscribe(data => {
-      console.log(data);
-      // this.info = data.map(e =>) {
-      //   return {
-      //     id: e.payload.doc.id,
-      //     ...e.payload.doc.data()
-      //   } as ProfileDetails
-      console.log("data" + data.get());
-      //snapshot.forEach(thing => {
-      //console.log(thing.data());
-    });
+    // get userName
+    this.usersService
+      .getBasicInfo(this.id)
+      .pipe(
+        map(doc => {
+          this.profile = doc.payload.data() as Users;
+          console.log("data" + doc.payload.data());
+        })
+      )
+      .subscribe(f => {
+        this.userName = this.profile.name;
+        console.log("userName: " + this.userName);
+      });
   }
+
+  // TODO get professionalInfo for current job title display
 
   toggleFriend() {
     if (this.friends) {

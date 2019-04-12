@@ -53,6 +53,7 @@ export class PostsComponent implements OnInit {
           ...e.payload.doc.data()
         } as postWithMeta;
       });
+      console.log(this.posts);
 
       //Within the subscribe to getPosts(), i'm calling my seccond data retrieval function
       //in this forEach loop, getting a document for each post object
