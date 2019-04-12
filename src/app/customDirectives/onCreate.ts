@@ -1,14 +1,16 @@
-import { Directive, Output, EventEmitter, Input, SimpleChange} from '@angular/core';
+import {Directive, Output, EventEmitter, Input, SimpleChange, OnInit} from '@angular/core';
 
 @Directive({
-  selector: '[onCreate]'
+  selector: '[appOnCreate]'
 })
-export class OnCreate {
+export class OnCreate implements OnInit {
 
   @Output() onCreate: EventEmitter<any> = new EventEmitter<any>();
+
   constructor() {}
-  ngOnInit() {      
-     this.onCreate.emit('dummy'); 
-  } 
+
+  ngOnInit() {
+     this.onCreate.emit('dummy');
+  }
 
 }
