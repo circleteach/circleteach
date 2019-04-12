@@ -1,16 +1,15 @@
 import {Injectable, NgZone} from '@angular/core';
 import {Observable} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/auth';
-import * as firebase from 'firebase/app';
+import * as firebase from "firebase/app";
 import {Router} from '@angular/router';
 import {UsersService} from './users.service';
 import {log} from 'util';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AuthenticationService {
-
   private user: Observable<firebase.User>;
   private userDetails: firebase.User = null;
 
@@ -27,8 +26,7 @@ export class AuthenticationService {
           this.userDetails = null;
           this.router.navigate(['/login']);
         }
-      }
-    );
+      });
   }
 
   isLoggedIn(): boolean {
@@ -36,29 +34,40 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) {
-    return firebase.auth().signInWithEmailAndPassword(email, password).catch(error => {
-      const errorCode = error.code;
-      alert(error.message);
-      return error.message;
-    }).then((res) => {
-      // this.router.navigate(['/home'])
-    });
+    return firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch(error => {
+        const errorCode = error.code;
+        alert(error.message);
+        return error.message;
+      })
+      .then(res => {
+        // this.router.navigate(['/home'])
+      });
   }
 
   signup(email: string, password: string, name: string) {
-    return firebase.auth().createUserWithEmailAndPassword(email, password).catch(error => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      alert(error.message);
-      return error.message;
-    }).then((res) => {
-      res.user.updateProfile({displayName: name, photoURL: null});
-      this.userService.setupUserDocument(res.user.uid, name);
-      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(error => {
-        log(error.message);
+    return firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .catch(error => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        alert(error.message);
+        return error.message;
+      })
+      .then(res => {
+        res.user.updateProfile({ displayName: name, photoURL: null });
+        this.userService.setupUserDocument(res.user.uid, name);
+        firebase
+          .auth()
+          .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+          .catch(error => {
+            log(error.message);
+          });
+        this.router.navigate(["/home"]);
       });
-      this.router.navigate(['/home']);
-    });
   }
 
   /* If we ever want to add login with Google
@@ -85,28 +94,36 @@ export class AuthenticationService {
 
   changePassword(newPassword: string) {
     const cpUser = firebase.auth().currentUser;
-    return cpUser.updatePassword(newPassword).then((res) => this.router.navigate(['/home']));
+    return cpUser
+      .updatePassword(newPassword)
+      .then(res => this.router.navigate(["/home"]));
   }
 
   reAuthenticate(email: string, oldPassword: string): Observable<boolean> {
     const cpUser = firebase.auth().currentUser;
-    const credentials = firebase.auth.EmailAuthProvider.credential(email, oldPassword);
+    const credentials = firebase.auth.EmailAuthProvider.credential(
+      email,
+      oldPassword
+    );
     // Observable to make sure reAuthentication is done
     return new Observable(observer => {
-      cpUser.reauthenticateAndRetrieveDataWithCredential(credentials).catch(error => {
-        console.log(error.code);
-        observer.error(error);
-        observer.complete();
-      }).then((res) => {
-        observer.next(true);
-        observer.complete();
-      });
+      cpUser
+        .reauthenticateAndRetrieveDataWithCredential(credentials)
+        .catch(error => {
+          console.log(error.code);
+          observer.error(error);
+          observer.complete();
+        })
+        .then(res => {
+          observer.next(true);
+          observer.complete();
+        });
     });
   }
 
   getIconUrl(): string {
     if (this.userDetails != null) {
-      if (this.userDetails.photoURL !== '') {
+      if (this.userDetails.photoURL !== "") {
         return this.userDetails.photoURL;
       }
     }
@@ -115,7 +132,7 @@ export class AuthenticationService {
 
   updateIconUrl(profileImage: string) {
     if (this.userDetails != null) {
-      this.userDetails.updateProfile({photoURL: profileImage});
+      this.userDetails.updateProfile({ photoURL: profileImage });
       this.userService.setProfileImage(this.userDetails.uid, profileImage);
     }
   }
@@ -124,4 +141,7 @@ export class AuthenticationService {
     return this.userDetails.uid;
   }
 
+  getDisplayName(): string {
+    return this.userDetails.displayName;
+  }
 }

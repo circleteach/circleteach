@@ -1,7 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { MatButtonToggleChange } from "@angular/material";
-import { ProfileDetailsService } from "../services/profile-details.service";
 import { ProfileDetails } from "../models/profileDetails.model";
+import { AuthenticationService } from "../authentication.service";
+import { Users } from "../models/users.model";
+import { UsersService } from "../users.service";
+import { Observable } from "rxjs";
+import { AngularFireAuth } from "@angular/fire/auth";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: "app-mycircle",
@@ -29,24 +34,37 @@ export class MycircleComponent implements OnInit {
 
   // Actual Data Fields
   toggle = true;
+  id;
+  info: ProfileDetails = new ProfileDetails();
+  skills: string[];
+  certifications: string[];
 
-  // delete later, not sure best way to hold data (and it is only getting an empty object currently)
-  profileDetails = ProfileDetails[0];
+  private user: Observable<firebase.User>;
+  constructor(
+    private firebaseAuth: AngularFireAuth,
+    private authService: AuthenticationService,
+    private usersService: UsersService
+  ) {
+    this.user = firebaseAuth.authState;
+  }
 
-  constructor(private profileDetailsService: ProfileDetailsService) {}
-
-  // Gets data from professionalInfo Collection (and jobCollection)
+  // Gets data from professionalInfo Collection
 
   ngOnInit() {
-    this.profileDetailsService.getProfileDetails().subscribe(data => {
-      this.profileDetails = data.map(e => {
-        return {
-          // just puts everything into an object
-          ...e.payload.doc.data()
-        } as ProfileDetails;
+    // Get ID from auth
+    this.id = this.authService.getUserId();
+    // get profile details
+    this.usersService
+      .getProfessionalInfo(this.id)
+      .pipe(
+        map(doc => {
+          this.info = doc.payload.data() as ProfileDetails;
+        })
+      )
+      .subscribe(f => {
+        this.skills = this.info.skills;
+        this.certifications = this.info.certifications;
       });
-      this.profileDetails = data;
-    });
   }
 
   toggleView(change: MatButtonToggleChange) {

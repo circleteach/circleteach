@@ -1,15 +1,15 @@
 <app-layout>
-  <main>
+  <main class="body">
     <div fxLayout="row">
       <div class="tagCont">
         <app-tagsearch></app-tagsearch>
       </div>
       <div class="appCont">
-        <app-posts [canwritepost]="'canwritepost'" [activitylogview]="'activitylogview'"></app-posts>
+        <app-posts
+          [canwritepost]="'canwritepost'"
+          [activitylogview]="'activitylogview'"
+        ></app-posts>
       </div>
     </div>
   </main>
 </app-layout>
-
-
-

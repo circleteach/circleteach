@@ -3,8 +3,8 @@ import { NgModule } from "@angular/core";
 import { MatCardModule } from "@angular/material/card";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatChipsModule } from '@angular/material/chips';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatChipsModule } from "@angular/material/chips";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -35,13 +35,12 @@ import { PostsComponent } from "./posts/posts.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { UserSearchComponent } from "./user-search/user-search.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { PersonalinfoComponent } from "./personalinfo/personalinfo.component";
+import { BasicinfoComponent } from "./basicinfo/basicinfo.component";
 import { ActivitylogComponent } from "./activitylog/activitylog.component";
 import { MycircleComponent } from "./mycircle/mycircle.component";
 import { SettingsComponent } from "./settings/settings.component";
-import { MessagingComponent } from './messaging/messaging.component';
-import { TagsearchComponent } from './tagsearch/tagsearch.component';
-
+import { MessagingComponent } from "./messaging/messaging.component";
+import { TagsearchComponent } from "./tagsearch/tagsearch.component";
 
 @NgModule({
   declarations: [
@@ -54,7 +53,7 @@ import { TagsearchComponent } from './tagsearch/tagsearch.component';
     PostsComponent,
     UserSearchComponent,
     ProfileComponent,
-    PersonalinfoComponent,
+    BasicinfoComponent,
     ActivitylogComponent,
     MycircleComponent,
     SettingsComponent,

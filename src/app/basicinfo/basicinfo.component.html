@@ -2,7 +2,7 @@
   <div id="profImgContainer" gdArea="profImage">
     <img
       id="profImg"
-      src="../../assets/uwath2018.png"
+      src="{{ profileImg }}"
       alt="Profile Image"
       height="140px"
       width="140px"
@@ -15,12 +15,21 @@
   </div>
 
   <div id="addFriend" gdArea="addCircle">
-    <button mat-fab *ngIf="friends" [color]="'myfriend'" (click)="toggleFriend()">
+    <button
+      mat-fab
+      *ngIf="friends"
+      [color]="'myfriend'"
+      (click)="toggleFriend()"
+    >
       <mat-icon>person</mat-icon>
     </button>
-    <button mat-fab *ngIf="!friends" [color]="'notfriend'" (click)= "toggleFriend()">
+    <button
+      mat-fab
+      *ngIf="!friends"
+      [color]="'notfriend'"
+      (click)="toggleFriend()"
+    >
       <mat-icon>person_add</mat-icon>
     </button>
   </div>
-
 </div>

@@ -2,19 +2,21 @@
 @import "~src/styles";
 
 .tagCont {
-    margin-left: 20px;
-    margin-right: 20px;
-    width: 25%;
-    margin-top: 15px;
-    border-radius: 50px;
-    border-style: solid;
-    border-width: 0.5px;
-    border-color: mat-color($app-primary, 500);
-    height: auto;
-    background-color: rgba(255, 255, 255, 0.247);
-  }
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 25%;
+  margin-top: 15px;
+  border-radius: 50px;
+  border-style: solid;
+  border-width: 0.5px;
+  border-color: mat-color($app-primary, 500);
+  height: auto;
+  background-color: rgba(255, 255, 255, 0.247);
+}
 
 .postsCont {
-    
-}   
+}
 
+.body {
+  background-color: #f2f6ff;
+}
