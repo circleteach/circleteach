@@ -5,9 +5,7 @@ import { Comment } from "../models/comment.model";
 import { Timestamp } from "rxjs/internal/operators/timestamp";
 import { AuthenticationService } from "../authentication.service";
 import { Users } from "../models/users.model";
-import { User } from "firebase";
 import { map } from "rxjs/operators";
-import { Observable } from "rxjs";
 
 @Component({
   selector: "app-posts",
@@ -66,7 +64,7 @@ export class PostsComponent implements OnInit {
   getPostUser(post: postWithMeta) {
     let user: Users = new Users();
     this.postService
-      .getPostUserData(post.id)
+      .getPostUserData(post.user)
       .pipe(
         map(action => {
           //This is how to get data from a document
