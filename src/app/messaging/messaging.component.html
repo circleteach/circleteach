@@ -1,21 +1,33 @@
 <app-layout>
   <main>
     <div id="usersCont" class="inline border">
-      <input id="searchInp" class="border" type="text" placeholder="Search Messages" />
+      <input
+        id="searchInp"
+        class="border"
+        type="text"
+        placeholder="Search Messages"
+      />
 
       <ng-container id="userList" *ngIf="chatList; else noChats">
         <div *ngFor="let chat of chatList; let i = index" [attr.data-index]="i">
           <div gdAreas="proImg uInfo date" [routerLink]="['/messaging', i]">
-            <img gdArea="proImg" id="proImg" src="../../assets/uwath2018.png" style="background-color: blue"
-              alt="Profile Image" height="80px" width="80px">
+            <img
+              gdArea="proImg"
+              id="proImg"
+              src="../../assets/uwath2018.png"
+              style="background-color: blue"
+              alt="Profile Image"
+              height="80px"
+              width="80px"
+            />
 
             <div id="uInfoCont" gdArea="uInfo">
-              <h3>{{exampleName}}</h3>
-              <p>{{exampleMessageSnip}}</p>
+              <h3>{{ exampleName }}</h3>
+              <p>{{ exampleMessageSnip }}</p>
             </div>
 
             <p id="date" gdArea="date">
-              {{exDateStub}}
+              {{ exDateStub }}
             </p>
           </div>
         </div>
@@ -24,28 +36,39 @@
         <p></p>
         <div>Search a User to Start Chatting!</div>
       </ng-template>
-
     </div>
     <div id="messagesCont" class="inline border">
-      <h3 id="messageTitle">{{chatName}}</h3>
+      <h3 id="messageTitle">{{ chatName }}</h3>
       <div id="messages">
         <ng-container class="messages" *ngIf="messages">
-            <div *ngFor="let message of messages">
-                <ng-container *ngIf="message; else left" >   <!--TODO- set positions-->
-                    <p class="messageRight">{{message}}</p> 
-                    <p class="messageLeft">{{message}}</p>
-                </ng-container>
-                <ng-template #left>
-                    <p class="messageLeft">{{message}}</p>
-                </ng-template>
-            </div>
+          <div *ngFor="let message of messages">
+            <ng-container *ngIf="message; else left">
+              <!--TODO- set positions-->
+              <p class="messageRight">{{ message }}</p>
+              <p class="messageLeft">{{ message }}</p>
+            </ng-container>
+            <ng-template #left>
+              <p class="messageLeft">{{ message }}</p>
+            </ng-template>
+          </div>
         </ng-container>
       </div>
       <p></p>
-      <button mat-button (click)="messageSubmit()" id="submitBtn" class="border" >Send</button>
+      <button
+        mat-button
+        (click)="messageSubmit()"
+        id="submitBtn"
+        class="border"
+      >
+        Send
+      </button>
 
-      <input id="messageInp" class="border" type="text" placeholder="Type a Message..." />
+      <input
+        id="messageInp"
+        class="border"
+        type="text"
+        placeholder="Type a Message..."
+      />
     </div>
-
   </main>
 </app-layout>

@@ -82,9 +82,10 @@ export class UsersService {
     return this.firestore.doc("professionalInfo/" + userID).snapshotChanges();
   }
 
-  getJobInfo(userID: string) {
-    console.log(this.firestore.collection("jobCollection", ref => ref.where('user', '==', userID)))
-    return this.firestore.collection("jobCollection", ref => ref.where('user', '==', userID)).snapshotChanges();
+  getJobInfo() {
+    // TODO want "example" to be referencing the document ID that we pass will in
+    console.log(this.firestore.doc("jobCollection/" + "example"));
+    return this.firestore.doc("jobCollection/" + "example").snapshotChanges();
   }  
   
   // getInfo(userID: string) {
