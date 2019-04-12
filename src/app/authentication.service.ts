@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {Observable} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
@@ -14,7 +14,8 @@ export class AuthenticationService {
   private user: Observable<firebase.User>;
   private userDetails: firebase.User = null;
 
-  constructor(private firebaseAuth: AngularFireAuth, private router: Router, private userService: UsersService) {
+  constructor(private firebaseAuth: AngularFireAuth, public router: Router, private userService: UsersService,
+              private ngZone: NgZone) {
     this.user = firebaseAuth.authState;
 
     this.user.subscribe(
@@ -24,6 +25,7 @@ export class AuthenticationService {
           this.router.navigate(['/home']);
         } else {
           this.userDetails = null;
+          this.router.navigate(['/login']);
         }
       }
     );
@@ -72,7 +74,9 @@ export class AuthenticationService {
       // Handle Errors here.
       const errorCode = error.code;
       return error.message;
-    }).then((res) => this.router.navigate(['/login']));
+    }).then((res) => this.ngZone.run(() => {
+      // this.router.navigate(['/login']);
+    }));
   }
 
   getEmail(): string {

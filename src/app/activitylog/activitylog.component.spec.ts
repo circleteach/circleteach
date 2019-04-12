@@ -5,7 +5,8 @@ import {PostsComponent} from '../posts/posts.component';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../environments/environment';
 import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
-import {MatButtonToggleModule} from '@angular/material';
+import {MatButtonToggleModule, MatInputModule} from '@angular/material';
+import {FormsModule} from '@angular/forms';
 
 describe('ActivitylogComponent', () => {
   let component: ActivitylogComponent;
@@ -16,6 +17,8 @@ describe('ActivitylogComponent', () => {
       imports: [
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFirestoreModule,
+        MatInputModule,
+        FormsModule,
         MatButtonToggleModule,
       ],
       declarations: [
