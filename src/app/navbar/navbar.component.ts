@@ -27,7 +27,6 @@ export class NavbarComponent implements OnInit {
         if (result === '' || result === undefined) {
           this.profileURL = null;
         } else {
-          console.log("Hello1!" + result);
           this.profileURL = result;
         }
       });

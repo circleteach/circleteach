@@ -18,4 +18,5 @@ script:
   - ng test
 
 after_success:
-  - ./deploy-command.sh
+  - firebase deploy --token $FIREBASE_TOKEN
+  - npm run lh -- https://circle-teach.firebaseapp.com
