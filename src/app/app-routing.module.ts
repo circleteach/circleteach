@@ -10,7 +10,7 @@ import { MessagingComponent } from './messaging/messaging.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
-  //Put this back ^ canActivate: [LoggedInGuard]  jay
+  // Put this back ^ canActivate: [LoggedInGuard]  jay
   // TODO: change to profile/:id
   {
     path: 'profile',

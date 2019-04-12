@@ -14,7 +14,6 @@ cache:
   directories:
     - ./node_modules
 script:
-  - ng lint
   - ng build --prod
   - ng test
 
