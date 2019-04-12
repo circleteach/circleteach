@@ -81,4 +81,26 @@ export class UsersService {
   getProfessionalInfo(userID: string) {
     return this.firestore.doc("professionalInfo/" + userID).snapshotChanges();
   }
+
+  getJobInfo(userID: string) {
+    console.log(this.firestore.collection("jobCollection", ref => ref.where('user', '==', userID)))
+    return this.firestore.collection("jobCollection", ref => ref.where('user', '==', userID)).snapshotChanges();
+  }  
+  
+  // getInfo(userID: string) {
+  //   // this.firestore.ca
+  //   this.firestore.child('users').orderByChild('user').equalTo(userID).on("value", function(snapshot) {
+  //     console.log(snapshot.val());
+  //     snapshot.forEach(function(data) {
+  //         console.log(data.key);
+  //     });
+  //   });
+//}
+
+  
+
+  // getPostUserData(postId: string){
+  //   return this.firestore.doc("users/" + postId).snapshotChanges();
+  // }
+
 }

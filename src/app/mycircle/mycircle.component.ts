@@ -53,6 +53,7 @@ export class MycircleComponent implements OnInit {
   ngOnInit() {
     // Get ID from auth
     this.id = this.authService.getUserId();
+    console.log(this.usersService.getJobInfo(this.id));
     // get profile details
     this.usersService
       .getProfessionalInfo(this.id)
@@ -63,8 +64,10 @@ export class MycircleComponent implements OnInit {
       )
       .subscribe(f => {
         this.skills = this.info.skills;
+        console.log(this.skills);
         this.certifications = this.info.certifications;
       });
+    
   }
 
   toggleView(change: MatButtonToggleChange) {
