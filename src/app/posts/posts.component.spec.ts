@@ -5,6 +5,8 @@ import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../environments/environment';
 import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
+import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/auth';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('PostsComponent', () => {
   let component: PostsComponent;
@@ -15,10 +17,12 @@ describe('PostsComponent', () => {
       imports: [
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFirestoreModule,
+        AngularFireAuthModule,
+        RouterTestingModule,
       ],
       declarations: [ PostsComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-      providers: [AngularFirestore]
+      providers: [AngularFirestore, AngularFireAuth]
     })
     .compileComponents();
   }));

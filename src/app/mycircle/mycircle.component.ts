@@ -4,7 +4,7 @@ import { ProfileDetails } from "../models/profileDetails.model";
 import { AuthenticationService } from "../authentication.service";
 import { Users } from "../models/users.model";
 import { UsersService } from "../users.service";
-import { Observable } from "rxjs";
+import {EMPTY, Observable} from 'rxjs';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { map } from "rxjs/operators";
 
@@ -39,35 +39,35 @@ export class MycircleComponent implements OnInit {
   skills: string[];
   certifications: string[];
 
-  private user: Observable<firebase.User>;
   constructor(
     private firebaseAuth: AngularFireAuth,
     private authService: AuthenticationService,
     private usersService: UsersService
   ) {
-    this.user = firebaseAuth.authState;
+    // TODO: If you need to access the user, access it from auth service
   }
 
   // Gets data from professionalInfo Collection
 
   ngOnInit() {
     // Get ID from auth
-    this.id = this.authService.getUserId();
+    if (this.authService.getUserId() != null) {
+      this.id = this.authService.getUserId();
+    }
     // get profile details
-    this.usersService
-      .getProfessionalInfo(this.id)
-      .pipe(
-        map(doc => {
+    const snapshot = this.usersService.getProfessionalInfo(this.id);
+    if (snapshot !== EMPTY && snapshot !== undefined) {
+      snapshot.pipe(map(doc => {
           this.info = doc.payload.data() as ProfileDetails;
-        })
-      )
-      .subscribe(f => {
-        this.skills = this.info.skills;
-        this.certifications = this.info.certifications;
+        })).subscribe(f => {
+          this.skills = this.info.skills;
+          this.certifications = this.info.certifications;
       });
+    }
   }
 
   toggleView(change: MatButtonToggleChange) {
     this.toggle = change.value;
   }
+
 }

@@ -7,6 +7,8 @@ import {environment} from '../../environments/environment';
 import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
 import {MatButtonToggleModule, MatInputModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
+import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/auth';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('ActivitylogComponent', () => {
   let component: ActivitylogComponent;
@@ -17,15 +19,17 @@ describe('ActivitylogComponent', () => {
       imports: [
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFirestoreModule,
+        AngularFireAuthModule,
         MatInputModule,
         FormsModule,
         MatButtonToggleModule,
+        RouterTestingModule,
       ],
       declarations: [
         ActivitylogComponent,
         PostsComponent
       ],
-      providers: [AngularFirestore]
+      providers: [AngularFirestore, AngularFireAuth]
     })
     .compileComponents();
   }));

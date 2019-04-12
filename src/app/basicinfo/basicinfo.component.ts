@@ -32,19 +32,21 @@ export class BasicinfoComponent implements OnInit {
   userDetails;
   test;
 
-  private user: Observable<firebase.User>;
-  //private ProfileDetailsService
+  // private user: Observable<firebase.User>;
+  // private ProfileDetailsService
   constructor(
     private firebaseAuth: AngularFireAuth,
     private authService: AuthenticationService,
     private usersService: UsersService
   ) {
-    this.user = firebaseAuth.authState;
+    // TODO If you need user, access it from auth service
   }
 
   ngOnInit() {
     // Get ID from auth
-    this.id = this.authService.getUserId();
+    if (this.authService.getUserId() != null) {
+      this.id = this.authService.getUserId();
+    }
 
     // get userName
     this.usersService

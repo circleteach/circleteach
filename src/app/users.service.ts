@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import {EMPTY, Observable} from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
   DocumentReference,
-  CollectionReference
-} from "@angular/fire/firestore";
+  CollectionReference, DocumentSnapshot, Action
+} from '@angular/fire/firestore';
 
 import { take } from "rxjs/operators";
 import { from } from "rxjs";
@@ -78,7 +78,11 @@ export class UsersService {
       .snapshotChanges();
   }
 
-  getProfessionalInfo(userID: string) {
-    return this.firestore.doc("professionalInfo/" + userID).snapshotChanges();
+  getProfessionalInfo(userID: string): Observable<Action<DocumentSnapshot<any>>> {
+    const doc = this.firestore.doc("professionalInfo/" + userID);
+    if (doc == null || doc === undefined) {
+      return EMPTY;
+    }
+    return doc.snapshotChanges();
   }
 }

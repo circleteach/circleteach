@@ -21,7 +21,6 @@ export class AuthenticationService {
       (user) => {
         if (user) {
           this.userDetails = user;
-          this.router.navigate(['/home']);
         } else {
           this.userDetails = null;
           this.router.navigate(['/login']);
@@ -43,7 +42,7 @@ export class AuthenticationService {
         return error.message;
       })
       .then(res => {
-        // this.router.navigate(['/home'])
+        this.router.navigate(['/home']);
       });
   }
 
@@ -137,8 +136,12 @@ export class AuthenticationService {
     }
   }
 
-  getUserId(): string {
-    return this.userDetails.uid;
+  getUserId(): string | null {
+    if (this.userDetails != null) {
+      return this.userDetails.uid;
+    } else {
+      return null;
+    }
   }
 
   getDisplayName(): string {
