@@ -19,7 +19,7 @@ import * as firebase from 'firebase';
 })
 export class MessagingComponent implements OnInit {
 
-  //user$: Observable<any>;
+  // user$: Observable<any>;
   public userID: string;
   public profile: Users;
   public userName;
@@ -27,7 +27,7 @@ export class MessagingComponent implements OnInit {
   public groups: Group[];
   public group;
 
-  public groupsDoc: Observable<any>; //Observable
+  public groupsDoc: Observable<any>; // Observable
   public groupsDocs: DocumentReference[];
 
   public group1 = "";
@@ -71,10 +71,6 @@ export class MessagingComponent implements OnInit {
         this.userID = this.auth.getUserId();
       }
 
-      if (this.userID == null) {
-        console.info("WHY??" + this.auth.isLoggedIn());
-      }
-  
       // get userName
       this.usersService
         .getUser(this.userID)
@@ -118,7 +114,7 @@ export class MessagingComponent implements OnInit {
   }
 
   public getGroup(groupDoc: DocumentReference) {
-    let group: Group = new Group();
+    const group: Group = new Group();
     group.name = this.groupsService.getName(groupDoc.id);
     group.messages = this.groupsService.getMessages(groupDoc.id);
     group.members = this.groupsService.getMembers(groupDoc.id);
@@ -128,10 +124,9 @@ export class MessagingComponent implements OnInit {
   }
 
 
-  //TODO Submit typed text, if there is any
+  // TODO Submit typed text, if there is any
   public messageSubmit() {
 
   }
-  
 
 }
