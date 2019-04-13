@@ -1,11 +1,16 @@
+import {Observable, of} from 'rxjs';
+import { switchMap, first, map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
-import {Observable, of} from 'rxjs';
-import {Router, ActivatedRoute, ParamMap} from '@angular/router';
-import { switchMap, first, map } from 'rxjs/operators';
-import { PARAMETERS } from '@angular/core/src/util/decorators';
+import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { AuthenticationService } from '../authentication.service';
+import { UsersService } from '../users.service';
+import { GroupsService } from '../services/groups.service';
+import { Group } from '../models/group.model';
+import { Users } from '../models/users.model';
 
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-messaging',
@@ -14,33 +19,18 @@ import { PARAMETERS } from '@angular/core/src/util/decorators';
 })
 export class MessagingComponent implements OnInit {
 
-  user$: Observable<any>;
-  public user = 1;
+  // user$: Observable<any>;
+  public userID: string;
+  public profile: Users;
+  public userName;
 
-  constructor(private afAuth: AngularFireAuth,
-              private afs: AngularFirestore,
-              private router: Router,
-              private route: ActivatedRoute) { 
+  public groups: Group[];
+  public group;
 
-                this.user$ = this.route.paramMap.pipe(
-                  switchMap((params: ParamMap) =>
-                    this.chatList[params.get('id')])
-                );
-    /*this.user$ = this.afAuth.authState.pipe(
-      switchMap(user => {
-        if (user) {
-          return this.afs.doc<any>(`users/${user.uid}`).valueChanges();
-        } else {
-          return of(null);
-        }
-      })
-    );*/
-  }
+  public groupsDoc: Observable<any>; // Observable
+  public groupsDocs: DocumentReference[];
 
-  ngOnInit() {
-    //first chat opens
-    this.chatName = this.chatList[this.chatID];
-  }
+  public group1 = "";
 
   public messageTitle = "Example User";
   public exampleName = "Example";
@@ -52,8 +42,90 @@ export class MessagingComponent implements OnInit {
   public chatName = "";
 
 
-  //TODO Submit typed text, if there is any
-  public messageSubmit(){
+  constructor(private afAuth: AngularFireAuth,
+              private afs: AngularFirestore,
+              private router: Router,
+              private route: ActivatedRoute,
+              private auth: AuthenticationService,
+              private usersService: UsersService,
+              private groupsService: GroupsService) 
+              { 
+
+                //this.group1 = this.groupsService.getName(this.groupsDoc.id);
+                
+                
+                /*this.user$ = this.afAuth.authState.pipe(
+                  switchMap(user => {
+                    if (user) {
+                      return this.afs.doc<any>(`users/${user.uid}`).valueChanges();
+                    } else {
+                      return of(null);
+                    }
+                  })
+                );*/
+  }
+
+  ngOnInit() {
+      // Get ID from auth
+      if (this.auth.getUserId() != null) {
+        this.userID = this.auth.getUserId();
+      }
+
+      // get userName
+      this.usersService
+        .getUser(this.userID)
+        .pipe(
+          map(doc => {
+            this.profile = doc.payload.data() as Users;
+            console.log("data" + doc.payload.data());
+          })
+        )
+        .subscribe(data => {
+          this.userName = this.profile.name;
+          this.groupsDocs = this.profile.groups;
+          console.log("userName: " + this.userName);
+
+          this.groupsDocs.forEach(groupDoc => {
+            this.getGroup(groupDoc);
+          });
+
+          /*this.groups = data.map(e => {
+            return {
+              ...
+            } as Group;
+          })
+          map(doc => {
+            this.profile = doc.payload.data() as Users;
+            console.log("data" + doc.payload.data());
+          })*/
+             
+            
+            /*this.groupsDocs.forEach(groupDoc => {
+            return groupDoc.get().then(doc => {
+              if (doc.exists) {
+                return doc.data().groups as Group;
+              } else {
+                console.log("No such document!");
+              }
+            })*/
+        });
+    
+
+  }
+
+  public getGroup(groupDoc: DocumentReference) {
+    const group: Group = new Group();
+    group.name = this.groupsService.getName(groupDoc.id);
+    group.messages = this.groupsService.getMessages(groupDoc.id);
+    group.members = this.groupsService.getMembers(groupDoc.id);
+    console.log("group added");
+
+    this.groups.push(group);
+  }
+
+
+  // TODO Submit typed text, if there is any
+  public messageSubmit() {
 
   }
 

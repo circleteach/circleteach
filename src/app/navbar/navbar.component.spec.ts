@@ -14,6 +14,7 @@ import {AngularFireStorage, AngularFireStorageModule} from '@angular/fire/storag
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
+  let authService: AuthenticationService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -36,8 +37,15 @@ describe('NavbarComponent', () => {
   }));
 
   beforeEach(() => {
+    TestBed.get(AngularFireAuth);
+    TestBed.get(AngularFirestore);
+    authService = TestBed.get(AuthenticationService);
     fixture = TestBed.createComponent(NavbarComponent);
     component = fixture.componentInstance;
+    authService.login('plougheed@wisc.edu', 'hello123').then(result => {
+      fixture.detectChanges();
+    }).catch(error => {
+    });
     fixture.detectChanges();
   });
 

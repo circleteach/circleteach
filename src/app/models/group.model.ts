@@ -1,6 +1,7 @@
 import * as firebase from 'firebase';
 
-export class Groups {
-  public content: string[];
+export class Group {
+  public members: string[];
   public messages: firebase.firestore.DocumentReference[];
+  public name: string;
 }

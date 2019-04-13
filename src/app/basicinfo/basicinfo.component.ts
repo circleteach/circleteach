@@ -48,21 +48,14 @@ export class BasicinfoComponent implements OnInit {
       this.id = this.authService.getUserId();
     }
 
-    this.userName = this.authService.getDisplayName();
-
-    // // Get Display Name
-    // this.usersService
-    //   .getBasicInfo(this.id)
-    //   .pipe(
-    //     map(doc => {
-    //       this.profile = doc.payload.data() as Users;
-    //       console.log("data" + doc.payload.data());
-    //     })
-    //   )
-    //   .subscribe(f => {
-    //     this.userName = this.profile.name;
-    //     console.log("userName: " + this.userName);
-    //   });
+    // Get Display Name
+    this.usersService.getDisplayName(this.id).then(result => {
+      if (result != null) {
+        this.userName = result;
+      } else {
+        console.log("Failed to get username in basic info!");
+      }
+    });
 
     // Get Education and Experiences
     this.usersService

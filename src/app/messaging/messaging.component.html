@@ -8,8 +8,8 @@
         placeholder="Search Messages"
       />
 
-      <ng-container id="userList" *ngIf="chatList; else noChats">
-        <div *ngFor="let chat of chatList; let i = index" [attr.data-index]="i">
+      <ng-container id="userList" *ngIf="groups; else noGroups">
+        <div *ngFor="let group of groups; let i = index" [attr.data-index]="i">
           <div gdAreas="proImg uInfo date" [routerLink]="['/messaging', i]">
             <img
               gdArea="proImg"
@@ -32,13 +32,13 @@
           </div>
         </div>
       </ng-container>
-      <ng-template id="userList" #noChats>
+      <ng-template id="userList" #noGroups>
         <p></p>
         <div>Search a User to Start Chatting!</div>
       </ng-template>
     </div>
     <div id="messagesCont" class="inline border">
-      <h3 id="messageTitle">{{ chatName }}</h3>
+      <h3 id="messageTitle">{{ userID }}</h3>
       <div id="messages">
         <ng-container class="messages" *ngIf="messages">
           <div *ngFor="let message of messages">

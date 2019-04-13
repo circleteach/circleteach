@@ -104,7 +104,10 @@
   </div>
   <div *ngIf="!toggle">
     <div id="circlecontent">
-      Add list of users in their circle here
+        <!--Being bad starting here-->
+        <div *ngFor="let connection of connections" class="connection">
+          {{ connection }}
+        </div>
     </div>
   </div>
 </div>

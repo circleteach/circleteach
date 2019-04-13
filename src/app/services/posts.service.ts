@@ -19,7 +19,7 @@ export class PostsService {
     return this.firestore.doc("users/" + postId).snapshotChanges();
   }
 
-  //Subcollection get comments
+  // Subcollection get comments
   getComments(post: Post){
     return this.firestore.collection("posts/" + post.id +"/comments").snapshotChanges();
   }
@@ -30,7 +30,7 @@ export class PostsService {
     return this.firestore.collection("posts").add(param);
   }
 
-  //Add Comment to subcollection
+  // Add Comment to subcollection
   createComments(comment: Comment, post: Post){
     const param = JSON.parse(JSON.stringify(comment));
     return this.firestore.collection("posts/" + post.id + "/comments").add(param);
