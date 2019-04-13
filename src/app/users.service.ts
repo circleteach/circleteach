@@ -42,8 +42,8 @@ export class UsersService {
       });
   }
 
-  setProfileImage(userID: string, profileImageURL: string) {
-    this.firestore.firestore
+  setProfileImage(userID: string, profileImageURL: string): Promise<any> {
+    return this.firestore.firestore
       .collection("users")
       .doc(userID)
       .update({
