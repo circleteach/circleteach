@@ -4,9 +4,10 @@ import { ProfileDetails } from "../models/profileDetails.model";
 import { AuthenticationService } from "../authentication.service";
 import { Job } from "../models/job.model";
 import { UsersService } from "../users.service";
-import { EMPTY, Observable } from "rxjs";
+import { EMPTY, Observable, from } from "rxjs";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { map, concat } from "rxjs/operators";
+import { first, map, concat, flatMap, reduce, toArray } from "rxjs/operators";
+import { Users } from "../models/users.model";
 
 @Component({
   selector: "app-mycircle",
@@ -17,8 +18,11 @@ export class MycircleComponent implements OnInit {
   // Data Fields
   info: ProfileDetails = new ProfileDetails();
   job: Job = new Job();
+  user: Users = new Users();
   skills: string[];
   certifications: string[];
+  connections: string[];
+  connectionNames: string[];
 
   institution = "";
   fieldsOfStudy = "";
@@ -50,6 +54,42 @@ export class MycircleComponent implements OnInit {
     if (this.authService.getUserId() != null) {
       this.id = this.authService.getUserId();
     }
+
+    // Get Connections
+    this.usersService
+      .getBasicInfo(this.id)
+      .pipe(first())
+      .pipe(
+        map(doc => {
+          this.user = doc.payload.data() as Users;
+          console.log("data: " + doc.payload.data());
+          return this.user;
+        })
+      )
+      .pipe(
+        flatMap(user => {
+          return from(user.connections)
+        })
+      )
+      .pipe(
+        flatMap(userId => {
+          return this.usersService.getBasicInfo(userId)
+            .pipe(first())
+            .pipe(
+              map(doc => {
+                return (doc.payload.data() as Users).name;
+              }
+            )
+          );
+        })
+      )
+      .pipe(toArray())
+      .subscribe(connections => {
+        console.log("suck it");
+        console.log(connections);
+        this.connections = connections;
+        console.log(connections);
+      });
 
     // Get Skills and Certifications
     const snapshot = this.usersService.getProfessionalInfo(this.id);
