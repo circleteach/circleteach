@@ -7,11 +7,6 @@ import {
   CollectionReference, DocumentSnapshot, Action
 } from '@angular/fire/firestore';
 
-import { take } from "rxjs/operators";
-import { from } from "rxjs";
-import { ValueConverter } from "@angular/compiler/src/render3/view/template";
-import { validateBasis } from "@angular/flex-layout";
-
 @Injectable({
   providedIn: "root"
 })
@@ -118,16 +113,17 @@ export class UsersService {
     return doc.snapshotChanges();
   }
 
-   /* // CRUD Read
+  /* // CRUD Read
     getUserDoc(userID: string) {
       return this.firebaseStorage.doc("users/" + userID).snapshotChanges();
     }
-*/
+  */
+
   getGroupsSnapshot(userID: string) {
     return this.firestore
       .collection("users")
       .doc(userID)
-      .snapshotChanges()
+      .snapshotChanges();
   }
 
   getUser(userID: string): Observable<Action<DocumentSnapshot<any>>> {
@@ -136,13 +132,13 @@ export class UsersService {
       .doc(userID)
       .snapshotChanges();
   }
-  
+
   getJobInfo() {
     // TODO want "example" to be referencing the document ID that we pass will in
     console.log(this.firestore.doc("jobCollection/" + "example"));
     return this.firestore.doc("jobCollection/" + "example").snapshotChanges();
-  }  
-  
+  }
+
   // getInfo(userID: string) {
   //   // this.firestore.ca
   //   this.firestore.child('users').orderByChild('user').equalTo(userID).on("value", function(snapshot) {
@@ -151,9 +147,9 @@ export class UsersService {
   //         console.log(data.key);
   //     });
   //   });
-//}
+  // }
 
-  
+
 
   // getPostUserData(postId: string){
   //   return this.firestore.doc("users/" + postId).snapshotChanges();
