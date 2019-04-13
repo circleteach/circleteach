@@ -134,7 +134,7 @@ export class UsersService {
     return this.firestore
       .collection("users")
       .doc(userID)
-      .snapshotChanges()
+      .snapshotChanges();
   }
   
   getJobInfo() {

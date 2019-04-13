@@ -67,9 +67,12 @@ export class MessagingComponent implements OnInit {
 
   ngOnInit() {
       // Get ID from auth
-      console.log("ngOnInit begun");
       if (this.auth.getUserId() != null) {
         this.userID = this.auth.getUserId();
+      }
+
+      if (this.userID == null) {
+        console.info("WHY??" + this.auth.isLoggedIn());
       }
   
       // get userName
