@@ -1,0 +1,141 @@
+<app-layout>
+  <main class="body">
+    <div fxLayoutAlign="center">
+      <div id="mycircle">
+        <div id="profileDetailsCont">
+          <!-- Certifications -->
+          <div class="detail-title">Certifications</div>
+          <div class="detail-description">
+            Add your teaching certifications
+          </div>
+          <div
+            class="container"
+            fxLayout="column"
+            fxLayout.xs="column"
+            fxLayoutAlign="left"
+            fxLayoutGap="10px"
+            fxLayoutGap.xs="10px"
+          >
+            <div class="example-container" id="certification">
+              <!-- <div class="item item-2" fxFlex="25%"> -->
+              <mat-form-field appearance="legacy">
+                <input
+                  matInput
+                  placeholder="Enter Certification"
+                  [formControl]="loginEmail"
+                />
+              </mat-form-field>
+            </div>
+            <button (click)="addInput('certification')">
+              <b>Add another certification</b>
+            </button>
+            <!-- <button class="edit-profile-button" onClick="addCertification("certification")">
+                <b>Edit Profile</b>
+              </button> -->
+          </div>
+          <hr class="full-divider" />
+          <!-- Education -->
+          <div class="detail-title">Education</div>
+          <div class="detail-description">Add details about your education</div>
+          <div
+            class="container"
+            fxLayout="column"
+            fxLayout.xs="column"
+            fxLayoutAlign="left"
+            fxLayoutGap="10px"
+            fxLayoutGap.xs="10px"
+          >
+            <div class="example-container">
+              <!-- <div class="item item-1" fxFlex="50%"> -->
+              <mat-form-field appearance="legacy">
+                <input
+                  matInput
+                  placeholder="Enter Institution Attended"
+                  [formControl]="loginEmail"
+                />
+              </mat-form-field>
+              <!-- </div> -->
+              <!-- <div class="item item-2" fxFlex="50%"> -->
+              <mat-form-field appearance="legacy">
+                <input
+                  matInput
+                  placeholder="List Field(s) of Study"
+                  [formControl]="loginEmail"
+                />
+              </mat-form-field>
+              <!-- </div> -->
+              <!-- <div class="item item-2" fxFlex="50%"> -->
+              <mat-form-field appearance="legacy">
+                <input
+                  matInput
+                  placeholder="Enter Date Enrolled"
+                  [formControl]="loginEmail"
+                />
+              </mat-form-field>
+              <!-- </div> -->
+              <!-- <div class="item item-2" fxFlex="50%"> -->
+              <mat-form-field appearance="legacy">
+                <input
+                  matInput
+                  placeholder="Enter Graduation Date"
+                  [formControl]="loginEmail"
+                />
+              </mat-form-field>
+              <!-- </div> -->
+              <!-- <div class="item item-2" fxFlex="50%"> -->
+              <mat-form-field appearance="legacy">
+                <textarea
+                  matInput
+                  placeholder="Add a description of Education"
+                  [formControl]="loginEmail"
+                >
+                </textarea>
+              </mat-form-field>
+              <!-- </div> -->
+            </div>
+          </div>
+          <hr class="full-divider" />
+          <!-- Experience -->
+          <div class="detail-title">Experience</div>
+          <div
+            class="container"
+            fxLayout="column"
+            fxLayout.xs="column"
+            fxLayoutAlign="left"
+            fxLayoutGap="10px"
+            fxLayoutGap.xs="10px"
+          >
+            <div class="item item-1" fxFlex="25%">{{ jobTitle }}</div>
+            <div class="item item-2" fxFlex="25%">{{ jobLocation }}</div>
+            <div class="item item-3" fxFlex="25%">{{ jobDates }}</div>
+            <div class="item item-4" fxFlex="25%">
+              <ul class="a">
+                <li>{{ jobDescription }}</li>
+              </ul>
+            </div>
+          </div>
+          <hr class="full-divider" />
+
+          <!-- Skills & Trainings -->
+          <div class="detail-title">Skills & Trainings</div>
+          <div
+            class="container"
+            fxLayout="column"
+            fxLayout.xs="column"
+            fxLayoutAlign="left"
+            fxLayoutGap="10px"
+            fxLayoutGap.xs="10px"
+          >
+            <div class="item item-4" fxFlex="25%">
+              <ul class="a">
+                <li *ngFor="let skill of skills">
+                  {{ skill }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</app-layout>

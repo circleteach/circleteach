@@ -41,7 +41,8 @@ import { MycircleComponent } from "./mycircle/mycircle.component";
 import { SettingsComponent } from "./settings/settings.component";
 import { MessagingComponent } from "./messaging/messaging.component";
 import { TagsearchComponent } from "./tagsearch/tagsearch.component";
-import {OnCreate} from './customDirectives/onCreate';
+import { OnCreate } from "./customDirectives/onCreate";
+import { EditprofileComponent } from './editprofile/editprofile.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import {OnCreate} from './customDirectives/onCreate';
     SettingsComponent,
     MessagingComponent,
     TagsearchComponent,
-    OnCreate
+    OnCreate,
+    EditprofileComponent
   ],
   imports: [
     BrowserModule,

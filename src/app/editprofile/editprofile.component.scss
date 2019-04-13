@@ -1,0 +1,147 @@
+@import "~@angular/material/theming";
+@import "~src/styles";
+
+.body {
+  background-color: #f2f6ff;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > * {
+  width: 100%;
+}
+#mycircle {
+  border-radius: 50px;
+  border-style: solid;
+  border-width: 0.5px;
+  border-color: lightgray;
+  width: 100%;
+  height: auto;
+  background-color: rgb(250, 250, 250);
+  margin: 60px;
+}
+
+#profileDetailsCont {
+  width: 100%;
+}
+
+.mat-button-toggle-group {
+  width: 100%;
+  border: none;
+  margin: auto;
+  border-bottom: solid lightgray 0.5px;
+  height: 50px;
+}
+
+.profile {
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.circle {
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.label {
+  width: 100%;
+  // border-bottom: solid lightgray 0.5px;
+  text-align: center;
+  margin: 1 auto;
+}
+
+.wrapper * {
+  overflow-y: scroll;
+  height: 100px;
+  border-bottom: solid black 1px;
+}
+
+.circlecontent > * {
+  margin: 10%;
+}
+
+.container {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  margin-left: 100px;
+  margin-right: 400px;
+
+  .item-1 {
+    font-weight: 700;
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+  .item-2 {
+    font-weight: normal;
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+  .item-3 {
+    opacity: 0.5;
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+  .item-4 {
+    font-weight: normal;
+    margin-left: 57px;
+    margin-right: 10px;
+    opacity: 0.7;
+  }
+}
+
+.detail-title {
+  font-weight: normal;
+  text-align: left;
+  margin-top: 15px;
+  margin-left: 30px;
+  font-size: 16px;
+}
+.detail-description {
+  font-weight: lighter;
+  text-align: left;
+  margin-top: 15px;
+  margin-left: 30px;
+  font-size: 12px;
+}
+
+.small-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  width: 50%;
+}
+
+.inline {
+  float: left;
+  margin-right: 5vw;
+}
+
+.partial-divider {
+  display: block;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  margin-left: 50px;
+  margin-right: auto;
+  border-style: inset;
+  border-width: 0.5px;
+  border-color: gray;
+}
+.full-divider {
+  display: block;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  margin-right: auto;
+  border-style: inset;
+  border-width: 0.5px;
+  border-color: lightgray;
+}
+
+ul.a {
+  list-style-type: circle;
+  padding: 0px;
+}
