@@ -34,7 +34,13 @@ import { LoginComponent } from "./login/login.component";
 import { PostsComponent } from "./posts/posts.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { UserSearchComponent } from "./user-search/user-search.component";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import {
+  FormsModule,
+  ReactiveFormsModule
+  // FormGroup,
+  // FormControl,
+  // FormControlName
+} from "@angular/forms";
 import { BasicinfoComponent } from "./basicinfo/basicinfo.component";
 import { ActivitylogComponent } from "./activitylog/activitylog.component";
 import { MycircleComponent } from "./mycircle/mycircle.component";
@@ -42,7 +48,7 @@ import { SettingsComponent } from "./settings/settings.component";
 import { MessagingComponent } from "./messaging/messaging.component";
 import { TagsearchComponent } from "./tagsearch/tagsearch.component";
 import { OnCreate } from "./customDirectives/onCreate";
-import { EditprofileComponent } from './editprofile/editprofile.component';
+import { EditprofileComponent } from "./editprofile/editprofile.component";
 
 @NgModule({
   declarations: [
