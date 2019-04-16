@@ -55,7 +55,13 @@
       <li>
         <a routerLink="/profile">
           <div class="profile-image-container" *ngIf="profileURL != null">
-            <img [src]="profileURL" width="auto" height="40" alt="Profile Image">
+            <img
+              class="profile-pic"
+              [src]="profileURL"
+              width="auto"
+              height="40"
+              alt="Profile Image"
+            />
           </div>
           <div class="profile-image-container" *ngIf="profileURL == null">
             <mat-icon>person</mat-icon>

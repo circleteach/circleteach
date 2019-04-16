@@ -20,6 +20,7 @@ import {
   MatSidenavModule,
   MatToolbarModule
 } from "@angular/material";
+
 import { LayoutComponent } from "./layout/layout.component";
 import { HomeComponent } from "./home/home.component";
 import { AngularFireModule } from "@angular/fire";
@@ -34,13 +35,7 @@ import { LoginComponent } from "./login/login.component";
 import { PostsComponent } from "./posts/posts.component";
 import { ProfileComponent } from "./profile/profile.component";
 import { UserSearchComponent } from "./user-search/user-search.component";
-import {
-  FormsModule,
-  ReactiveFormsModule
-  // FormGroup,
-  // FormControl,
-  // FormControlName
-} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BasicinfoComponent } from "./basicinfo/basicinfo.component";
 import { ActivitylogComponent } from "./activitylog/activitylog.component";
 import { MycircleComponent } from "./mycircle/mycircle.component";

@@ -18,7 +18,7 @@
   border-style: solid;
   border-width: 0.5px;
   border-color: lightgray;
-  width: 100%;
+  // width: 100%;
   height: auto;
   background-color: rgb(250, 250, 250);
   margin: 60px;
@@ -34,6 +34,40 @@
   margin: auto;
   border-bottom: solid lightgray 0.5px;
   height: 50px;
+}
+
+.add-button {
+  background-color: mat-color($app-accent, 500);
+  color: white;
+  width: 20vh;
+  height: 2.5vw;
+  border-radius: 50px;
+  margin-bottom: 5vh;
+}
+.add-button:focus,
+input:focus {
+  outline: none;
+}
+.add-button:hover {
+  cursor: pointer;
+}
+.mat-add {
+  background-color: mat-color($app-accent, 400);
+}
+.add-profile-pic {
+  color: white;
+  border-radius: 50px;
+  margin-left: 1vw;
+  margin-top: 1vh;
+  margin-bottom: 3vh;
+  margin-right: 20px;
+}
+.add-profile-pic:focus,
+input:focus {
+  outline: none;
+}
+.add-profile-pic:hover {
+  cursor: pointer;
 }
 
 .profile {
@@ -101,6 +135,14 @@
   margin-left: 30px;
   font-size: 16px;
 }
+.title {
+  font-weight: normal;
+  text-align: left;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  font-size: 22px;
+}
 .detail-description {
   font-weight: lighter;
   text-align: left;
@@ -144,4 +186,14 @@
 ul.a {
   list-style-type: circle;
   padding: 0px;
+}
+
+#profImg {
+  border-radius: 100%;
+  border-style: solid;
+  border-color: mat-color($app-accent, 500);
+  margin-top: 16px;
+  margin-left: 30px;
+  margin-right: 0.5vw;
+  margin-bottom: 0.5vh;
 }

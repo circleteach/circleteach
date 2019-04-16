@@ -3,7 +3,6 @@ import { Users } from "../models/users.model";
 import { StorageService } from "../storage.service";
 import { AuthenticationService } from "../authentication.service";
 import { UsersService } from "../users.service";
-import { Observable } from "rxjs";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Data } from "@angular/router";
 import { ProfileDetails } from "../models/profileDetails.model";
@@ -16,38 +15,29 @@ import { Job } from "../models/job.model";
   styleUrls: ["./basicinfo.component.scss"]
 })
 export class BasicinfoComponent implements OnInit {
-  job: Job = new Job();
+  // Fields and Variables
+  info: ProfileDetails = new ProfileDetails();
   jobTitle = "";
-
-  // Actual Data Fields
+  jobLocation = "";
+  jobNum;
+  jobList: Job[];
   userName;
   profileImg = "../../assets/img/default-profile-picture.png";
   id;
   skills: string[];
-  friends = false; // TODO: implement functionality
+  // TODO: implement friends functionality
+  friends = false;
 
-  // testing things
-  info: ProfileDetails = new ProfileDetails();
-  profile: Users = new Users();
-  userDetails;
-  test;
-
-  // private user: Observable<firebase.User>;
-  // private ProfileDetailsService
   constructor(
-    private firebaseAuth: AngularFireAuth,
     private authService: AuthenticationService,
     private usersService: UsersService
-  ) {
-    // TODO If you need user, access it from auth service
-  }
+  ) {}
 
   ngOnInit() {
     // Get ID from auth
     if (this.authService.getUserId() != null) {
       this.id = this.authService.getUserId();
     }
-
     // Get Display Name
     this.usersService.getDisplayName(this.id).then(result => {
       if (result != null) {
@@ -56,20 +46,26 @@ export class BasicinfoComponent implements OnInit {
         console.log("Failed to get username in basic info!");
       }
     });
-
-    // Get Education and Experiences
-    this.usersService
-      .getJobInfo()
-      .pipe(
-        map(doc => {
-          this.job = doc.payload.data() as Job;
-          console.log("data: " + doc.payload.data());
-        })
-      )
-      .subscribe(f => {
-        // Job Title
-        this.jobTitle = this.job.position;
-      });
+    // Get Job Title and Job Location
+    const snapshot = this.usersService.getProfessionalInfo(this.id);
+    if (snapshot !== undefined) {
+      snapshot
+        .pipe(
+          map(doc => {
+            this.info = doc.payload.data() as ProfileDetails;
+          })
+        )
+        .subscribe(f => {
+          this.jobList = this.info.jobHistory;
+          // Loop through Experiences (only 1 right now)
+          for (let entry in this.jobList) {
+            console.log(entry);
+            // Get Job Title
+            this.jobTitle = this.jobList[entry].position;
+            this.jobLocation = this.jobList[entry].location;
+          }
+        });
+    }
   }
 
   toggleFriend() {

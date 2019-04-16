@@ -1,12 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { ProfileDetails } from "../models/profileDetails.model";
 import { Job } from "../models/job.model";
-import {
-  FormBuilder,
-  FormGroup,
-  FormArray,
-  FormArrayName
-} from "@angular/forms";
+import { AuthenticationService } from "../authentication.service";
+import { StorageService } from "../storage.service";
+import { UsersService } from "../users.service";
+import { EMPTY } from "rxjs";
+import { Users } from "../models/users.model";
+import { map } from "rxjs/operators";
+
+import { FormGroup, FormArray, FormControl } from "@angular/forms";
 
 @Component({
   selector: "app-editprofile",
@@ -17,8 +19,10 @@ export class EditprofileComponent implements OnInit {
   // Data Fields
   info: ProfileDetails = new ProfileDetails();
   job: Job = new Job();
+  profile: Users = new Users();
   skills: string[];
   certifications: string[];
+  profileImg = "../../assets/img/default-profile-picture.png";
 
   institution = "";
   fieldsOfStudy = "";
@@ -36,66 +40,154 @@ export class EditprofileComponent implements OnInit {
   counter = 1;
   limit = 5;
 
+  userName;
+
   orderForm: FormGroup;
   items: FormArray;
 
-  constructor(private fb: FormBuilder) {}
+  certification = new FormControl();
+  displayname = new FormControl();
+  skill = new FormControl();
+
+  id;
+  educationForm: FormGroup;
+  experienceForm: FormGroup;
+
+  constructor(
+    private auth: AuthenticationService,
+    private usersService: UsersService,
+    private storeageService: StorageService
+  ) {}
 
   ngOnInit() {
-    // this.myForm = new FormGroup({
-    //   name: new FormControl("Benedict"),
-    //   email: new FormControl(""),
-    //   message: new FormControl("")
-    // });
+    // Get ID from auth
+    if (this.auth.getUserId() != null) {
+      this.id = this.auth.getUserId();
+    }
+    // Get Display Name
+    this.usersService.getDisplayName(this.id).then(result => {
+      if (result != null) {
+        this.userName = result;
+      } else {
+        console.log("Failed to get username in basic info!");
+      }
+    });
+    // Get Skills and Certifications
+    const snapshot = this.usersService.getProfessionalInfo(this.id);
+    if (snapshot !== EMPTY && snapshot !== undefined) {
+      snapshot
+        .pipe(
+          map(doc => {
+            this.info = doc.payload.data() as ProfileDetails;
+          })
+        )
+        .subscribe(f => {
+          this.skills = this.info.skills;
+          this.certifications = this.info.certifications;
+        });
+    }
+    // Education Form
+    this.educationForm = new FormGroup({
+      institution_attended: new FormControl(),
+      fields_of_study: new FormControl(),
+      date_started: new FormControl(),
+      date_ended: new FormControl(),
+      description: new FormControl()
+    });
 
-    // this.myForm = this.fb.group({
-    //   name: "Benedict",
-    //   email: "",
-    //   message: ""
-    // });
-
-    this.orderForm = this.fb.group({
-      customerName: "",
-      email: "",
-      items: this.fb.array([this.createItem()])
+    // Experience Form
+    this.experienceForm = new FormGroup({
+      jobTitle: new FormControl(),
+      jobLocation: new FormControl(),
+      jobStart: new FormControl(),
+      jobEnd: new FormControl(),
+      jobDescription: new FormControl()
     });
   }
-
-  // create one
-  createItem(): FormGroup {
-    return this.fb.group({
-      name: "",
-      description: "",
-      price: ""
+  // Update Profile Picture
+  updateProfilePicture(fileInputEvent: any) {
+    this.storeageService.uploadProfilePicture(
+      this.auth.getIconUrl(),
+      fileInputEvent
+    );
+  }
+  updateDisplayName() {
+    this.profile.name = this.displayname.value;
+    // update it to be displayed immediately
+    this.userName = this.profile.name;
+    // update the correct field in firebase
+    this.usersService.updateBasicInfo(this.id, this.profile.name);
+    // re-initializes the form
+    this.displayname = new FormControl();
+  }
+  updateCertifications(professionalInfo: ProfileDetails) {
+    // adds it to certifications array to display
+    this.certifications.push(this.certification.value);
+    // make sure profileDetails object is updated
+    this.info.certifications = this.certifications;
+    // push new certification to firestore
+    this.usersService.updateProfessionalInfo(professionalInfo, this.id);
+    // re-initializes the form
+    this.certification = new FormControl();
+  }
+  updateSkills(professionalInfo: ProfileDetails) {
+    // adds it to skills array to display
+    this.skills.push(this.skill.value);
+    // make sure profileDetails object is updated
+    this.info.skills = this.skills;
+    // push new skill to firestore
+    this.usersService.updateProfessionalInfo(professionalInfo, this.id);
+    // re-initializes the form
+    this.skill = new FormControl();
+  }
+  // update firebase with info from education form
+  updateEducation(form: FormGroup) {
+    this.job.location = form.value.institution_attended;
+    this.job.fieldOfStudy = form.value.fields_of_study;
+    this.job.startTime = form.value.date_started;
+    this.job.endTime = form.value.date_ended;
+    this.job.description = form.value.description;
+    console.log(this.job);
+    if (this.job !== undefined) {
+      this.info.education = new Array();
+      this.info.education.push(this.job);
+    } else {
+      console.log("job object undefined");
+    }
+    // push new education or job to firestore
+    this.usersService.updateProfessionalInfo(this.info, this.id);
+    // re-initializes the form
+    this.educationForm = new FormGroup({
+      institution_attended: new FormControl(),
+      fields_of_study: new FormControl(),
+      date_started: new FormControl(),
+      date_ended: new FormControl(),
+      description: new FormControl()
     });
   }
-
-  // add more
-  addItem(): void {
-    this.items = this.orderForm.get("items") as FormArray;
-    this.items.push(this.createItem());
+  // update firebase with info from experience form
+  updateExperience(form: FormGroup) {
+    this.job.position = form.value.jobTitle;
+    this.job.location = form.value.jobLocation;
+    this.job.startTime = form.value.jobStart;
+    this.job.endTime = form.value.jobEnd;
+    this.job.description = form.value.jobDescription;
+    console.log(this.job);
+    if (this.job !== undefined) {
+      this.info.jobHistory = new Array();
+      this.info.jobHistory.push(this.job);
+    } else {
+      console.log("job object undefined");
+    }
+    // push new experience or job to firestore
+    this.usersService.updateProfessionalInfo(this.info, this.id);
+    // re-initializes the form
+    this.experienceForm = new FormGroup({
+      jobTitle: new FormControl(),
+      jobLocation: new FormControl(),
+      jobStart: new FormControl(),
+      jobEnd: new FormControl(),
+      jobDescription: new FormControl()
+    });
   }
-
-  onSubmit(form: FormGroup) {
-    console.log("Valid?", form.valid); // true or false
-    console.log("Name", form.value.name);
-    console.log("Email", form.value.email);
-    console.log("Message", form.value.message);
-  }
-
-  // addInput(divName) {
-  //   if (this.counter == this.limit) {
-  //     alert("You have reached the limit of adding " + this.counter + " inputs");
-  //   } else {
-  //     console.log(divName);
-  //     var newdiv = document.createElement("div");
-  //     //newdiv.className = "example-container";
-  //     newdiv.setAttribute("appearance", "legacy");
-  //     newdiv.innerHTML =
-  //       "Certification " +
-  //       (this.counter + 1) +
-  //       " <input matInput placeholder='Enter Certification' [formControl]='loginEmail'/>";
-  //     this.counter++;
-  //   }
-  // }
 }

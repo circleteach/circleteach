@@ -1,164 +1,246 @@
 <app-layout>
   <main class="body">
-    <div fxLayoutAlign="center">
-      <div id="mycircle">
-        <div id="profileDetailsCont">
-          <!-- Certifications -->
-          <div class="detail-title">Certifications</div>
-          <div class="detail-description">
-            Add your teaching certifications
-          </div>
-          <div
-            class="container"
-            fxLayout="column"
-            fxLayout.xs="column"
-            fxLayoutAlign="left"
-            fxLayoutGap="10px"
-            fxLayoutGap.xs="10px"
+    <div id="mycircle" fxLayoutAlign="center">
+      <div id="profileDetailsCont">
+        <div class="title">Edit Profile</div>
+        <hr class="full-divider" />
+        <div id="profImgContainer" gdArea="profImage">
+          <img
+            id="profImg"
+            src="{{ profileImg }}"
+            alt="Profile Image"
+            height="140px"
+            width="140px"
+          />
+          <!-- <button
+            class="add-profile-pic"
+            mat-fab
+            [color]="'add'"
+            (click)="addProfilePicture()"
           >
-            <div class="example-container" id="certification">
-              <!-- <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
-                <input formControlName="name" placeholder="Your name" />
-                <input formControlName="email" placeholder="Your email" />
-                <input formControlName="message" placeholder="Your message" />
+            <mat-icon>add_a_photo</mat-icon>
+          </button> -->
+          <input
+            #jpgInput
+            hidden="true"
+            type="file"
+            onclick="this.value=null"
+            (change)="updateProfilePicture($event)"
+          />
+          <button mat-flat-button color="primary" (click)="jpgInput.click()">
+            Change Profile Picture
+          </button>
+        </div>
+        <!-- Name Information -->
+        <div class="detail-title">Personal Information</div>
+        <div class="detail-description">
+          Change Display Name
+        </div>
+        <div
+          class="container"
+          fxLayout="column"
+          fxLayout.xs="column"
+          fxLayoutAlign="left"
+          fxLayoutGap="10px"
+          fxLayoutGap.xs="10px"
+        >
+          <div class="example-container">
+            <b>{{ userName }}</b>
+            <mat-form-field appearance="legacy">
+              <input
+                matInput
+                placeholder="Enter Display Name"
+                [formControl]="displayname"
+              />
+            </mat-form-field>
+            <p>
+              <button class="add-button" (click)="updateDisplayName()">
+                Save Display Name
+              </button>
+            </p>
+          </div>
+        </div>
+        <!-- Certifications -->
+        <div class="detail-title">Certifications</div>
+        <div class="detail-description">
+          Add Certifications
+        </div>
+        <div
+          class="container"
+          fxLayout="column"
+          fxLayout.xs="column"
+          fxLayoutAlign="left"
+          fxLayoutGap="10px"
+          fxLayoutGap.xs="10px"
+        >
+          <div class="example-container">
+            <li *ngFor="let certification of certifications">
+              {{ certification }}
+            </li>
+            <mat-form-field appearance="legacy">
+              <input
+                matInput
+                placeholder="Add a certification"
+                [formControl]="certification"
+              />
+            </mat-form-field>
+            <p>
+              <button class="add-button" (click)="updateCertifications(info)">
+                Add Certification
+              </button>
+            </p>
+          </div>
+        </div>
+        <hr class="full-divider" />
+        <!-- Education -->
+        <div class="detail-title">Education</div>
+        <div class="detail-description">Add details about your education</div>
+        <div
+          class="container"
+          fxLayout="column"
+          fxLayout.xs="column"
+          fxLayoutAlign="left"
+          fxLayoutGap="10px"
+          fxLayoutGap.xs="10px"
+        >
+          <div class="example-container">
+            <form
+              [formGroup]="educationForm"
+              (ngSubmit)="updateEducation(educationForm)"
+            >
+              <input
+                formControlName="institution_attended"
+                matInput
+                placeholder="Institution Attended"
+              />
+              <input
+                formControlName="fields_of_study"
+                matInput
+                placeholder="Field(s) of Study"
+              />
+              <input
+                formControlName="date_started"
+                matInput
+                placeholder="Date Began"
+              />
+              <input
+                formControlName="date_ended"
+                matInput
+                placeholder="Graduation Date"
+              />
+              <input
+                formControlName="description"
+                matInput
+                placeholder="Description of Education"
+              />
+              <p>
+                <button class="add-button" type="submit">
+                  Update Education
+                </button>
+              </p>
+            </form>
+          </div>
+        </div>
+        <hr class="full-divider" />
+        <!-- Experience -->
+        <div class="detail-title">Experience</div>
+        <div class="detail-description">Add details about your experience</div>
+        <div
+          class="container"
+          fxLayout="column"
+          fxLayout.xs="column"
+          fxLayoutAlign="left"
+          fxLayoutGap="10px"
+          fxLayoutGap.xs="10px"
+        >
+          <div class="example-container">
+            <form
+              [formGroup]="experienceForm"
+              (ngSubmit)="updateExperience(experienceForm)"
+            >
+              <input
+                formControlName="jobTitle"
+                matInput
+                placeholder="Job Title"
+              />
+              <input
+                formControlName="jobLocation"
+                matInput
+                placeholder="Location"
+              />
+              <input
+                formControlName="jobStart"
+                matInput
+                placeholder="Date Began"
+              />
+              <input
+                formControlName="jobEnd"
+                matInput
+                placeholder="Date Ended"
+              />
+              <input
+                formControlName="jobDescription"
+                matInput
+                placeholder="Description of Experience"
+              />
+              <p>
+                <button class="add-button" type="submit">
+                  Update Experience
+                </button>
+              </p>
+            </form>
+          </div>
+        </div>
+        <!-- <div class="detail-title">Experience</div>
+        <div
+          class="container"
+          fxLayout="column"
+          fxLayout.xs="column"
+          fxLayoutAlign="left"
+          fxLayoutGap="10px"
+          fxLayoutGap.xs="10px"
+        >
+          <div class="item item-1" fxFlex="25%">{{ jobTitle }}</div>
+          <div class="item item-2" fxFlex="25%">{{ jobLocation }}</div>
+          <div class="item item-3" fxFlex="25%">{{ jobDates }}</div>
+          <div class="item item-4" fxFlex="25%">
+            <ul class="a">
+              <li>{{ jobDescription }}</li>
+            </ul>
+          </div>
+        </div> -->
+        <hr class="full-divider" />
 
-                <button type="submit">Send</button>
-              </form>  -->
-              <!-- <div
-                formArrayName="items"
-                *ngFor="
-                  let item of orderForm.get('items').controls;
-                  let i = index
-                "
-              >
-                <div [formGroupName]="i">
-                  <input formControlName="name" placeholder="Item name" />
-                  <input
-                    formControlName="description"
-                    placeholder="Item description"
-                  />
-                  <input formControlName="price" placeholder="Item price" />
-                </div>
-
-                Chosen name:
-                {{ orderForm.controls.items.controls[i].controls.name.value }}
-              </div> -->
-              <!-- <div class="item item-2" fxFlex="25%"> -->
-              <mat-form-field appearance="legacy">
-                <input
-                  matInput
-                  placeholder="Enter Certification"
-                  [formControl]="loginEmail"
-                />
-              </mat-form-field>
-            </div>
-            <button (click)="addInput('certification')">
-              <b>Add another certification</b>
-            </button>
-            <!-- <button class="edit-profile-button" onClick="addCertification("certification")">
-                <b>Edit Profile</b>
-              </button> -->
-          </div>
-          <hr class="full-divider" />
-          <!-- Education -->
-          <div class="detail-title">Education</div>
-          <div class="detail-description">Add details about your education</div>
-          <div
-            class="container"
-            fxLayout="column"
-            fxLayout.xs="column"
-            fxLayoutAlign="left"
-            fxLayoutGap="10px"
-            fxLayoutGap.xs="10px"
-          >
-            <div class="example-container">
-              <!-- <div class="item item-1" fxFlex="50%"> -->
-              <mat-form-field appearance="legacy">
-                <input
-                  matInput
-                  placeholder="Enter Institution Attended"
-                  [formControl]="loginEmail"
-                />
-              </mat-form-field>
-              <!-- </div> -->
-              <!-- <div class="item item-2" fxFlex="50%"> -->
-              <mat-form-field appearance="legacy">
-                <input
-                  matInput
-                  placeholder="List Field(s) of Study"
-                  [formControl]="loginEmail"
-                />
-              </mat-form-field>
-              <!-- </div> -->
-              <!-- <div class="item item-2" fxFlex="50%"> -->
-              <mat-form-field appearance="legacy">
-                <input
-                  matInput
-                  placeholder="Enter Date Enrolled"
-                  [formControl]="loginEmail"
-                />
-              </mat-form-field>
-              <!-- </div> -->
-              <!-- <div class="item item-2" fxFlex="50%"> -->
-              <mat-form-field appearance="legacy">
-                <input
-                  matInput
-                  placeholder="Enter Graduation Date"
-                  [formControl]="loginEmail"
-                />
-              </mat-form-field>
-              <!-- </div> -->
-              <!-- <div class="item item-2" fxFlex="50%"> -->
-              <mat-form-field appearance="legacy">
-                <textarea
-                  matInput
-                  placeholder="Add a description of Education"
-                  [formControl]="loginEmail"
-                >
-                </textarea>
-              </mat-form-field>
-              <!-- </div> -->
-            </div>
-          </div>
-          <hr class="full-divider" />
-          <!-- Experience -->
-          <div class="detail-title">Experience</div>
-          <div
-            class="container"
-            fxLayout="column"
-            fxLayout.xs="column"
-            fxLayoutAlign="left"
-            fxLayoutGap="10px"
-            fxLayoutGap.xs="10px"
-          >
-            <div class="item item-1" fxFlex="25%">{{ jobTitle }}</div>
-            <div class="item item-2" fxFlex="25%">{{ jobLocation }}</div>
-            <div class="item item-3" fxFlex="25%">{{ jobDates }}</div>
-            <div class="item item-4" fxFlex="25%">
-              <ul class="a">
-                <li>{{ jobDescription }}</li>
-              </ul>
-            </div>
-          </div>
-          <hr class="full-divider" />
-
-          <!-- Skills & Trainings -->
-          <div class="detail-title">Skills & Trainings</div>
-          <div
-            class="container"
-            fxLayout="column"
-            fxLayout.xs="column"
-            fxLayoutAlign="left"
-            fxLayoutGap="10px"
-            fxLayoutGap.xs="10px"
-          >
-            <div class="item item-4" fxFlex="25%">
-              <ul class="a">
-                <li *ngFor="let skill of skills">
-                  {{ skill }}
-                </li>
-              </ul>
-            </div>
+        <!-- Skills & Trainings -->
+        <div class="detail-title">Skills & Trainings</div>
+        <div class="detail-description">
+          Add Skills and Trainings
+        </div>
+        <div
+          class="container"
+          fxLayout="column"
+          fxLayout.xs="column"
+          fxLayoutAlign="left"
+          fxLayoutGap="10px"
+          fxLayoutGap.xs="10px"
+        >
+          <div class="example-container" id="certification">
+            <!-- <div class="item item-2" fxFlex="25%"> -->
+            <li *ngFor="let skill of skills">
+              {{ skill }}
+            </li>
+            <mat-form-field appearance="legacy">
+              <input
+                matInput
+                placeholder="Add a skill or training"
+                [formControl]="skill"
+              />
+            </mat-form-field>
+            <p>
+              <button class="add-button" (click)="updateSkills(info)">
+                Add Skill or Training
+              </button>
+            </p>
           </div>
         </div>
       </div>
