@@ -15,9 +15,6 @@ import { Users } from "../models/users.model";
   styleUrls: ["./mycircle.component.scss"]
 })
 export class MycircleComponent implements OnInit {
-  @Input("educationdescription") education_Description: Boolean; // Toggles a bullet point
-  @Input("jobdescription") job_Description: Boolean; // Toggles a bullet point
-
   // Data Fields
   info: ProfileDetails = new ProfileDetails();
   job: Job = new Job();

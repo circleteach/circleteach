@@ -86,12 +86,17 @@
         alt="Profile Image"
         height="70px"
         width="70px"
+        (click)="starClick(post)"
       />
     </div>
 
     <div id="userInfo" gdArea="userInfo">
-      <h2 onmouseover="" style="cursor: pointer">{{ post.name }}</h2>
-      <p onmouseover="" style="cursor: pointer">{{ userTitle }}</p>
+      <h2 (click)="starClick(post)" onmouseover="" style="cursor: pointer">
+        {{ post.name }}
+      </h2>
+      <p (click)="starClick(post)" onmouseover="" style="cursor: pointer">
+        {{ userTitle }}
+      </p>
     </div>
 
     <div id="postAge" gdArea="postAge">

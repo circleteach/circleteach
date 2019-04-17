@@ -74,6 +74,7 @@ export class PostsComponent implements OnInit {
       )
       .subscribe(f => {
         if (user !== undefined) {
+          console.log(user.name);
           post.name = user.name;
         }
       });
