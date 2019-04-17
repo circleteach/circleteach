@@ -96,6 +96,17 @@ export class AuthenticationService {
       );
   }
 
+  delete() {
+    this.userDetails
+      .delete()
+      .then(function() {
+        // User deleted.
+      })
+      .catch(function(error) {
+        // An error happened.
+      });
+  }
+
   getEmail(): string {
     return this.userDetails.email;
   }

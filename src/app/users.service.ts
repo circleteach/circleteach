@@ -28,6 +28,19 @@ export class UsersService {
   getUserDoc(userID: string): DocumentReference {
     return this.firestore.firestore.collection("users").doc(userID);
   }
+  /// Called upon deletion of an account
+  deleteUserDoc(userID: string) {
+    return this.firestore.firestore
+      .collection("users")
+      .doc(userID)
+      .delete()
+      .then(function() {
+        console.log("User doc successfully deleted!");
+      })
+      .catch(function(error) {
+        console.error("Error removing User doc: ", error);
+      });
+  }
 
   // Set's up user's document in firestore
   setupUserDocument(userID: string, displayName: string) {
@@ -126,6 +139,19 @@ export class UsersService {
   updateProfessionalInfo(professionalInfo: ProfileDetails, userID: string) {
     const param = JSON.parse(JSON.stringify(professionalInfo));
     return this.firestore.doc("professionalInfo/" + userID).update(param);
+  }
+
+  // called upon deletion of an account
+  deleteProfessionalInfo(userID: string) {
+    return this.firestore
+      .doc("professionalInfo/" + userID)
+      .delete()
+      .then(function() {
+        console.log("ProfessionalInfo doc successfully deleted!");
+      })
+      .catch(function(error) {
+        console.error("Error removing ProfessionalInfo doc: ", error);
+      });
   }
 
   // create ProfessionalInfo document for new user
