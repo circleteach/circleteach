@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
   profileURL: string | null;
   url = "../../assets/img/circle-teach-logo.png";
+  id;
 
   constructor(
     private firebaseAuth: AngularFireAuth,
@@ -21,6 +22,7 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.id = this.auth.getUserId();
     if (this.auth.getIconUrl() == null) {
       this.profileURL = "../../assets/img/default-profile-picture.png";
     } else {

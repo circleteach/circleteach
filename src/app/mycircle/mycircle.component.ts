@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { MatButtonToggleChange } from "@angular/material";
 import { ProfileDetails } from "../models/profileDetails.model";
 import { AuthenticationService } from "../authentication.service";
@@ -15,6 +15,9 @@ import { Users } from "../models/users.model";
   styleUrls: ["./mycircle.component.scss"]
 })
 export class MycircleComponent implements OnInit {
+  @Input("educationdescription") education_Description: Boolean; // Toggles a bullet point
+  @Input("jobdescription") job_Description: Boolean; // Toggles a bullet point
+
   // Data Fields
   info: ProfileDetails = new ProfileDetails();
   job: Job = new Job();
@@ -41,6 +44,8 @@ export class MycircleComponent implements OnInit {
 
   // other fields used
   toggle = true;
+  edu_empty = true;
+  job_empty = true;
   id;
   // Number of Education Entries and array to hold them
   educationNum;
@@ -61,7 +66,6 @@ export class MycircleComponent implements OnInit {
     if (this.authService.getUserId() != null) {
       this.id = this.authService.getUserId();
     }
-
     // Get Connections
     this.usersService
       .getBasicInfo(this.id)
@@ -118,6 +122,12 @@ export class MycircleComponent implements OnInit {
             this.institution = this.educationList[entry].location;
             this.fieldsOfStudy = this.educationList[entry].fieldOfStudy;
             this.educationDescription = this.educationList[entry].description;
+            if (
+              this.educationDescription !== "" &&
+              this.educationDescription !== undefined
+            ) {
+              this.edu_empty = false;
+            }
             this.educationStart = this.educationList[entry].startTime;
             this.educationEnd = this.educationList[entry].endTime;
             this.educationDates = this.educationStart.concat(
@@ -133,41 +143,18 @@ export class MycircleComponent implements OnInit {
             this.jobTitle = this.jobList[entry].position;
             this.jobLocation = this.jobList[entry].location;
             this.jobDescription = this.jobList[entry].description;
+            if (
+              this.jobDescription !== "" &&
+              this.jobDescription !== undefined
+            ) {
+              this.job_empty = false;
+            }
             this.jobStart = this.jobList[entry].startTime;
             this.jobEnd = this.jobList[entry].endTime;
             this.jobDates = this.jobStart.concat(" - ", this.jobEnd);
           }
         });
     }
-
-    // // Get Education and Experiences
-    // this.usersService
-    //   .getJobInfo()
-    //   .pipe(
-    //     map(doc => {
-    //       this.job = doc.payload.data() as Job;
-    //       console.log("data: " + doc.payload.data());
-    //     })
-    //   )
-    //   .subscribe(f => {
-    //     // Education Fields
-    //     // this.institution = this.job.location;
-    //     // this.fieldsOfStudy = this.job.fieldOfStudy;
-    //     // this.educationDescription = this.job.description;
-    //     // this.educationStart = this.job.startTime;
-    //     // this.educationEnd = this.job.endTime;
-    //     // this.educationDates = this.educationStart.concat(
-    //     //   " - ",
-    //     //   this.educationEnd
-    //     // );
-    //     // Job Fields
-    //     this.jobTitle = this.job.position;
-    //     this.jobLocation = this.job.location;
-    //     this.jobDescription = this.job.description;
-    //     this.jobStart = this.job.startTime;
-    //     this.jobEnd = this.job.endTime;
-    //     this.jobDates = this.jobStart.concat(" - ", this.jobEnd);
-    //   });
   }
 
   toggleView(change: MatButtonToggleChange) {

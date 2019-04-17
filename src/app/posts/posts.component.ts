@@ -69,11 +69,13 @@ export class PostsComponent implements OnInit {
         map(action => {
           //This is how to get data from a document
           user = action.payload.data() as Users;
-          user.id = action.payload.id;
+          //user.id = action.payload.id;
         })
       )
       .subscribe(f => {
-        post.name = user.name;
+        if (user !== undefined) {
+          post.name = user.name;
+        }
       });
   }
 

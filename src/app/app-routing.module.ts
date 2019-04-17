@@ -14,7 +14,7 @@ const routes: Routes = [
   // Put this back ^ canActivate: [LoggedInGuard]  jay
   // TODO: change to profile/:id
   {
-    path: "profile",
+    path: "profile/:id",
     component: ProfileComponent,
     canActivate: [LoggedInGuard]
   },
