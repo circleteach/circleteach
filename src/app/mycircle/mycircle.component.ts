@@ -8,6 +8,7 @@ import { EMPTY, Observable, from } from "rxjs";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { first, map, concat, flatMap, reduce, toArray } from "rxjs/operators";
 import { Users } from "../models/users.model";
+import { Data, ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-mycircle",
@@ -54,15 +55,14 @@ export class MycircleComponent implements OnInit {
   constructor(
     private firebaseAuth: AngularFireAuth,
     private authService: AuthenticationService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private route: ActivatedRoute
   ) {
     // TODO: If you need to access the user, access it from auth service
   }
   ngOnInit() {
-    // Get ID from auth
-    if (this.authService.getUserId() != null) {
-      this.id = this.authService.getUserId();
-    }
+    // Set Correct ID
+    this.setCorrectID();
     // Get Connections
     this.usersService
       .getBasicInfo(this.id)
@@ -156,5 +156,16 @@ export class MycircleComponent implements OnInit {
 
   toggleView(change: MatButtonToggleChange) {
     this.toggle = change.value;
+  }
+  setCorrectID() {
+    this.route.params.subscribe(params => {
+      console.log(params); //log the entire params object
+      console.log(params["id"]); //log the value of id
+      if (this.authService.getUserId() == params["id"]) {
+        this.id = this.authService.getUserId();
+      } else {
+        this.id = params["id"];
+      }
+    });
   }
 }

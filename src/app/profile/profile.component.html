@@ -11,7 +11,7 @@
         </div>
       </div>
     </mat-card-content>
-    <div fxLayoutAlign="center">
+    <div fxLayoutAlign="center" *ngIf="editProfileButton">
       <a routerLink="/editprofile">
         <button class="edit-profile-button">
           <b>Edit Profile</b>

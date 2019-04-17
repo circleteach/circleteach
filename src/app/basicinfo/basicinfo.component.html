@@ -14,7 +14,7 @@
     <div class="user-title">{{ jobTitle }} at {{ jobLocation }}</div>
   </div>
 
-  <div id="addFriend" gdArea="addCircle">
+  <div *ngIf="connectionButton" id="addFriend" gdArea="addCircle">
     <button
       mat-fab
       *ngIf="friends"

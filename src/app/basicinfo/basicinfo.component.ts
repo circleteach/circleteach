@@ -4,7 +4,7 @@ import { StorageService } from "../storage.service";
 import { AuthenticationService } from "../authentication.service";
 import { UsersService } from "../users.service";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { Data } from "@angular/router";
+import { Data, ActivatedRoute } from "@angular/router";
 import { ProfileDetails } from "../models/profileDetails.model";
 import { map } from "rxjs/operators";
 import { Job } from "../models/job.model";
@@ -27,17 +27,17 @@ export class BasicinfoComponent implements OnInit {
   skills: string[];
   // TODO: implement friends functionality
   friends = false;
+  connectionButton = false;
 
   constructor(
     private authService: AuthenticationService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    // Get ID from auth
-    if (this.authService.getUserId() != null) {
-      this.id = this.authService.getUserId();
-    }
+    // Set Correct ID
+    this.setCorrectID();
     // Get Display Name
     this.usersService.getDisplayName(this.id).then(result => {
       if (result != null) {
@@ -74,5 +74,17 @@ export class BasicinfoComponent implements OnInit {
     } else {
       this.friends = true;
     }
+  }
+  setCorrectID() {
+    this.route.params.subscribe(params => {
+      console.log(params); //log the entire params object
+      console.log(params["id"]); //log the value of id
+      if (this.authService.getUserId() == params["id"]) {
+        this.id = this.authService.getUserId();
+      } else {
+        this.id = params["id"];
+        this.connectionButton = true;
+      }
+    });
   }
 }

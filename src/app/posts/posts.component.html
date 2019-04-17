@@ -78,25 +78,28 @@
     gdAreas="profImage userInfo userInfo postAge  | content content content content  | tags  postInfo postInfo postInfo | comment comment comment comment"
   >
     <div id="profImgContainer" gdArea="profImage">
-      <img
-        id="profImg"
-        src="../../assets/uwath2018.png"
-        onmouseover=""
-        style="background-color: blue; cursor: pointer"
-        alt="Profile Image"
-        height="70px"
-        width="70px"
-        (click)="starClick(post)"
-      />
+      <a routerLink="/profile/{{ post.user }}">
+        <img
+          id="profImg"
+          src="../../assets/uwath2018.png"
+          onmouseover=""
+          style="background-color: blue; cursor: pointer"
+          alt="Profile Image"
+          height="70px"
+          width="70px"
+        />
+      </a>
     </div>
 
     <div id="userInfo" gdArea="userInfo">
-      <h2 (click)="starClick(post)" onmouseover="" style="cursor: pointer">
-        {{ post.name }}
-      </h2>
-      <p (click)="starClick(post)" onmouseover="" style="cursor: pointer">
-        {{ userTitle }}
-      </p>
+      <a routerLink="/profile/{{ post.user }}">
+        <h2 onmouseover="" style="cursor: pointer">
+          {{ post.name }} {{ post.user }}
+        </h2>
+        <p onmouseover="" style="cursor: pointer">
+          {{ userTitle }}
+        </p>
+      </a>
     </div>
 
     <div id="postAge" gdArea="postAge">
