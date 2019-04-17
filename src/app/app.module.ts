@@ -18,7 +18,8 @@ import {
   MatListModule,
   MatSelectModule,
   MatSidenavModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatAutocompleteModule
 } from "@angular/material";
 
 import { LayoutComponent } from "./layout/layout.component";
@@ -72,6 +73,7 @@ import { EditprofileComponent } from "./editprofile/editprofile.component";
     MatCardModule,
     MatSlideToggleModule,
     MatChipsModule,
+    MatAutocompleteModule,
     MatSnackBarModule,
     MatButtonToggleModule,
     FlexLayoutModule,
