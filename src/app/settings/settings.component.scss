@@ -1,46 +1,97 @@
 @import "~@angular/material/theming";
 @import "~src/styles";
 
+.body {
+  background-color: #f2f6ff;
+}
+
 .settings-card {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-radius: 100px;
-    background-color: mat-color($app-accent, 50);
-  }
-
-.box{
-    display: block;
-    text-align: center;
-    width: 20vw;
-    height: 3vh;
-    font-size: 1rem;
-    border-radius: 15px;
-    outline: none;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-radius: 100px;
+  background-color: mat-color($app-accent, 500);
+  background-color: white;
+  margin-right: 100px;
+  margin-left: 100px;
 }
 
-.label{
-    display: block;
-    text-align: center;
+.box {
+  display: block;
+  text-align: center;
+  width: 20vw;
+  height: 3vh;
+  font-size: 1rem;
+  border-radius: 15px;
+  outline: none;
 }
 
-.button{
-    width: 10vw;
-    height: 3vh;
-    background-color: lightskyblue;
-    border-radius: 15px;
-    border: none;
-    ;
+.label {
+  display: block;
+  text-align: center;
 }
 
-.logout-button{
-    width: 15vw;
-    height: 4vh;
-    background-color: lightskyblue;
-    border-radius: 15px;
-    border: none;
-    ;
+.button {
+  width: 15vw;
+  height: 4vh;
+  background-color: mat-color($app-primary, 500);
+  border-radius: 15px;
+  border: none;
+  color: white;
+  margin-top: 5px;
+}
+.button:focus,
+input:focus {
+  outline: none;
+}
+.button:hover {
+  cursor: pointer;
 }
 
-.slider{
-    text-align: center;
+.logout-button {
+  width: 15vw;
+  height: 4vh;
+  background-color: mat-color($app-primary, 500);
+  border-radius: 50px;
+  border: none;
+  color: white;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.logout-button:focus,
+input:focus {
+  outline: none;
+}
+.logout-button:hover {
+  cursor: pointer;
+}
+.delete-button {
+  width: 15vw;
+  height: 4vh;
+  background-color: rgb(231, 107, 107);
+  border-radius: 50px;
+  border: none;
+  color: white;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.delete-button:focus,
+input:focus {
+  outline: none;
+}
+.delete-button:hover {
+  cursor: pointer;
+}
+
+.slider {
+  text-align: center;
+}
+
+.full-divider {
+  display: block;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  margin-right: auto;
+  border-style: inset;
+  border-width: 0.5px;
+  border-color: lightgray;
 }

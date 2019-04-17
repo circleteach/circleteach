@@ -1,39 +1,66 @@
 <app-layout>
-  <main>
-
+  <main class="body">
     <mat-card>
-      <div fxFlex fxLayout fxLayoutAlign="center">
+      <div class="heading" fxFlex fxLayout fxLayoutAlign="center">
         <h2>Settings</h2>
       </div>
     </mat-card>
 
     <mat-card class="settings-card">
-      <div fxLayoutAlign="center" ><button class="logout-button" (click)="doLogout()"><b>Log Out</b></button></div>
-      <p>{{logoutMessage}}</p>
+      <div fxLayoutAlign="center">
+        <button class="logout-button" (click)="doLogout()">
+          <b>Log Out</b>
+        </button>
+        <button class="delete-button" (click)="deleteAccount()">
+          <b>Delete Account</b>
+        </button>
+      </div>
+      <p>{{ logoutMessage }}</p>
     </mat-card>
 
-    <mat-card class="settings-card" >
-      <h3 fxLayoutAlign="center">Change Password</h3> <hr>
+    <mat-card class="settings-card">
+      <h3 fxLayoutAlign="center">Change Password</h3>
       <div fxLayoutAlign="center">
         <mat-card-content>
-          <label class="label">Type your current password</label> <br>
-          <input class="box" type="password" [(ngModel)]="oldPassword" placeholder="Enter Current Password"> <br> 
-          <label class="label">Type your new password</label> <br>
-          <input class="box" type="password" [(ngModel)]="newPasswordConfirm" placeholder="Enter New Password"> <br> 
-          <label class="label">Retype your new password</label> <br>
-          <input class="box" type="password" [(ngModel)]="newPassword" placeholder="Re-enter New Password"> <br> 
-          <div fxLayoutAlign="center" ><button class="button" (click)="changePass()">Submit</button></div>
+          <label class="label">Type Current Password</label> <br />
+          <input
+            class="box"
+            type="password"
+            [(ngModel)]="oldPassword"
+            placeholder="Current Password"
+          />
+          <br />
+          <label class="label">Type New Password</label> <br />
+          <input
+            class="box"
+            type="password"
+            [(ngModel)]="newPasswordConfirm"
+            placeholder="New Password"
+          />
+          <br />
+          <label class="label">Retype New Password</label> <br />
+          <input
+            class="box"
+            type="password"
+            [(ngModel)]="newPassword"
+            placeholder="New Password"
+          />
+          <br />
+          <div fxLayoutAlign="center">
+            <button class="button" (click)="changePass()"><b>Submit</b></button>
+          </div>
         </mat-card-content>
       </div>
     </mat-card>
 
     <mat-card class="settings-card">
-        <h3 fxLayoutAlign="center">Site Preferences</h3> <hr>
-        <mat-card-subtitle fxLayoutAlign="center">Profile Information Visibilty (Public by Default)</mat-card-subtitle>
-        <div class="slider">
-          <mat-slide-toggle color='primary'>Circle Only</mat-slide-toggle>
-        </div>
+      <h3 fxLayoutAlign="center">Site Preferences</h3>
+      <mat-card-subtitle fxLayoutAlign="center" style="margin-top: 5px"
+        >Profile Information Visibilty (Public by Default)</mat-card-subtitle
+      >
+      <div class="slider">
+        <mat-slide-toggle color="primary">Circle Only</mat-slide-toggle>
+      </div>
     </mat-card>
-
   </main>
 </app-layout>
