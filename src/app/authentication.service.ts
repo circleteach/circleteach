@@ -62,6 +62,7 @@ export class AuthenticationService {
       .then(res => {
         res.user.updateProfile({ displayName: name, photoURL: null });
         this.userService.setupUserDocument(res.user.uid, name);
+        this.userService.createProfessionalInfo(res.user.uid);
         firebase
           .auth()
           .setPersistence(firebase.auth.Auth.Persistence.LOCAL)

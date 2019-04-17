@@ -128,11 +128,13 @@ export class UsersService {
     return this.firestore.doc("professionalInfo/" + userID).update(param);
   }
 
-  // getJobInfo() {
-  //   // TODO want "example" to be referencing the document ID that we pass will in
-  //   console.log(this.firestore.doc("jobCollection/" + "example"));
-  //   return this.firestore.doc("jobCollection/" + "example").snapshotChanges();
-  // }
+  // create ProfessionalInfo document for new user
+  createProfessionalInfo(userID: string) {
+    return this.firestore
+      .collection("professionalInfo")
+      .doc(userID)
+      .set({ exists: true });
+  }
 
   // Add certification or skill to subcollection
   updateJobInfo(job: Job, professionalInfo: ProfileDetails, userID: string) {

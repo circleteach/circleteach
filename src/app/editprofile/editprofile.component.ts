@@ -20,8 +20,8 @@ export class EditprofileComponent implements OnInit {
   info: ProfileDetails = new ProfileDetails();
   job: Job = new Job();
   profile: Users = new Users();
-  skills: string[];
-  certifications: string[];
+  skills = new Array();
+  certifications = new Array();
   profileImg = "../../assets/img/default-profile-picture.png";
 
   institution = "";
@@ -45,9 +45,9 @@ export class EditprofileComponent implements OnInit {
   orderForm: FormGroup;
   items: FormArray;
 
-  certification = new FormControl();
+  new_certification = new FormControl();
+  new_skill = new FormControl();
   displayname = new FormControl();
-  skill = new FormControl();
 
   id;
   educationForm: FormGroup;
@@ -82,8 +82,13 @@ export class EditprofileComponent implements OnInit {
           })
         )
         .subscribe(f => {
-          this.skills = this.info.skills;
-          this.certifications = this.info.certifications;
+          console.log("HERE" + this.info.skills);
+          if (this.info.skills !== undefined) {
+            this.skills = this.info.skills;
+          }
+          if (this.info.certifications !== undefined) {
+            this.certifications = this.info.certifications;
+          }
         });
     }
     // Education Form
@@ -120,25 +125,25 @@ export class EditprofileComponent implements OnInit {
     // re-initializes the form
     this.displayname = new FormControl();
   }
-  updateCertifications(professionalInfo: ProfileDetails) {
+  updateCertifications() {
     // adds it to certifications array to display
-    this.certifications.push(this.certification.value);
+    this.certifications.push(this.new_certification.value);
     // make sure profileDetails object is updated
     this.info.certifications = this.certifications;
     // push new certification to firestore
-    this.usersService.updateProfessionalInfo(professionalInfo, this.id);
+    this.usersService.updateProfessionalInfo(this.info, this.id);
     // re-initializes the form
-    this.certification = new FormControl();
+    this.new_certification = new FormControl();
   }
-  updateSkills(professionalInfo: ProfileDetails) {
+  updateSkills() {
     // adds it to skills array to display
-    this.skills.push(this.skill.value);
+    this.skills.push(this.new_skill.value);
     // make sure profileDetails object is updated
     this.info.skills = this.skills;
     // push new skill to firestore
-    this.usersService.updateProfessionalInfo(professionalInfo, this.id);
+    this.usersService.updateProfessionalInfo(this.info, this.id);
     // re-initializes the form
-    this.skill = new FormControl();
+    this.new_skill = new FormControl();
   }
   // update firebase with info from education form
   updateEducation(form: FormGroup) {

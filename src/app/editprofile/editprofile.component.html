@@ -81,11 +81,11 @@
               <input
                 matInput
                 placeholder="Add a certification"
-                [formControl]="certification"
+                [formControl]="new_certification"
               />
             </mat-form-field>
             <p>
-              <button class="add-button" (click)="updateCertifications(info)">
+              <button class="add-button" (click)="updateCertifications()">
                 Add Certification
               </button>
             </p>
@@ -233,11 +233,11 @@
               <input
                 matInput
                 placeholder="Add a skill or training"
-                [formControl]="skill"
+                [formControl]="new_skill"
               />
             </mat-form-field>
             <p>
-              <button class="add-button" (click)="updateSkills(info)">
+              <button class="add-button" (click)="updateSkills()">
                 Add Skill or Training
               </button>
             </p>
