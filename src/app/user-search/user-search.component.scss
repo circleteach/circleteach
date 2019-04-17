@@ -1,13 +1,26 @@
-#searchInp {
-  width: 20vw;
+@import "~@angular/material/theming";
+@import "~src/styles";
+
+.searchbox{
+  width: auto;
+  height: auto;
+  border-radius: 50px;
+  background: snow;
+}
+
+.searchInp {
+  width: 18vw;
   height: 3vh;
   font-size: 1rem;
-  border-radius: 15px;
-  border: 0.9px;
-  padding-left: 10px;
-  margin-left: 30px;
-  margin-right: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 30px;
 }
+
+.mat-form-field{
+  color: mat-color($app-primary, 800);
+}
+
 #searchInp:focus,
 input:focus {
   outline: none;
