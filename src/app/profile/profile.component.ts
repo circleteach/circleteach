@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Data, ActivatedRoute } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { AuthenticationService } from "../authentication.service";
 
 @Component({
@@ -19,10 +19,9 @@ export class ProfileComponent implements OnInit {
     // Set Correct ID
     this.setCorrectID();
   }
+  // Used to find out if Edit Profile Button should be showed
   setCorrectID() {
     this.route.params.subscribe(params => {
-      console.log(params); //log the entire params object
-      console.log(params["id"]); //log the value of id
       if (this.authService.getUserId() == params["id"]) {
         this.id = this.authService.getUserId();
       } else {
