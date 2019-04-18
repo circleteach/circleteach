@@ -1,14 +1,14 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { MatButtonToggleChange } from "@angular/material";
 import { ProfileDetails } from "../models/profileDetails.model";
-import { AuthenticationService } from "../authentication.service";
-import { Job } from "../models/job.model";
-import { UsersService } from "../users.service";
-import { EMPTY, Observable, from } from "rxjs";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { first, map, concat, flatMap, reduce, toArray } from "rxjs/operators";
 import { Users } from "../models/users.model";
-import { Data, ActivatedRoute } from "@angular/router";
+import { Job } from "../models/job.model";
+import { AuthenticationService } from "../authentication.service";
+import { UsersService } from "../users.service";
+import { first, map, flatMap, toArray } from "rxjs/operators";
+import { EMPTY, from } from "rxjs";
+import { combineLatest } from "rxjs";
 
 @Component({
   selector: "app-mycircle",
@@ -25,7 +25,12 @@ export class MycircleComponent implements OnInit {
   certifications: string[];
   connections: string[];
   connectionNames: string[];
+  // Array to Hold Education Entries
+  educationList: Job[];
+  // Array to Hold Job Entries
+  jobList: Job[];
 
+  // Education Fields
   institution = "";
   fieldsOfStudy = "";
   educationStart = "";
@@ -33,6 +38,7 @@ export class MycircleComponent implements OnInit {
   educationDates = "";
   educationDescription = "";
 
+  // Job Fields
   jobTitle = "";
   jobLocation = "";
   jobStart = "";
@@ -40,132 +46,155 @@ export class MycircleComponent implements OnInit {
   jobDates = "";
   jobDescription = "";
 
-  // other fields used
-  toggle = true;
-  edu_empty = true;
-  job_empty = true;
+  // Other Fields and Booleans used
+  userName;
+  firstName;
   id;
-  // Number of Education Entries and array to hold them
-  educationNum;
-  educationList: Job[];
-  // Number of Job Entries and array to hold them
-  jobNum;
-  jobList: Job[];
+  toggle = true;
+  eduEmpty = true;
+  jobEmpty = true;
+  loggedInUser = false;
 
   constructor(
-    private firebaseAuth: AngularFireAuth,
     private authService: AuthenticationService,
     private usersService: UsersService,
-    private route: ActivatedRoute
-  ) {
-    // TODO: If you need to access the user, access it from auth service
-  }
+    private activeRoute: ActivatedRoute
+  ) {}
   ngOnInit() {
-    // Set Correct ID
-    this.setCorrectID();
-    // Get Connections
-    this.usersService
-      .getBasicInfo(this.id)
-      .pipe(first())
-      .pipe(
-        map(doc => {
-          this.user = doc.payload.data() as Users;
-          console.log("data: " + doc.payload.data());
-          return this.user;
-        })
-      )
-      .pipe(
-        flatMap(user => {
-          return from(user.connections);
-        })
-      )
-      .pipe(
-        flatMap(userId => {
-          return this.usersService
-            .getBasicInfo(userId)
-            .pipe(first())
-            .pipe(
-              map(doc => {
-                return (doc.payload.data() as Users).name;
-              })
-            );
-        })
-      )
-      .pipe(toArray())
-      .subscribe(connections => {
-        console.log("suck it");
-        console.log(connections);
-        this.connections = connections;
-        console.log(connections);
+    // Combine them both into a single observable
+    const urlParams = combineLatest(
+      this.activeRoute.params,
+      this.activeRoute.queryParams,
+      (params, queryParams) => ({ ...params, ...queryParams })
+    );
+    // Subscribe to the single observable, giving us both
+    urlParams.subscribe(routeParams => {
+      // Use Correct ID of page being viewed
+      this.id = routeParams.id;
+      // Checks if that ID is that of the logged in user
+      this.isLoggedInUser(this.id);
+      // Get Display Name
+      this.usersService.getDisplayName(this.id).then(result => {
+        if (result != null) {
+          this.userName = result;
+          this.userName = this.getFirstName(this.userName);
+        } else {
+          console.log("Failed to get username in basic info!");
+        }
       });
-
-    // Get Skills and Certifications
-    const snapshot = this.usersService.getProfessionalInfo(this.id);
-    if (snapshot !== EMPTY && snapshot !== undefined) {
-      snapshot
+      // Get Connections
+      this.usersService
+        .getBasicInfo(this.id)
+        .pipe(first())
         .pipe(
           map(doc => {
-            this.info = doc.payload.data() as ProfileDetails;
+            this.user = doc.payload.data() as Users;
+            return this.user;
           })
         )
-        .subscribe(f => {
-          this.skills = this.info.skills;
-          this.certifications = this.info.certifications;
-          this.educationList = this.info.education;
-          // Loop through Educations (only 1 right now)
-          for (let entry in this.educationList) {
-            console.log(entry);
-            // Education Fields
-            this.institution = this.educationList[entry].location;
-            this.fieldsOfStudy = this.educationList[entry].fieldOfStudy;
-            this.educationDescription = this.educationList[entry].description;
-            if (
-              this.educationDescription !== "" &&
-              this.educationDescription !== undefined
-            ) {
-              this.edu_empty = false;
-            }
-            this.educationStart = this.educationList[entry].startTime;
-            this.educationEnd = this.educationList[entry].endTime;
-            this.educationDates = this.educationStart.concat(
-              " - ",
-              this.educationEnd
-            );
-          }
-          this.jobList = this.info.jobHistory;
-          // Loop through Experiences (only 1 right now)
-          for (let entry in this.jobList) {
-            console.log(entry);
-            // Experience Fields
-            this.jobTitle = this.jobList[entry].position;
-            this.jobLocation = this.jobList[entry].location;
-            this.jobDescription = this.jobList[entry].description;
-            if (
-              this.jobDescription !== "" &&
-              this.jobDescription !== undefined
-            ) {
-              this.job_empty = false;
-            }
-            this.jobStart = this.jobList[entry].startTime;
-            this.jobEnd = this.jobList[entry].endTime;
-            this.jobDates = this.jobStart.concat(" - ", this.jobEnd);
-          }
+        .pipe(
+          flatMap(user => {
+            return from(user.connections);
+          })
+        )
+        .pipe(
+          flatMap(userId => {
+            return this.usersService
+              .getBasicInfo(userId)
+              .pipe(first())
+              .pipe(
+                map(doc => {
+                  return (doc.payload.data() as Users).name;
+                })
+              );
+          })
+        )
+        .pipe(toArray())
+        .subscribe(connections => {
+          this.connections = connections;
+          console.log(connections);
         });
-    }
+
+      // Get Skills and Certifications
+      const snapshot = this.usersService.getProfessionalInfo(this.id);
+      if (snapshot !== EMPTY && snapshot !== undefined) {
+        snapshot
+          .pipe(
+            map(doc => {
+              this.info = doc.payload.data() as ProfileDetails;
+            })
+          )
+          .subscribe(f => {
+            if (this.info !== undefined) {
+              this.skills = this.info.skills;
+              this.certifications = this.info.certifications;
+              this.educationList = this.info.education;
+            }
+            // Loop through Educations (only 1 right now)
+            for (let entry in this.educationList) {
+              // Education Fields
+              this.institution = this.educationList[entry].location;
+              this.fieldsOfStudy = this.educationList[entry].fieldOfStudy;
+              this.educationDescription = this.educationList[entry].description;
+              if (
+                this.educationDescription !== "" &&
+                this.educationDescription !== undefined
+              ) {
+                this.eduEmpty = false;
+              }
+              this.educationStart = this.educationList[entry].startTime;
+              this.educationEnd = this.educationList[entry].endTime;
+              this.educationDates = this.educationStart.concat(
+                " - ",
+                this.educationEnd
+              );
+            }
+            if (this.info !== undefined) {
+              this.jobList = this.info.jobHistory;
+            }
+            // Loop through Experiences (only 1 right now)
+            for (let entry in this.jobList) {
+              // Experience Fields
+              this.jobTitle = this.jobList[entry].position;
+              this.jobLocation = this.jobList[entry].location;
+              this.jobDescription = this.jobList[entry].description;
+              if (
+                this.jobDescription !== "" &&
+                this.jobDescription !== undefined
+              ) {
+                this.jobEmpty = false;
+              }
+              this.jobStart = this.jobList[entry].startTime;
+              this.jobEnd = this.jobList[entry].endTime;
+              this.jobDates = this.jobStart.concat(" - ", this.jobEnd);
+            }
+          });
+      }
+    });
   }
 
   toggleView(change: MatButtonToggleChange) {
     this.toggle = change.value;
   }
   setCorrectID() {
-    this.route.params.subscribe(params => {
-      console.log(params); //log the entire params object
-      console.log(params["id"]); //log the value of id
+    this.activeRoute.params.subscribe(params => {
       if (this.authService.getUserId() == params["id"]) {
         this.id = this.authService.getUserId();
       } else {
         this.id = params["id"];
       }
     });
+  }
+  // Checks if a users profile page is being viewed by themselves
+  isLoggedInUser(id: string) {
+    var logged_in = this.authService.getUserId();
+    if (id === logged_in) {
+      this.loggedInUser = true;
+    } else {
+      this.loggedInUser = false;
+    }
+  }
+  getFirstName(fullName: string) {
+    return fullName.substr(0, fullName.indexOf(" "));
   }
 }

@@ -39,10 +39,13 @@ $warn: mat-color($mat-red, 500);
 // that you are using.
 @include angular-material-theme($app-theme);
 
-html,
+html {
+  background-color: #f2f6ff;
+}
 body {
   margin: 0;
   height: 100%;
+  background-color: #f2f6ff;
 }
 body {
   margin: 0;

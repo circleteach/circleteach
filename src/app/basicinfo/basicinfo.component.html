@@ -11,10 +11,12 @@
 
   <div id="userInfo" gdArea="userInfo">
     <div class="user-name">{{ userName }}</div>
-    <div class="user-title">{{ jobTitle }} at {{ jobLocation }}</div>
+    <div *ngIf="!jobEmpty" class="user-title">
+      {{ jobTitle }} at {{ jobLocation }}
+    </div>
   </div>
 
-  <div *ngIf="connectionButton" id="addFriend" gdArea="addCircle">
+  <div *ngIf="!loggedInUser" id="addFriend" gdArea="addCircle">
     <button
       mat-fab
       *ngIf="friends"
