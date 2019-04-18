@@ -39,8 +39,10 @@
 .add-button {
   background-color: mat-color($app-accent, 500);
   color: white;
-  width: 20vh;
-  height: 2.5vw;
+  // width: 20vh;
+  // height: 2.5vw;
+  width: 100px;
+  height: 40px;
   border-radius: 50px;
   margin-bottom: 5vh;
 }
