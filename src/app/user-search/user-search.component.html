@@ -7,7 +7,7 @@
       placeholder="Search Users" 
       [matAutocomplete]="auto"
     />
-    <mat-autocomplete #auto="matAutocomplete">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="goUser()">
       <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
         {{user}}
       </mat-option>
