@@ -203,6 +203,10 @@ export class UsersService {
       .snapshotChanges();
   }
 
+  getAllUsers(){
+    return this.firestore.collection("users").snapshotChanges();
+  }
+
   // getInfo(userID: string) {
   //   // this.firestore.ca
   //   this.firestore.child('users').orderByChild('user').equalTo(userID).on("value", function(snapshot) {
