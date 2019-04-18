@@ -10,7 +10,8 @@ import {map, startWith} from 'rxjs/operators';
 })
 export class UserSearchComponent implements OnInit {
   userEntry = new FormControl();
-  users: string[] = ["Connor", "Shri", "Jay", "Parker", "Melanie", "Jeff"];
+
+  
   filteredUsers: Observable<string[]>;
 
   constructor() { }
