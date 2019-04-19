@@ -2,10 +2,10 @@
   <a mat-list-item routerLink="/home" (click)="onSidenavClose()">
     <mat-icon>home</mat-icon> <span class="nav-caption">Home</span>
   </a>
-  <a mat-list-item routerLink="/login" (click)="onSidenavClose()">
+  <a mat-list-item routerLink="/messaging" (click)="onSidenavClose()">
     <mat-icon>mail</mat-icon><span class="nav-caption">Messages</span>
   </a>
-  <a mat-list-item routerLink="/profile" (click)="onSidenavClose()">
+  <a mat-list-item (click)="onSidenavClose(true)">
     <mat-icon>person</mat-icon><span class="nav-caption">Profile</span>
   </a>
   <a mat-list-item routerLink="/settings" (click)="onSidenavClose()">
