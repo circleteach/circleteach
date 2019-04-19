@@ -17,8 +17,10 @@ export class StorageService {
     return pathRef.getDownloadURL();
   }
 
-  uploadProfilePicture(link: string, event) {
+  uploadProfilePicture(link: string, event): Promise<string> {
     const pathRef = this.storage.ref(link);
-    pathRef.put(event.target.files[0]);
+    return pathRef.put(event.target.files[0]).then(uploadTask => {
+      return uploadTask.ref.getDownloadURL();
+    });
   }
 }

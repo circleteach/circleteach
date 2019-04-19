@@ -146,7 +146,7 @@ export class AuthenticationService {
         return this.userDetails.photoURL;
       }
     }
-    return "profile-pictures/";
+    return "gs://circle-teach.appspot.com/profile-pictures/default-profile-picture.png";
   }
 
   updateIconUrl(profileImage: string) {

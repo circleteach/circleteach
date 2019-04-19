@@ -74,17 +74,21 @@ export class UsersService {
       .get()
       .then(doc => {
         if (doc.exists) {
-          return doc.data().profileImage;
+          const image = doc.data().profileImage;
+          if (image == null) {
+            return "gs://circle-teach.appspot.com/profile-pictures/default-profile-picture.png";
+          }
+          return image;
         } else {
           console.log("Failed to retrieve profile image url from user.");
-          return null;
+          return "gs://circle-teach.appspot.com/profile-pictures/default-profile-picture.png";
         }
       })
       .catch(error => {
         console.log(
           "Failed to retrieve profile image url from user due to error."
         );
-        return null;
+        return "gs://circle-teach.appspot.com/profile-pictures/default-profile-picture.png";
       });
   }
 

@@ -35,7 +35,8 @@ export class BasicinfoComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private usersService: UsersService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private storageService: StorageService
   ) {}
 
   ngOnInit() {
@@ -72,6 +73,12 @@ export class BasicinfoComponent implements OnInit {
           console.log("Failed to get username in basic info!");
         }
       });
+
+      this.usersService.getProfileImage(this.id).then(result => {
+        this.storageService.getStorageFromLink(result).then(r => {
+          this.profileImg = r;
+        });
+    });
 
       // Get Job Title and Job Location
       const snapshot = this.usersService.getProfessionalInfo(this.id);

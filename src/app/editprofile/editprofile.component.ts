@@ -9,6 +9,7 @@ import { Users } from "../models/users.model";
 import { map } from "rxjs/operators";
 
 import { FormGroup, FormArray, FormControl } from "@angular/forms";
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: "app-editprofile",
@@ -56,13 +57,17 @@ export class EditprofileComponent implements OnInit {
   constructor(
     private auth: AuthenticationService,
     private usersService: UsersService,
-    private storeageService: StorageService
+    private storeageService: StorageService,
+    private snackbar: MatSnackBar,
   ) {}
 
   ngOnInit() {
     // Get ID from auth
     if (this.auth.getUserId() != null) {
       this.id = this.auth.getUserId();
+      this.storeageService.getStorageFromLink(this.auth.getIconUrl()).then(result => {
+        this.profileImg = result;
+      });
     }
     // Get Display Name
     this.usersService.getDisplayName(this.id).then(result => {
@@ -111,10 +116,21 @@ export class EditprofileComponent implements OnInit {
   }
   // Update Profile Picture
   updateProfilePicture(fileInputEvent: any) {
+    const file = fileInputEvent.target.files[0];
+    const parts = file.name.split(".");
+    const extension = parts[parts.length - 1];
     this.storeageService.uploadProfilePicture(
-      this.auth.getIconUrl(),
+      'profile-pictures/' + this.auth.getUserId() + extension,
       fileInputEvent
-    );
+    ).then(url => {
+      this.auth.updateIconUrl(url);
+      this.storeageService.getStorageFromLink(url).then(result => {
+        this.profileImg = result;
+        this.snackbar.open("Successfully uploaded your new profile picture!", "X", {
+          duration: 3000
+        });
+      });
+    });
   }
   updateDisplayName() {
     this.profile.name = this.displayname.value;
