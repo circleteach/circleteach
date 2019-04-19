@@ -10,8 +10,10 @@ import { MessagingComponent } from "./messaging/messaging.component";
 import { EditprofileComponent } from "./editprofile/editprofile.component";
 
 const routes: Routes = [
-  { path: "home", component: HomeComponent },
-  // Put this back ^ canActivate: [LoggedInGuard]  jay
+  { path: "home",
+    component: HomeComponent,
+    canActivate: [LoggedInGuard]
+  },
   {
     path: "profile/:id",
     component: ProfileComponent,
@@ -29,8 +31,14 @@ const routes: Routes = [
     component: SettingsComponent,
     canActivate: [LoggedInGuard]
   },
-  { path: "messaging", component: MessagingComponent },
-  { path: "messaging/:id", component: MessagingComponent },
+  { path: "messaging",
+    component: MessagingComponent,
+    canActivate: [LoggedInGuard]
+  },
+  { path: "messaging/:id",
+    component: MessagingComponent,
+    canActivate: [LoggedInGuard]
+  },
   { path: "", redirectTo: "/login", pathMatch: "full" }
 ];
 

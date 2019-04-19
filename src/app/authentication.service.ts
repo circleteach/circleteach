@@ -45,7 +45,9 @@ export class AuthenticationService {
         return error.message;
       })
       .then(res => {
-        this.router.navigate(["/home"]);
+        if (this.isLoggedIn()) {
+          this.router.navigate(["/home"]);
+        }
       });
   }
 
