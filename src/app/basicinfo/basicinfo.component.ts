@@ -8,6 +8,7 @@ import { Job } from "../models/job.model";
 import { map } from "rxjs/operators";
 import { combineLatest } from "rxjs";
 import { StorageService } from "../storage.service";
+import { AngularFireAuth } from "@angular/fire/auth";
 
 @Component({
   selector: "app-basicinfo",
@@ -31,11 +32,14 @@ export class BasicinfoComponent implements OnInit {
   authenticatedID;
   jobEmpty = false;
   friends;
+  profileURL: string | null;
 
   constructor(
-    private authService: AuthenticationService,
+    private auth: AuthenticationService,
     private usersService: UsersService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private storage: StorageService,
+    private firebaseAuth: AngularFireAuth
   ) {}
 
   ngOnInit() {
@@ -50,7 +54,7 @@ export class BasicinfoComponent implements OnInit {
       // Use Correct ID of page being viewed
       this.id = routeParams.id;
       // get AuthID
-      this.authenticatedID = this.authService.getUserId();
+      this.authenticatedID = this.auth.getUserId();
       // Checks if that ID is that of the logged in user
       this.isLoggedInUser();
       // Get Display Name
@@ -111,12 +115,18 @@ export class BasicinfoComponent implements OnInit {
           break;
         }
       }
-     this.usersService.updateConnections(this.authenticatedID, this.authUsersConnections);
+      this.usersService.updateConnections(
+        this.authenticatedID,
+        this.authUsersConnections
+      );
     } else {
-        this.friends = true;
-        // Follow
-        this.authUsersConnections.push(this.id);
-        this.usersService.updateConnections(this.authenticatedID, this.authUsersConnections);
+      this.friends = true;
+      // Follow
+      this.authUsersConnections.push(this.id);
+      this.usersService.updateConnections(
+        this.authenticatedID,
+        this.authUsersConnections
+      );
     }
   }
 
