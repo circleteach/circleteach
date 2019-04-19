@@ -117,6 +117,19 @@ export class EditprofileComponent implements OnInit {
   // Update Profile Picture
   updateProfilePicture(fileInputEvent: any) {
     const file = fileInputEvent.target.files[0];
+    if (file == null) {
+      this.snackbar.open("You must specify a proper picture to upload!", "X", {
+        duration: 3000
+      });
+      return;
+    }
+
+    if (!(file && file.type.split('/')[0] === 'image')) {
+      this.snackbar.open("You can only upload an image as your profile picture!", "X", {
+        duration: 3000
+      });
+      return;
+    }
     const parts = file.name.split(".");
     const extension = parts[parts.length - 1];
     this.storeageService.uploadProfilePicture(
@@ -133,6 +146,13 @@ export class EditprofileComponent implements OnInit {
     });
   }
   updateDisplayName() {
+    if (this.displayname.value == null || this.displayname.value.length < 1) {
+      this.snackbar.open("Your new display name must be at least 1 character!", "X", {
+        duration: 3000
+      });
+      this.displayname = new FormControl();
+      return;
+    }
     this.profile.name = this.displayname.value;
     // update it to be displayed immediately
     this.userName = this.profile.name;
