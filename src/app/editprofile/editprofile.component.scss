@@ -39,12 +39,13 @@
 .add-button {
   background-color: mat-color($app-accent, 500);
   color: white;
-  // width: 20vh;
-  // height: 2.5vw;
   width: 100px;
   height: 40px;
   border-radius: 50px;
   margin-bottom: 5vh;
+}
+.mat-flat-button.mat-primary {
+  margin-left: 15px;
 }
 .add-button:focus,
 input:focus {
@@ -59,7 +60,7 @@ input:focus {
 .add-profile-pic {
   color: white;
   border-radius: 50px;
-  margin-left: 1vw;
+  margin-left: 5px;
   margin-top: 1vh;
   margin-bottom: 3vh;
   margin-right: 20px;

@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { EMPTY, Observable } from "rxjs";
-import { Certification } from "./models/certifications.model";
 import { ProfileDetails } from "./models/profileDetails.model";
 import { Job } from "./models/job.model";
 import { Users } from "./models/users.model";
@@ -108,6 +107,34 @@ export class UsersService {
       });
   }
 
+  // Get Connections
+  getConnections(userID: string): Promise<string | null> {
+    return this.firestore.firestore
+      .collection("users")
+      .doc(userID)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          return doc.data().connections;
+        } else {
+          console.log("Failed to retrieve connections from user.");
+          return null;
+        }
+      })
+      .catch(error => {
+        console.log("Failed to retrieve connections from user due to error.");
+        return null;
+      });
+  }
+
+  // Add Connection to a Users Connections List
+  updateConnections(loggedInUserID: string, connections: Array<String>) {
+    return this.firestore
+      .collection("users")
+      .doc(loggedInUserID)
+      .set({ connections: connections }, {merge: true});
+  }
+
   getGroups(userID: string): DocumentReference[] {
     this.firestore.firestore
       .collection("users")
@@ -203,7 +230,7 @@ export class UsersService {
       .snapshotChanges();
   }
 
-  getAllUsers(){
+  getAllUsers() {
     return this.firestore.collection("users").snapshotChanges();
   }
 

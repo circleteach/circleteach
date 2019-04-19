@@ -12,7 +12,6 @@ import { EditprofileComponent } from "./editprofile/editprofile.component";
 const routes: Routes = [
   { path: "home", component: HomeComponent },
   // Put this back ^ canActivate: [LoggedInGuard]  jay
-  // TODO: change to profile/:id
   {
     path: "profile/:id",
     component: ProfileComponent,
@@ -36,7 +35,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: "reload" })],
+  imports: [
+    RouterModule.forRoot(routes, { onSameUrlNavigation: "reload" }),
+    [
+      RouterModule.forRoot(routes, {
+        scrollPositionRestoration: "enabled"
+      })
+    ]
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
