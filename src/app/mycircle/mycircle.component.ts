@@ -121,6 +121,7 @@ export class MycircleComponent implements OnInit {
         .subscribe(connections => {
           this.connections = connections;
           console.log(connections);
+          console.log(this.connectionsList);
         });
 
       // // Get ProfessionalInfo About Connections
