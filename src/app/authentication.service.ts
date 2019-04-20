@@ -82,14 +82,6 @@ export class AuthenticationService {
       });
   }
 
-  /* If we ever want to add login with Google
-  loginWithGoogle() {
-    return this.firebaseAuth.auth.signInWithPopup(
-      new firebase.auth.GoogleAuthProvider()
-    );
-  }
-  */
-
   logout() {
     if (this.isLoggedIn()) {
       return this.firebaseAuth.auth
