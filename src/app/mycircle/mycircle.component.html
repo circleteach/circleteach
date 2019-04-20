@@ -108,8 +108,31 @@
   <div *ngIf="!toggle">
     <div id="circlecontent">
       <!--Being bad starting here-->
-      <div *ngFor="let connection of connections" class="connection">
-        {{ connection }}
+      <div *ngFor="let connection of connections; let i = index">
+        <!-- {{ connection }} -->
+        <a
+          class="link"
+          (click)="changeToggle()"
+          routerLink="/profile/{{ connectionsList[i] }}"
+        >
+          <div id="personalInfoCont" gdAreas="profImage userInfo addCircle">
+            <div id="profImgContainer" gdArea="profImage">
+              <img
+                id="profImg"
+                src="{{ profileImg }}"
+                alt="Profile Image"
+                height="80px"
+                width="80px"
+              />
+            </div>
+            <div id="userInfo" gdArea="userInfo">
+              <div class="user-name">{{ connection }}</div>
+              <div *ngIf="!jobEmpty" class="user-title">
+                <!-- {{ jobTitle }} at {{ jobLocation }} -->
+              </div>
+            </div>
+          </div>
+        </a>
       </div>
     </div>
   </div>

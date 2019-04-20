@@ -81,7 +81,7 @@ export class BasicinfoComponent implements OnInit {
         this.storage.getStorageFromLink(result).then(r => {
           this.profileImg = r;
         });
-    });
+      });
 
       // Get Job Title and Job Location
       const snapshot = this.usersService.getProfessionalInfo(this.id);

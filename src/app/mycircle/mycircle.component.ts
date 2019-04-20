@@ -9,6 +9,7 @@ import { UsersService } from "../users.service";
 import { first, map, flatMap, toArray } from "rxjs/operators";
 import { EMPTY, from } from "rxjs";
 import { combineLatest } from "rxjs";
+import { StorageService } from "../storage.service";
 
 @Component({
   selector: "app-mycircle",
@@ -24,6 +25,8 @@ export class MycircleComponent implements OnInit {
   skills: string[];
   certifications: string[];
   connections: string[];
+  jobTitles: string[];
+  jobLocations: string[];
   connectionNames: string[];
   // Array to Hold Education Entries
   educationList: Job[];
@@ -54,11 +57,15 @@ export class MycircleComponent implements OnInit {
   eduEmpty = true;
   jobEmpty = true;
   loggedInUser = false;
+  profileImg = "../../assets/img/default-profile-picture.png";
+  profileImage;
+  connectionsList = new Array();
 
   constructor(
     private authService: AuthenticationService,
     private usersService: UsersService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private storage: StorageService
   ) {}
   ngOnInit() {
     // Combine them both into a single observable
@@ -82,7 +89,7 @@ export class MycircleComponent implements OnInit {
           console.log("Failed to get username in basic info!");
         }
       });
-      // Get Connections
+      // Get Connections Display Names
       this.usersService
         .getBasicInfo(this.id)
         .pipe(first())
@@ -99,6 +106,7 @@ export class MycircleComponent implements OnInit {
         )
         .pipe(
           flatMap(userId => {
+            this.connectionsList.push(userId);
             return this.usersService
               .getBasicInfo(userId)
               .pipe(first())
@@ -114,6 +122,43 @@ export class MycircleComponent implements OnInit {
           this.connections = connections;
           console.log(connections);
         });
+
+      // // Get ProfessionalInfo About Connections
+      // this.usersService
+      //   .getBasicInfo(this.id)
+      //   .pipe(first())
+      //   .pipe(
+      //     map(doc => {
+      //       this.user = doc.payload.data() as Users;
+      //       return this.user;
+      //     })
+      //   )
+      //   .pipe(
+      //     flatMap(user => {
+      //       return from(user.connections);
+      //     })
+      //   )
+      //   .pipe(
+      //     flatMap(userId => {
+      //       console.log(userId);
+      //       this.connectionsList.push(userId);
+      //       return this.usersService
+      //         .getProfessionalInfo(userId)
+      //         .pipe(first())
+      //         .pipe(
+      //           map(doc => {
+      //             return (doc.payload.data() as Users).name;
+      //           })
+      //         );
+      //     })
+      //   );
+      // console.log(this.connectionsList);
+
+      // .pipe(toArray())
+      // .subscribe(connections => {
+      //   this.connections = connections;
+      //   console.log(connections);
+      // });
 
       // Get Skills and Certifications
       const snapshot = this.usersService.getProfessionalInfo(this.id);
@@ -170,11 +215,20 @@ export class MycircleComponent implements OnInit {
             }
           });
       }
+      this.usersService.getProfileImage(this.id).then(result => {
+        this.storage.getStorageFromLink(result).then(r => {
+          this.profileImage = r;
+        });
+      });
     });
   }
 
   toggleView(change: MatButtonToggleChange) {
     this.toggle = change.value;
+  }
+  // used when a profile is clicked on in connections to switch toggle back to profile
+  changeToggle() {
+    this.toggle = !this.toggle;
   }
   setCorrectID() {
     this.activeRoute.params.subscribe(params => {
