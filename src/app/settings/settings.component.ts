@@ -48,7 +48,7 @@ export class SettingsComponent implements OnInit {
 
     this.auth.reAuthenticate(this.userEmail, this.oldPassword).subscribe(
       success => {
-        if (this.newPassword != this.newPasswordConfirm) {
+        if (this.newPassword !== this.newPasswordConfirm) {
           this.snackbar.open("NEW PASSWORDS DO NOT MATCH", "X", {
             duration: 3000
           });

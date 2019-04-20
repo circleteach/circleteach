@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PostsComponent } from '../posts/posts.component'
 
 @Component({
   selector: 'app-home',
@@ -8,11 +7,12 @@ import { PostsComponent } from '../posts/posts.component'
 })
 export class HomeComponent implements OnInit {
 
+  public canwritepost = false;
+  public activitylogview = false;
+
   constructor() { }
 
   ngOnInit() {
   }
 
-  public canwritepost: Boolean=false;  
-  public activitylogview: Boolean=false;
 }

@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TagsearchComponent implements OnInit {
 
-  currTag= '';
+  currTag = '';
   tags: string[] = [];
 
   constructor() { }
@@ -15,9 +15,9 @@ export class TagsearchComponent implements OnInit {
   ngOnInit() {
   }
 
-  addTag(){
+  addTag() {
     this.tags.push(this.currTag);
-    this.currTag= '';
+    this.currTag = '';
   }
 
   remove(tag: string): void {

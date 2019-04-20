@@ -11,7 +11,7 @@ export class ProfileDetails implements Deserializable {
   deserialize(input: any): this {
     Object.assign(this, input);
     // if it was just one instance (not an array of objects)
-    //this.jobHistory = new Job().deserialize(input.jobHistory);
+    // this.jobHistory = new Job().deserialize(input.jobHistory);
 
     // two options
     // this.jobHistory = input.jobHistory.map(jobHistory =>

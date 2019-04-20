@@ -101,7 +101,7 @@ export class BasicinfoComponent implements OnInit {
               }
             }
             // Loop through Experiences (only 1 right now)
-            for (let entry in this.jobList) {
+            for (const entry in this.jobList) {
               // Get Job Title
               this.jobTitle = this.jobList[entry].position;
               this.jobLocation = this.jobList[entry].location;
@@ -115,7 +115,7 @@ export class BasicinfoComponent implements OnInit {
     if (this.friends) {
       this.friends = false;
       // "Unfollow"
-      for (var i = this.authUsersConnections.length - 1; i >= 0; i--) {
+      for (let i = this.authUsersConnections.length - 1; i >= 0; i--) {
         if (this.authUsersConnections[i] === this.id) {
           this.authUsersConnections.splice(i, 1);
           break;

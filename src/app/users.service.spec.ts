@@ -43,6 +43,7 @@ describe('UsersService', () => {
     fixture.setProfileImage('8C4CDYnHEDYVe2aHemmf8iRvTgf1', "https://pbs.twimg.com/profile_images/993555605078994945/Yr-pWI4G_400x400.jpg").then(result => {
       fixture.getProfileImage('8C4CDYnHEDYVe2aHemmf8iRvTgf1').then(r2 => {
         expect(r2).toEqual('https://pbs.twimg.com/profile_images/993555605078994945/Yr-pWI4G_400x400.jpg');
+        // tslint:disable-next-line:max-line-length
         fixture.setProfileImage('8C4CDYnHEDYVe2aHemmf8iRvTgf1', 'gs://circle-teach.appspot.com/profile-pictures/8C4CDYnHEDYVe2aHemmf8iRvTgf1.jpg').then(r3 => {
 
         });

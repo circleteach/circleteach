@@ -5,7 +5,6 @@ import {map, startWith} from 'rxjs/operators';
 import {Users} from '../models/users.model';
 import {UsersService} from '../users.service';
 import {Router} from '@angular/router';
-import { MatAutocompleteSelectedEvent } from '@angular/material'
 
 @Component({
   selector: 'app-user-search',
@@ -25,13 +24,13 @@ export class UserSearchComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.usersService.getAllUsers().subscribe(data => {    
+    this.usersService.getAllUsers().subscribe(data => {
       this.users = data.map(e => {
         return{
           id: e.payload.doc.id,
           ...e.payload.doc.data()
         } as Users;
-      })
+      });
       console.log(this.users);
 
       this.users.forEach(user => {
@@ -46,24 +45,24 @@ export class UserSearchComponent implements OnInit {
     );
   }
 
-  private myFilter(value: string): string[]{
+  private myFilter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.userNames.filter(user => user.toLowerCase().includes(filterValue));
   }
 
-  private goUser(){
-    var goName = this.userEntry.value;
-    var id = '';
-    var keepGoing = true;
+  private goUser() {
+    const goName = this.userEntry.value;
+    let id = '';
+    let keepGoing = true;
     this.users.forEach(user => {
-      if(keepGoing){
-        if(goName == user.name){
+      if (keepGoing) {
+        if (goName === user.name) {
           id = 'profile/' + user.id;
           keepGoing = false;
         }
       }
-    })
-    if(id != ''){
+    });
+    if (id !== '') {
       this.router.navigate([id]);
     }
   }

@@ -1,7 +1,3 @@
-import { Time } from '@angular/common';
-import { Comment } from './comment.model'
-import * as firebase from 'firebase';
-
 export class Post {
     public id: string;
     public attachments;

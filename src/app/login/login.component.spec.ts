@@ -8,7 +8,7 @@ import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/auth';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AuthenticationService} from '../authentication.service';
 import {UsersService} from '../users.service';
-import {LoginComponent} from "../login/login.component";
+import {LoginComponent} from "./login.component";
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
 import {HomeComponent} from "../home/home.component";
 

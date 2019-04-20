@@ -15,13 +15,13 @@ export class PostsService {
     return this.firestore.collection("posts").snapshotChanges();
   }
 
-  getPostUserData(postId: string){
+  getPostUserData(postId: string) {
     return this.firestore.doc("users/" + postId).snapshotChanges();
   }
 
   // Subcollection get comments
-  getComments(post: Post){
-    return this.firestore.collection("posts/" + post.id +"/comments").snapshotChanges();
+  getComments(post: Post) {
+    return this.firestore.collection("posts/" + post.id + "/comments").snapshotChanges();
   }
 
   // CRUD Create
@@ -31,7 +31,7 @@ export class PostsService {
   }
 
   // Add Comment to subcollection
-  createComments(comment: Comment, post: Post){
+  createComments(comment: Comment, post: Post) {
     const param = JSON.parse(JSON.stringify(comment));
     return this.firestore.collection("posts/" + post.id + "/comments").add(param);
   }

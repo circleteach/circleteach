@@ -6,7 +6,7 @@ export class Job implements Deserializable {
   public endTime: string;
   public location: string;
   public position: string;
-  public user : string;
+  public user: string;
   public fieldOfStudy: string;
 
   deserialize(input: any): this {

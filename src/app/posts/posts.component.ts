@@ -13,25 +13,25 @@ import { map } from "rxjs/operators";
   styleUrls: ["./posts.component.scss"]
 })
 export class PostsComponent implements OnInit {
-  //Example Fields
+  // Example Fields
   userName = "Jay Example";
   userTitle = "Example grade Example at Example School";
   postAge = "2 Days ago";
   postContent =
     "Some days I just feel like, Example. Then I go Example and keep exampling myself. Everyday all day!";
   stars = 52;
-  //END Example Fields
+  // END Example Fields
 
-  posts: postWithMeta[]; //Stores list of posts
-  comments: Comment[]; //Stores list of comments per each post
+  posts: postWithMeta[]; // Stores list of posts
+  comments: Comment[]; // Stores list of comments per each post
 
-  @Input("canwritepost") canWritePost: Boolean; //Toggles write posts section
-  @Input("activitylogview") activityLogView: Boolean; //Toggles Activity log view
+  @Input("canwritepost") canWritePost: boolean; // Toggles write posts section
+  @Input("activitylogview") activityLogView: boolean; // Toggles Activity log view
 
-  private isStared = false; //Have you starred the post
-  private newPostInp; //Bound text field for write post
-  private newCommentInp; //Bound text field for write comment
-  private tagsInp; //Bound text filed for input of tags with post
+  private isStared = false; // Have you starred the post
+  private newPostInp; // Bound text field for write post
+  private newCommentInp; // Bound text field for write comment
+  private tagsInp; // Bound text filed for input of tags with post
 
   constructor(
     private postService: PostsService,
@@ -44,7 +44,7 @@ export class PostsComponent implements OnInit {
   // Gets unfiltered list of all posts, proof of concept for subscribing to collection
   ngOnInit() {
     this.postService.getPosts().subscribe(data => {
-      //This is how to get data from a collection
+      // This is how to get data from a collection
       this.posts = data.map(e => {
         return {
           id: e.payload.doc.id,
@@ -52,8 +52,8 @@ export class PostsComponent implements OnInit {
         } as postWithMeta;
       });
 
-      //Within the subscribe to getPosts(), i'm calling my seccond data retrieval function
-      //in this forEach loop, getting a document for each post object
+      // Within the subscribe to getPosts(), i'm calling my seccond data retrieval function
+      // in this forEach loop, getting a document for each post object
       this.posts.forEach(post => {
         this.getPostUser(post);
       });
@@ -66,9 +66,9 @@ export class PostsComponent implements OnInit {
       .getPostUserData(post.user)
       .pipe(
         map(action => {
-          //This is how to get data from a document
+          // This is how to get data from a document
           user = action.payload.data() as Users;
-          //user.id = action.payload.id;
+          // user.id = action.payload.id;
         })
       )
       .subscribe(f => {
@@ -78,9 +78,9 @@ export class PostsComponent implements OnInit {
       });
   }
 
-  //----------- Methods for Post Body ------------//
+  // ----------- Methods for Post Body ------------//
 
-  //Adds or removes from posts star count, changes Icon appearance
+  // Adds or removes from posts star count, changes Icon appearance
   starClick(post: Post) {
     if (!this.isStared) {
       post.stars += 1;
@@ -93,7 +93,7 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  //Allows viewing of comments, opens comment creation UI
+  // Allows viewing of comments, opens comment creation UI
   commentClick(post: Post) {
     post.showComments = !post.showComments;
 
@@ -107,7 +107,7 @@ export class PostsComponent implements OnInit {
     });
   }
 
-  //TODO Uploads comment given body and user info
+  // TODO Uploads comment given body and user info
   submitCommentClick(post: Post) {
     if (this.newCommentInp != "" && this.newCommentInp != null) {
       let newComment: Comment = new Comment();
@@ -134,11 +134,11 @@ export class PostsComponent implements OnInit {
   // TODO Allows content to be uploaded to post
   uploadClick() {}
 
-  //Validates content and creates a new post for the user
-  //TODO: Linke to User, Tags
+  // Validates content and creates a new post for the user
+  // TODO: Linke to User, Tags
   postClick() {
-    if (this.newPostInp != "" && this.newPostInp != null) {
-      let newPost = new Post();
+    if (this.newPostInp !== "" && this.newPostInp != null) {
+      const newPost = new Post();
       newPost.content = this.newPostInp;
       newPost.time = Date.now();
       newPost.user = this.authService.getUserId();
@@ -157,7 +157,7 @@ export class PostsComponent implements OnInit {
   // TODO toggles the posts by options
   postsByClick() {}
 
-  //------------ Methods for Comments ------------//
+  // ------------ Methods for Comments ------------//
 }
 
 class postWithMeta extends Post {
