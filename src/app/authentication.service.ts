@@ -27,12 +27,15 @@ export class AuthenticationService {
       if (user) {
         this.userDetails = user;
         if (!this.loggedInPreviously) {
-          this.router.navigate(['/home']);
+          if (this.router.url === '' || this.router.url === '/login' || this.router.url === '/signup') {
+            this.router.navigate(['/home']);
+          }
           this.loggedInPreviously = true;
         }
       } else {
         this.userDetails = null;
         this.router.navigate(["/login"]);
+        this.loggedInPreviously = false;
       }
     });
   }
