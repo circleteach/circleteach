@@ -11,6 +11,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import {
+  MatAutocompleteModule,
   MatButtonModule, MatButtonToggleModule, MatChipsModule,
   MatIconModule,
   MatInputModule,
@@ -39,6 +40,7 @@ import { SettingsComponent } from './settings/settings.component';
 import {MessagingComponent} from './messaging/messaging.component';
 import {TagsearchComponent} from './tagsearch/tagsearch.component';
 import {BasicinfoComponent} from './basicinfo/basicinfo.component';
+import {EditprofileComponent} from "./editprofile/editprofile.component";
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -59,6 +61,7 @@ describe('AppComponent', () => {
         MatListModule,
         MatSelectModule,
         MatInputModule,
+        MatAutocompleteModule,
         ReactiveFormsModule,
         FormsModule,
         AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -83,6 +86,7 @@ describe('AppComponent', () => {
         SettingsComponent,
         MessagingComponent,
         TagsearchComponent,
+        EditprofileComponent,
       ]
     }).compileComponents();
   }));
