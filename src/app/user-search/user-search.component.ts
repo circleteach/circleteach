@@ -50,7 +50,7 @@ export class UserSearchComponent implements OnInit {
     return this.userNames.filter(user => user.toLowerCase().includes(filterValue));
   }
 
-  private goUser() {
+  public goUser() {
     const goName = this.userEntry.value;
     let id = '';
     let keepGoing = true;
