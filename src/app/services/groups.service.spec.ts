@@ -21,10 +21,10 @@ describe('GroupsService', () => {
     expect(service).toBeTruthy();
   });
 
-  it ('The specified group should have a name SMG', () => {
+  it ('The specified group should have a name SMH', () => {
     const fixture: GroupsService = TestBed.get(GroupsService);
     fixture.getGroupName('kK9jqzsnR1OFScwufon9').then(result => {
-      expect(result).toEqual('"SMH"');
+      expect(result).toEqual('SMH');
     }).catch();
   });
 });

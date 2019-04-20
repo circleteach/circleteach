@@ -12,6 +12,7 @@ import { log } from "util";
 export class AuthenticationService {
   private user: Observable<firebase.User>;
   private userDetails: firebase.User = null;
+  private loggedInPreviously = false;
 
   constructor(
     private firebaseAuth: AngularFireAuth,
@@ -19,14 +20,22 @@ export class AuthenticationService {
     private userService: UsersService,
     private ngZone: NgZone
   ) {
+    this.firebaseAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     this.user = firebaseAuth.authState;
 
     this.user.subscribe(user => {
       if (user) {
         this.userDetails = user;
+        if (!this.loggedInPreviously) {
+          if (this.router.url === '' || this.router.url === '/login' || this.router.url === '/signup') {
+            this.router.navigate(['/home']);
+          }
+          this.loggedInPreviously = true;
+        }
       } else {
         this.userDetails = null;
         this.router.navigate(["/login"]);
+        this.loggedInPreviously = false;
       }
     });
   }
@@ -101,11 +110,12 @@ export class AuthenticationService {
   delete() {
     this.userDetails
       .delete()
-      .then(function() {
+      .then(() => {
+        console.log("User successfully deleted!");
         // User deleted.
       })
-      .catch(function(error) {
-        // An error happened.
+      .catch(error => {
+        console.log("An error happened deleting the user: " + error);
       });
   }
 

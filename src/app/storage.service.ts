@@ -1,7 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
 import { AngularFireStorage } from "@angular/fire/storage";
-import { AuthenticationService } from "./authentication.service";
 
 @Injectable({
   providedIn: "root"
@@ -9,7 +7,6 @@ import { AuthenticationService } from "./authentication.service";
 export class StorageService {
   constructor(
     private storage: AngularFireStorage,
-    private auth: AuthenticationService
   ) {}
 
   getStorageFromLink(link: string): Promise<string | null> {

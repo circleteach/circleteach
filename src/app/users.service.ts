@@ -68,6 +68,10 @@ export class UsersService {
   }
 
   getProfileImage(userID: string): Promise<string | null> {
+    if (userID == null) {
+      return new Promise(null);
+    }
+
     return this.firestore.firestore
       .collection("users")
       .doc(userID)
@@ -136,7 +140,7 @@ export class UsersService {
     return this.firestore
       .collection("users")
       .doc(loggedInUserID)
-      .set({ connections: connections }, {merge: true});
+      .set({ connections }, {merge: true});
   }
 
   getGroups(userID: string): DocumentReference[] {
@@ -214,7 +218,7 @@ export class UsersService {
       .doc(userID)
       .set(
         {
-          name: name
+          name
         },
         { merge: true }
       );
@@ -246,7 +250,7 @@ export class UsersService {
   //         console.log(data.key);
   //     });
   //   });
-  //}
+  // }
 
   // getPostUserData(postId: string){
   //   return this.firestore.doc("users/" + postId).snapshotChanges();

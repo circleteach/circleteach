@@ -9,6 +9,7 @@ import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/auth';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AuthenticationService} from '../authentication.service';
 import {UsersService} from '../users.service';
+import {AngularFireStorage, AngularFireStorageModule} from "@angular/fire/storage";
 
 describe("BasicinfoComponent", () => {
   let component: BasicinfoComponent;
@@ -21,12 +22,13 @@ describe("BasicinfoComponent", () => {
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFirestoreModule,
         AngularFireAuthModule,
+        AngularFireStorageModule,
         MatButtonModule,
         MatIconModule,
         RouterTestingModule,
       ],
       declarations: [BasicinfoComponent],
-      providers: [AngularFirestore, AngularFireAuth, AuthenticationService, UsersService]
+      providers: [AngularFirestore, AngularFireAuth, AngularFireStorage, AuthenticationService, UsersService]
     }).compileComponents();
   }));
 

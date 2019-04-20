@@ -43,13 +43,20 @@
   <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
     <ul fxLayout fxLayoutGap="20px" class="navigation-items">
       <li>
+        <!-- Remove notification button for now
         <a routerLink="/notifications">
           <mat-icon>notifications</mat-icon>
         </a>
+        -->
       </li>
       <li>
         <a routerLink="/messaging">
           <mat-icon>messages</mat-icon>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/settings">
+          <mat-icon>settings</mat-icon>
         </a>
       </li>
       <li>
@@ -68,11 +75,6 @@
           <div class="profile-image-container" *ngIf="profileURL == null">
             <mat-icon>person</mat-icon>
           </div>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/settings">
-          <mat-icon>settings</mat-icon>
         </a>
       </li>
     </ul>

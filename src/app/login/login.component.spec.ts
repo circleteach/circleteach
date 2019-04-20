@@ -45,7 +45,6 @@ describe("LoginComponent", () => {
       fixture.detectChanges();
     }).catch(error => {
     });
-    fixture.detectChanges();
   });
 
   it("should create", () => {
