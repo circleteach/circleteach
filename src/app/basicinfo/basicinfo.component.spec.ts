@@ -38,11 +38,13 @@ describe("BasicinfoComponent", () => {
     fixture = TestBed.createComponent(BasicinfoComponent);
     component = fixture.componentInstance;
     component.id = '8C4CDYnHEDYVe2aHemmf8iRvTgf1';
-    authService.login('plougheed@wisc.edu', 'hello123');
-    fixture.detectChanges();
+    authService.login('plougheed@wisc.edu', 'hello123').then(result => {
+      fixture.detectChanges();
+    });
   });
 
   it("should create", () => {
+    sleep(25);
     expect(component).toBeTruthy();
   });
 

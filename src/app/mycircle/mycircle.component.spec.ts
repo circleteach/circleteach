@@ -11,6 +11,9 @@ import {UsersService} from '../users.service';
 import {MycircleComponent} from "./mycircle.component";
 import {LoginComponent} from "../login/login.component";
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
+import {AngularFireStorage, AngularFireStorageModule} from "@angular/fire/storage";
+import {StorageService} from "../storage.service";
+import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 
 describe("MycircleComponent", () => {
   let component: MycircleComponent;
@@ -23,6 +26,8 @@ describe("MycircleComponent", () => {
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFirestoreModule,
         AngularFireAuthModule,
+        NoopAnimationsModule,
+        AngularFireStorageModule,
         MatButtonModule,
         MatIconModule,
         RouterTestingModule.withRoutes([
@@ -31,7 +36,7 @@ describe("MycircleComponent", () => {
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       declarations: [MycircleComponent, LoginComponent],
-      providers: [AngularFirestore, AngularFireAuth, AuthenticationService, UsersService]
+      providers: [AngularFirestore, AngularFireAuth, AngularFireStorage, StorageService, AuthenticationService, UsersService]
     }).compileComponents();
   }));
 
@@ -45,7 +50,6 @@ describe("MycircleComponent", () => {
       fixture.detectChanges();
     }).catch(error => {
     });
-    fixture.detectChanges();
   });
 
   it("should create", () => {

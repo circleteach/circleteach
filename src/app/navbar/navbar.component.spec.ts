@@ -46,7 +46,6 @@ describe('NavbarComponent', () => {
       fixture.detectChanges();
     }).catch(error => {
     });
-    fixture.detectChanges();
   });
 
   it('should create', () => {

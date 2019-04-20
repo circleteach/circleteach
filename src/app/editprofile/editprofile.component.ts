@@ -69,6 +69,12 @@ export class EditprofileComponent implements OnInit {
         this.profileImg = result;
       });
     }
+
+    if (this.id == null || this.id === undefined) {
+      console.log("Problem rendering the edit profile page!");
+      return;
+    }
+
     // Get Display Name
     this.usersService.getDisplayName(this.id).then(result => {
       if (result != null) {
@@ -87,7 +93,6 @@ export class EditprofileComponent implements OnInit {
           })
         )
         .subscribe(f => {
-          console.log("HERE" + this.info.skills);
           if (this.info.skills !== undefined) {
             this.skills = this.info.skills;
           }

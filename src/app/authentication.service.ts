@@ -45,8 +45,7 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) {
-    return firebase
-      .auth()
+    return this.firebaseAuth.auth
       .signInWithEmailAndPassword(email, password)
       .catch(error => {
         const errorCode = error.code;
@@ -61,8 +60,7 @@ export class AuthenticationService {
   }
 
   signup(email: string, password: string, name: string) {
-    return firebase
-      .auth()
+    return this.firebaseAuth.auth
       .createUserWithEmailAndPassword(email, password)
       .catch(error => {
         // Handle Errors here.
@@ -93,18 +91,20 @@ export class AuthenticationService {
   */
 
   logout() {
-    return this.firebaseAuth.auth
-      .signOut()
-      .catch(error => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        return error.message;
-      })
-      .then(res =>
-        this.ngZone.run(() => {
-          // this.router.navigate(['/login']);
+    if (this.isLoggedIn()) {
+      return this.firebaseAuth.auth
+        .signOut()
+        .catch(error => {
+          // Handle Errors here.
+          const errorCode = error.code;
+          return error.message;
         })
-      );
+        .then(res =>
+          this.ngZone.run(() => {
+            // this.router.navigate(['/login']);
+          })
+        );
+    }
   }
 
   delete() {
