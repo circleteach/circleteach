@@ -28,13 +28,17 @@ export class AuthenticationService {
         this.userDetails = user;
         if (!this.loggedInPreviously) {
           if (this.router.url === '' || this.router.url === '/login' || this.router.url === '/signup') {
-            this.router.navigate(['/home']);
+            this.ngZone.run(() => {
+              this.router.navigate(['/home']);
+            });
           }
           this.loggedInPreviously = true;
         }
       } else {
         this.userDetails = null;
-        this.router.navigate(["/login"]);
+        this.ngZone.run(() => {
+          this.router.navigate(['/login']);
+        });
         this.loggedInPreviously = false;
       }
     });
@@ -54,7 +58,9 @@ export class AuthenticationService {
       })
       .then(res => {
         if (this.isLoggedIn()) {
-          this.router.navigate(["/home"]);
+          this.ngZone.run(() => {
+            this.router.navigate(["/home"]);
+          });
         }
       });
   }
@@ -78,7 +84,9 @@ export class AuthenticationService {
           .catch(error => {
             log(error.message);
           });
-        this.router.navigate(["/home"]);
+        this.ngZone.run(() => {
+          this.router.navigate(['/home']);
+        });
       });
   }
 
@@ -99,11 +107,9 @@ export class AuthenticationService {
           const errorCode = error.code;
           return error.message;
         })
-        .then(res =>
-          this.ngZone.run(() => {
-            // this.router.navigate(['/login']);
-          })
-        );
+        .then(res => {
+          this.router.navigate(['/login']);
+        });
     }
   }
 
