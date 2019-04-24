@@ -112,6 +112,16 @@
   border-style: solid;
   border-color: mat-color($app-primary, 500);
   margin-bottom: 1vh;
+  overflow-x: auto;
+
+  p{
+    color: white;
+    font: .6em;
+  }
+}
+::-webkit-scrollbar {
+  width: 0px;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
 }
 
 #postInfo {
@@ -161,8 +171,6 @@
   margin-top: 3.5vh;
 }
 
-#commInp {
-}
 
 #commSubBtn {
   margin-left: 1vw;
@@ -192,4 +200,19 @@ a:active {
   color: black;
   text-decoration: none;
   display: inline-block;
+}
+
+//Tags Style
+.mat-basic-chip {
+  text-align: center;
+  margin-top: 5%;
+  margin-left: 10px;
+  width: 70px;
+  height: 70px;
+  background-color: mat-color($app-primary, 500);
+  border-radius: 50px;
+
+  p{
+    margin-top: -5%;
+  }
 }

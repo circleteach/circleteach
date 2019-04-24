@@ -151,8 +151,8 @@ export class EditprofileComponent implements OnInit {
     });
   }
   updateDisplayName() {
-    if (this.displayname.value == null || this.displayname.value.length < 1) {
-      this.snackbar.open("Your new display name must be at least 1 character!", "X", {
+    if (this.displayname.value == null || this.displayname.value.length < 2) {
+      this.snackbar.open("Your new display name must be at least 2 characters long!", "X", {
         duration: 3000
       });
       this.displayname = new FormControl();

@@ -120,8 +120,8 @@ export class MycircleComponent implements OnInit {
         .pipe(toArray())
         .subscribe(connections => {
           this.connections = connections;
-          console.log(connections);
-          console.log(this.connectionsList);
+          // console.log(connections);
+          // console.log(this.connectionsList);
         });
 
       // // Get ProfessionalInfo About Connections

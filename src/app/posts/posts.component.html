@@ -1,55 +1,37 @@
 <!--Write Posts Component-->
-<div
-  *ngIf="canWritePost"
-  gdAreas=" proImg postWrite postWrite postWrite | sortByTxt sortByBtn postsByTxt postsByBtn"
-  gdGap="10px"
->
+<div *ngIf="canWritePost" gdAreas=" proImg postWrite postWrite postWrite | sortByTxt sortByBtn postsByTxt postsByBtn"
+  gdGap="10px">
   <div gdArea="proImg">
-    <img
-      id="proImg"
-      src="../../assets/uwath2018.png"
-      style="background-color: blue"
-      alt="Profile Image"
-      height="100px"
-      width="100px"
-    />
+    <img id="proImg" src="../../assets/uwath2018.png" style="background-color: blue" alt="Profile Image" height="100px"
+      width="100px" />
   </div>
 
-  <div
-    id="writePostCont"
-    gdArea="postWrite"
-    gdAreas="postTxtBox postTxtBox postTxtBox | addTags uploadBtn postBtn"
-  >
-    <input
-      gdArea="postTxtBox"
-      id="postInp"
-      type="text"
-      placeholder="Write new post..."
-      [(ngModel)]="newPostInp"
-    />
-    <input
-      gdArea="addTags"
-      id="tagsInp"
-      type="text"
-      placeholder="Add Tags"
-      [(ngModel)]="tagsInp"
-    />
-    <button
-      gdArea="uploadBtn"
-      id="uploadBtn"
-      class="filterBtn"
-      mat-button
-      (click)="uploadClick()"
-    >
+  <div id="writePostCont" gdArea="postWrite" gdAreas="postTxtBox postTxtBox postTxtBox | addTags uploadBtn postBtn | tags tags tags">
+    <input gdArea="postTxtBox" id="postInp" type="text" placeholder="Write new post..." [(ngModel)]="newPostInp" />
+
+    <mat-form-field appearance="legacy" id="tagsInp">
+      <input matInput [formControl]="tagEntry" type="text" placeholder="Add Tags" [matAutocomplete]="auto"
+        (keydown.enter)="addTag()" />
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addTag()">
+        <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+          {{tag}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <div gdArea="tags" id="tagsCont" style="width: 200px; height: 75px;" gdArea="tags">
+        <mat-chip-list class="mat-chip-list">
+          <mat-basic-chip *ngFor="let tag of addedTags" (removed)="remove(tag)">
+            <mat-icon matChipRemove>cancel</mat-icon>
+            <p>{{tag.name}}</p>
+          </mat-basic-chip>
+        </mat-chip-list>
+      </div>
+
+    <button gdArea="uploadBtn" id="uploadBtn" class="filterBtn" mat-button (click)="uploadClick()">
       Upload
     </button>
-    <button
-      gdArea="postBtn"
-      id="postBtn"
-      class="filterBtn"
-      mat-button
-      (click)="postClick()"
-    >
+    <button gdArea="postBtn" id="postBtn" class="filterBtn" mat-button (click)="postClick()">
       Post
     </button>
   </div>
@@ -59,12 +41,7 @@
     Top
   </button>
   <p gdArea="postsByTxt">Posts By:</p>
-  <button
-    gdArea="postsByBtn"
-    class="filterBtn"
-    mat-button
-    (click)="postsByClick()"
-  >
+  <button gdArea="postsByBtn" class="filterBtn" mat-button (click)="postsByClick()">
     All
   </button>
 </div>
@@ -72,22 +49,12 @@
 <!--Actual List of Posts-->
 <div id="postsList" *ngFor="let post of posts">
   <!--Version of Posts that displayus when NOT the activity log-->
-  <div
-    *ngIf="activityLogView"
-    id="postCont"
-    gdAreas="profImage userInfo userInfo postAge  | content content content content  | tags  postInfo postInfo postInfo | comment comment comment comment"
-  >
+  <div *ngIf="activityLogView" id="postCont"
+    gdAreas="profImage userInfo userInfo postAge  | content content content content  | tags  postInfo postInfo postInfo | comment comment comment comment">
     <div id="profImgContainer" gdArea="profImage">
       <a routerLink="/profile/{{ post.user }}">
-        <img
-          id="profImg"
-          src="../../assets/uwath2018.png"
-          onmouseover=""
-          style="background-color: blue; cursor: pointer"
-          alt="Profile Image"
-          height="70px"
-          width="70px"
-        />
+        <img id="profImg" src="../../assets/uwath2018.png" onmouseover=""
+          style="background-color: blue; cursor: pointer" alt="Profile Image" height="70px" width="70px" />
       </a>
     </div>
 
@@ -110,18 +77,18 @@
       <p>{{ post.content }}</p>
     </div>
 
-    <div id="tagsCont" style="width: 200px; height: 75px;" gdArea="tags"></div>
+    <div id="tagsCont" style="width: 200px; height: 75px;" gdArea="tags">
+      <mat-chip-list class="mat-chip-list">
+        <mat-basic-chip *ngFor="let tag of post.tags" >
+          <p>{{tag.name}}</p>
+        </mat-basic-chip>
+      </mat-chip-list>
+    </div>
 
     <div id="postInfo" gdArea="postInfo" gdAreas="star starDisp comm down">
       <div gdArea="star" class="postInfoEle" id="starBtn">
-        <svg
-          width="50px"
-          height="50px"
-          id="Layer_1"
-          data-name="Layer 1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 30.13 28.86"
-        >
+        <svg width="50px" height="50px" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 30.13 28.86">
           <defs>
             <style>
               .cls-1 {
@@ -132,11 +99,9 @@
             </style>
           </defs>
           <title>star-filled</title>
-          <path
-            class="cls-1"
+          <path class="cls-1"
             d="M17.41,3l3.28,6.64a1.6,1.6,0,0,0,1.19.87l7.33,1.06a1.58,1.58,0,0,1,.88,2.69l-5.31,5.17a1.59,1.59,0,0,0-.45,1.4l1.25,7.3a1.58,1.58,0,0,1-2.29,1.67L16.73,26.3a1.57,1.57,0,0,0-1.46,0L8.71,29.75a1.58,1.58,0,0,1-2.29-1.67l1.25-7.3a1.59,1.59,0,0,0-.45-1.4L1.91,14.21a1.58,1.58,0,0,1,.88-2.69l7.33-1.06a1.6,1.6,0,0,0,1.19-.87L14.59,3A1.57,1.57,0,0,1,17.41,3Z"
-            transform="translate(-0.93 -1.57)"
-          />
+            transform="translate(-0.93 -1.57)" />
         </svg>
         <button mat-button (click)="starClick(post)">Star</button>
       </div>
@@ -146,14 +111,8 @@
       </div>
 
       <div gdArea="comm" class="postInfoEle" id="commentBtn">
-        <svg
-          width="50px"
-          height="50px"
-          id="Layer_1"
-          data-name="Layer 1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 31.05 22.08"
-        >
+        <svg width="50px" height="50px" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 31.05 22.08">
           <defs>
             <style>
               .cls-1,
@@ -175,11 +134,9 @@
             </style>
           </defs>
           <title>comment</title>
-          <path
-            class="cls-1"
+          <path class="cls-1"
             d="M10.69,23.38,2.28,25.91A1.21,1.21,0,0,1,.76,24.47l2-8.54a1.21,1.21,0,0,1,2-.6l6.39,6A1.19,1.19,0,0,1,10.69,23.38Z"
-            transform="translate(-0.47 -4.13)"
-          />
+            transform="translate(-0.47 -4.13)" />
           <ellipse class="cls-1" cx="16.2" cy="11.01" rx="14.6" ry="10.76" />
           <text class="cls-2" transform="translate(12.17 11.88)">...</text>
           <ellipse class="cls-3" cx="3.06" cy="15.9" rx="1.46" ry="3.13" />
@@ -191,26 +148,13 @@
 
       <div gdArea="down" class="postInfoEle" id="downloadBtn">
         <!--Get rid of the style once the svg is here-->
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          version="1.1"
-          id="Layer_1"
-          x="0px"
-          y="0px"
-          width="50px"
-          height="50px"
-          viewBox="0 0 512 512"
-          enable-background="new 0 0 512 512"
-          xml:space="preserve"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1"
+          x="0px" y="0px" width="50px" height="50px" viewBox="0 0 512 512" enable-background="new 0 0 512 512"
+          xml:space="preserve">
           <g>
             <path
-              d="M446.844,208.875C447.625,203.313,448,197.656,448,192c0-70.563-57.406-128-128-128   c-40.938,0-78.531,19.344-102.344,51.063C209.25,113.031,200.688,112,192,112c-61.75,0-112,50.25-112,112   c0,1.563,0.031,3.094,0.094,4.625C33.813,242.375,0,285.313,0,336c0,61.75,50.25,112,112,112h272c70.594,0,128-57.406,128-128   C512,273.344,486.344,231.188,446.844,208.875z M384,416H112c-44.188,0-80-35.813-80-80s35.813-80,80-80   c2.438,0,4.75,0.5,7.125,0.719c-4.5-10-7.125-21.031-7.125-32.719c0-44.188,35.813-80,80-80c14.438,0,27.813,4.125,39.5,10.813   C246,120.25,280.156,96,320,96c53.031,0,96,42.969,96,96c0,12.625-2.594,24.625-7.031,35.688C449.813,238.75,480,275.688,480,320   C480,373.031,437.031,416,384,416z"
-            />
-            <polygon
-              points="288,192 224,192 224,288 160,288 256,384 352,288 288,288  "
-            />
+              d="M446.844,208.875C447.625,203.313,448,197.656,448,192c0-70.563-57.406-128-128-128   c-40.938,0-78.531,19.344-102.344,51.063C209.25,113.031,200.688,112,192,112c-61.75,0-112,50.25-112,112   c0,1.563,0.031,3.094,0.094,4.625C33.813,242.375,0,285.313,0,336c0,61.75,50.25,112,112,112h272c70.594,0,128-57.406,128-128   C512,273.344,486.344,231.188,446.844,208.875z M384,416H112c-44.188,0-80-35.813-80-80s35.813-80,80-80   c2.438,0,4.75,0.5,7.125,0.719c-4.5-10-7.125-21.031-7.125-32.719c0-44.188,35.813-80,80-80c14.438,0,27.813,4.125,39.5,10.813   C246,120.25,280.156,96,320,96c53.031,0,96,42.969,96,96c0,12.625-2.594,24.625-7.031,35.688C449.813,238.75,480,275.688,480,320   C480,373.031,437.031,416,384,416z" />
+            <polygon points="288,192 224,192 224,288 160,288 256,384 352,288 288,288  " />
           </g>
         </svg>
         <button style="" mat-button (click)="downloadClick()">Download</button>
@@ -220,58 +164,28 @@
     <div *ngIf="post.showComments" gdArea="comment" id="commentCont">
       <ng-container>
         <div id="writeComm" gdAreas="inp inp sub">
-          <input
-            gdArea="inp"
-            id="commInp"
-            type="text"
-            placeholder="Write new comment..."
-            [(ngModel)]="newCommentInp"
-          />
-          <button
-            gdArea="sub"
-            id="commSubBtn"
-            mat-button
-            (click)="submitCommentClick(post)"
-          >
+          <input gdArea="inp" id="commInp" type="text" placeholder="Write new comment..." [(ngModel)]="newCommentInp" />
+          <button gdArea="sub" id="commSubBtn" mat-button (click)="submitCommentClick(post)">
             Submit
           </button>
         </div>
-        <div
-          *ngFor="let comment of comments"
-          id="comment"
-          gdAreas="img name | cont cont"
-        >
-          <img
-            gdArea="img"
-            id="profImg"
-            src="../../assets/uwath2018.png"
-            style="background-color: blue"
-            alt="Profile Image"
-            height="45px"
-            width="45px"
-          />
+        <div *ngFor="let comment of comments" id="comment" gdAreas="img name | cont cont">
+          <img gdArea="img" id="profImg" src="../../assets/uwath2018.png" style="background-color: blue"
+            alt="Profile Image" height="45px" width="45px" />
           <h3 id="commentUserName" gdArea="name">{{ comment.user }}</h3>
           <p gdArea="cont">{{ comment.content }}</p>
         </div>
       </ng-container>
     </div>
   </div>
+
+
   <!--Version of Posts that displayus when IT IS the activity log-->
-  <div
-    style="height: 350px"
-    *ngIf="!activityLogView"
-    id="postCont"
-    gdAreas="profImage userInfo postAge  | content content content  | tags tags tags "
-  >
+  <div style="height: 350px" *ngIf="!activityLogView" id="postCont"
+    gdAreas="profImage userInfo postAge  | content content content  | tags tags tags ">
     <div id="profImgContainer" gdArea="profImage">
-      <img
-        id="profImg"
-        src="../../assets/uwath2018.png"
-        style="background-color: blue"
-        alt="Profile Image"
-        height="70px"
-        width="70px"
-      />
+      <img id="profImg" src="../../assets/uwath2018.png" style="background-color: blue" alt="Profile Image"
+        height="70px" width="70px" />
     </div>
 
     <div style="margin-left: 5vw;" id="userInfo" gdArea="userInfo">
@@ -287,18 +201,21 @@
       <p>{{ post.content }}</p>
     </div>
 
-    <div id="tagsCont" style="width: 200px; height: 75px;" gdArea="tags"></div>
+    <div id="tagsCont" style="width: 200px; height: 75px;" gdArea="tags">
+      <mat-chip-list class="mat-chip-list">
+        <mat-basic-chip *ngFor="let tag of selectedTags" (removed)="remove(tag)">
+          <mat-icon matChipRemove>cancel</mat-icon>
+          <div class="vert">
+            {{tag.name}}
+          </div>
+        </mat-basic-chip>
+      </mat-chip-list>
+    </div>
 
     <div id="postInfo" gdArea="postInfo" gdAreas="star starDisp comm down">
       <div gdArea="star" class="postInfoEle" id="starBtn">
-        <svg
-          width="50px"
-          height="50px"
-          id="Layer_1"
-          data-name="Layer 1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 30.13 28.86"
-        >
+        <svg width="50px" height="50px" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 30.13 28.86">
           <defs>
             <style>
               .cls-1 {
@@ -309,11 +226,9 @@
             </style>
           </defs>
           <title>star-filled</title>
-          <path
-            class="cls-1"
+          <path class="cls-1"
             d="M17.41,3l3.28,6.64a1.6,1.6,0,0,0,1.19.87l7.33,1.06a1.58,1.58,0,0,1,.88,2.69l-5.31,5.17a1.59,1.59,0,0,0-.45,1.4l1.25,7.3a1.58,1.58,0,0,1-2.29,1.67L16.73,26.3a1.57,1.57,0,0,0-1.46,0L8.71,29.75a1.58,1.58,0,0,1-2.29-1.67l1.25-7.3a1.59,1.59,0,0,0-.45-1.4L1.91,14.21a1.58,1.58,0,0,1,.88-2.69l7.33-1.06a1.6,1.6,0,0,0,1.19-.87L14.59,3A1.57,1.57,0,0,1,17.41,3Z"
-            transform="translate(-0.93 -1.57)"
-          />
+            transform="translate(-0.93 -1.57)" />
         </svg>
         <button mat-button (click)="starClick(post)">Star</button>
       </div>
@@ -323,14 +238,8 @@
       </div>
 
       <div gdArea="comm" class="postInfoEle" id="commentBtn">
-        <svg
-          width="50px"
-          height="50px"
-          id="Layer_1"
-          data-name="Layer 1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 31.05 22.08"
-        >
+        <svg width="50px" height="50px" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 31.05 22.08">
           <defs>
             <style>
               .cls-1,
@@ -352,11 +261,9 @@
             </style>
           </defs>
           <title>comment</title>
-          <path
-            class="cls-1"
+          <path class="cls-1"
             d="M10.69,23.38,2.28,25.91A1.21,1.21,0,0,1,.76,24.47l2-8.54a1.21,1.21,0,0,1,2-.6l6.39,6A1.19,1.19,0,0,1,10.69,23.38Z"
-            transform="translate(-0.47 -4.13)"
-          />
+            transform="translate(-0.47 -4.13)" />
           <ellipse class="cls-1" cx="16.2" cy="11.01" rx="14.6" ry="10.76" />
           <text class="cls-2" transform="translate(12.17 11.88)">...</text>
           <ellipse class="cls-3" cx="3.06" cy="15.9" rx="1.46" ry="3.13" />
@@ -368,26 +275,13 @@
 
       <div gdArea="down" class="postInfoEle" id="downloadBtn">
         <!--Get rid of the style once the svg is here-->
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          version="1.1"
-          id="Layer_1"
-          x="0px"
-          y="0px"
-          width="50px"
-          height="50px"
-          viewBox="0 0 512 512"
-          enable-background="new 0 0 512 512"
-          xml:space="preserve"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1"
+          x="0px" y="0px" width="50px" height="50px" viewBox="0 0 512 512" enable-background="new 0 0 512 512"
+          xml:space="preserve">
           <g>
             <path
-              d="M446.844,208.875C447.625,203.313,448,197.656,448,192c0-70.563-57.406-128-128-128   c-40.938,0-78.531,19.344-102.344,51.063C209.25,113.031,200.688,112,192,112c-61.75,0-112,50.25-112,112   c0,1.563,0.031,3.094,0.094,4.625C33.813,242.375,0,285.313,0,336c0,61.75,50.25,112,112,112h272c70.594,0,128-57.406,128-128   C512,273.344,486.344,231.188,446.844,208.875z M384,416H112c-44.188,0-80-35.813-80-80s35.813-80,80-80   c2.438,0,4.75,0.5,7.125,0.719c-4.5-10-7.125-21.031-7.125-32.719c0-44.188,35.813-80,80-80c14.438,0,27.813,4.125,39.5,10.813   C246,120.25,280.156,96,320,96c53.031,0,96,42.969,96,96c0,12.625-2.594,24.625-7.031,35.688C449.813,238.75,480,275.688,480,320   C480,373.031,437.031,416,384,416z"
-            />
-            <polygon
-              points="288,192 224,192 224,288 160,288 256,384 352,288 288,288  "
-            />
+              d="M446.844,208.875C447.625,203.313,448,197.656,448,192c0-70.563-57.406-128-128-128   c-40.938,0-78.531,19.344-102.344,51.063C209.25,113.031,200.688,112,192,112c-61.75,0-112,50.25-112,112   c0,1.563,0.031,3.094,0.094,4.625C33.813,242.375,0,285.313,0,336c0,61.75,50.25,112,112,112h272c70.594,0,128-57.406,128-128   C512,273.344,486.344,231.188,446.844,208.875z M384,416H112c-44.188,0-80-35.813-80-80s35.813-80,80-80   c2.438,0,4.75,0.5,7.125,0.719c-4.5-10-7.125-21.031-7.125-32.719c0-44.188,35.813-80,80-80c14.438,0,27.813,4.125,39.5,10.813   C246,120.25,280.156,96,320,96c53.031,0,96,42.969,96,96c0,12.625-2.594,24.625-7.031,35.688C449.813,238.75,480,275.688,480,320   C480,373.031,437.031,416,384,416z" />
+            <polygon points="288,192 224,192 224,288 160,288 256,384 352,288 288,288  " />
           </g>
         </svg>
         <button style="" mat-button (click)="downloadClick()">Download</button>
@@ -397,36 +291,14 @@
     <div *ngIf="post.showComments" gdArea="comment" id="commentCont">
       <ng-container>
         <div id="writeComm" gdAreas="inp inp sub">
-          <input
-            gdArea="inp"
-            id="commInp"
-            type="text"
-            placeholder="Write new comment..."
-            [(ngModel)]="newCommentInp"
-          />
-          <button
-            gdArea="sub"
-            id="commSubBtn"
-            mat-button
-            (click)="submitCommentClick(post)"
-          >
+          <input gdArea="inp" id="commInp" type="text" placeholder="Write new comment..." [(ngModel)]="newCommentInp" />
+          <button gdArea="sub" id="commSubBtn" mat-button (click)="submitCommentClick(post)">
             Submit
           </button>
         </div>
-        <div
-          *ngFor="let comment of comments"
-          id="comment"
-          gdAreas="img name | cont cont"
-        >
-          <img
-            gdArea="img"
-            id="profImg"
-            src="../../assets/uwath2018.png"
-            style="background-color: blue"
-            alt="Profile Image"
-            height="45px"
-            width="45px"
-          />
+        <div *ngFor="let comment of comments" id="comment" gdAreas="img name | cont cont">
+          <img gdArea="img" id="profImg" src="../../assets/uwath2018.png" style="background-color: blue"
+            alt="Profile Image" height="45px" width="45px" />
           <h3 id="commentUserName" gdArea="name">{{ comment.user }}</h3>
           <p gdArea="cont">{{ comment.content }}</p>
         </div>

@@ -31,12 +31,10 @@ export class UserSearchComponent implements OnInit {
           ...e.payload.doc.data()
         } as Users;
       });
-      console.log(this.users);
 
       this.users.forEach(user => {
         this.userNames.push(user.name);
       });
-      console.log(this.userNames);
     });
 
     this.filteredUsers = this.userEntry.valueChanges.pipe(
