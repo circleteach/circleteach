@@ -175,6 +175,7 @@ export class MycircleComponent implements OnInit {
               this.skills = this.info.skills;
               this.certifications = this.info.certifications;
               this.educationList = this.info.education;
+              this.jobList = this.info.jobHistory;
               // Loop through Educations (only 1 right now)
               for (let entry in this.educationList) {
                 // Education Fields
@@ -196,9 +197,6 @@ export class MycircleComponent implements OnInit {
                   this.educationEnd
                 );
               }
-              if (this.info !== undefined) {
-                this.jobList = this.info.jobHistory;
-              }
               // Loop through Experiences (only 1 right now)
               for (let entry in this.jobList) {
                 // Experience Fields
@@ -215,24 +213,28 @@ export class MycircleComponent implements OnInit {
                 this.jobEnd = this.jobList[entry].endTime;
                 this.jobDates = this.jobStart.concat(" - ", this.jobEnd);
               }
+              if (this.info.education === undefined) {
+                this.educationList = null;
+                this.institution = null;
+                this.fieldsOfStudy = null;
+                this.educationDescription = null;
+                this.eduEmpty = true;
+                this.educationStart = null;
+                this.educationEnd = null;
+                this.educationDates = null;
+              }
+              if (this.info.jobHistory === undefined) {
+                this.jobTitle = null;
+                this.jobLocation = null;
+                this.jobDescription = null;
+                this.jobEmpty = true;
+                this.jobStart = null;
+                this.jobEnd = null;
+                this.jobDates = null;
+              }
             } else {
               this.skills = null;
               this.certifications = null;
-              this.educationList = null;
-              this.institution = null;
-              this.fieldsOfStudy = null;
-              this.educationDescription = null;
-              this.eduEmpty = true;
-              this.educationStart = null;
-              this.educationEnd = null;
-              this.educationDates = null;
-              this.jobTitle = null;
-              this.jobLocation = null;
-              this.jobDescription = null;
-              this.jobEmpty = true;
-              this.jobStart = null;
-              this.jobEnd = null;
-              this.jobDates = null;
             }
           });
       }
