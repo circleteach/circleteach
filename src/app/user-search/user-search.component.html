@@ -1,12 +1,6 @@
 <div class="searchbox">
   <mat-form-field appearance="legacy" class="searchInp">
-    <input 
-      matInput 
-      [formControl]="userEntry" 
-      type="text" 
-      placeholder="Search Users" 
-      [matAutocomplete]="auto"
-    />
+    <input matInput [formControl]="userEntry" type="text" placeholder="Search Users" [matAutocomplete]="auto" />
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="goUser()">
       <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
         {{user}}
@@ -14,5 +8,3 @@
     </mat-autocomplete>
   </mat-form-field>
 </div>
-
-

@@ -1,11 +1,15 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { PostsService } from "../services/posts.service";
+import { TagsService } from "../services/tags.service";
 import { Post } from "../models/post.model";
+import { Tag } from "../models/tags.model";
 import { Comment } from "../models/comment.model";
 import { Timestamp } from "rxjs/internal/operators/timestamp";
 import { AuthenticationService } from "../authentication.service";
 import { Users } from "../models/users.model";
-import { map } from "rxjs/operators";
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: "app-posts",
@@ -13,17 +17,18 @@ import { map } from "rxjs/operators";
   styleUrls: ["./posts.component.scss"]
 })
 export class PostsComponent implements OnInit {
-  // Example Fields
-  userName = "Jay Example";
-  userTitle = "Example grade Example at Example School";
-  postAge = "2 Days ago";
-  postContent =
-    "Some days I just feel like, Example. Then I go Example and keep exampling myself. Everyday all day!";
-  stars = 52;
-  // END Example Fields
+  
 
   posts: postWithMeta[]; // Stores list of posts
   comments: Comment[]; // Stores list of comments per each post
+  selectedTags: Tag[] = []; //TAGS FROM THE TAGS COMPONENT
+
+  tagEntry = new FormControl();
+  private tags: Tag[] = []; //Array for tags to be added to a post
+  addedTags: Tag[] = [];
+  tagNames = new Array();
+
+  filteredTags: Observable<string[]>;
 
   @Input("canwritepost") canWritePost: boolean; // Toggles write posts section
   @Input("activitylogview") activityLogView: boolean; // Toggles Activity log view
@@ -31,11 +36,14 @@ export class PostsComponent implements OnInit {
   private isStared = false; // Have you starred the post
   private newPostInp; // Bound text field for write post
   private newCommentInp; // Bound text field for write comment
+
   private tagsInp; // Bound text filed for input of tags with post
+
 
   constructor(
     private postService: PostsService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private tagService: TagsService
   ) {
     console.log(this.canWritePost);
     console.log(this.activityLogView);
@@ -58,6 +66,9 @@ export class PostsComponent implements OnInit {
         this.getPostUser(post);
       });
     });
+
+    this.tagService.currentTags.subscribe(tags => this.selectedTags = tags); //SUBSCRIBES TO TAGS
+    this.loadTags();
   }
 
   getPostUser(post: postWithMeta) {
@@ -93,6 +104,50 @@ export class PostsComponent implements OnInit {
     }
   }
 
+  
+
+  // TODO downloads content of post
+  downloadClick() {
+    console.log(this.selectedTags);
+  }
+
+  // TODO Navigate to user page on profile image or name click
+  profileClick() {}
+
+  // TODO after tag functionality is built
+  tagClick() {}
+
+  // Methods for Post Creation
+
+  // TODO Allows content to be uploaded to post
+  uploadClick() {}
+
+  // Validates content and creates a new post for the user
+  // TODO: Linke to User, Tags
+  postClick() {
+    if (this.newPostInp !== "" && this.newPostInp != null) {
+      const newPost = new Post();
+      newPost.content = this.newPostInp;
+      newPost.time = Date.now();
+      newPost.user = this.authService.getUserId();
+      newPost.showComments = false;
+      newPost.stars = 0;
+      newPost.tags = this.addedTags;
+
+      this.postService.createPost(newPost);
+      console.log("Uploaded Post");
+      this.newPostInp = "";
+    }
+  }
+
+  // TODO toggles the sort by options
+  sortClick() {}
+
+  // TODO toggles the posts by options
+  postsByClick() {}
+
+    // ------------ Methods for Comments ------------//
+
   // Allows viewing of comments, opens comment creation UI
   commentClick(post: Post) {
     post.showComments = !post.showComments;
@@ -120,44 +175,56 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  // TODO downloads content of post
-  downloadClick() {}
+ // ------------ Methods for Adding Tags ------------//
 
-  // TODO Navigate to user page on profile image or name click
-  profileClick() {}
+  remove(tag: Tag): void {
+    const index = this.addedTags.indexOf(tag);
 
-  // TODO after tag functionality is built
-  tagClick() {}
-
-  // Methods for Post Creation
-
-  // TODO Allows content to be uploaded to post
-  uploadClick() {}
-
-  // Validates content and creates a new post for the user
-  // TODO: Linke to User, Tags
-  postClick() {
-    if (this.newPostInp !== "" && this.newPostInp != null) {
-      const newPost = new Post();
-      newPost.content = this.newPostInp;
-      newPost.time = Date.now();
-      newPost.user = this.authService.getUserId();
-      newPost.showComments = false;
-      newPost.stars = 0;
-
-      this.postService.createPost(newPost);
-      console.log("Uploaded Post");
-      this.newPostInp = "";
+    if (index >= 0) {
+      this.addedTags.splice(index, 1);
     }
   }
 
-  // TODO toggles the sort by options
-  sortClick() {}
+  private loadTags(){
+    this.tagService.getTags().subscribe(data => {
+      this.tags = data.map(e => {
+        return{
+          id: e.payload.doc.id,
+          ...e.payload.doc.data()
+        } as Tag;
+      });
 
-  // TODO toggles the posts by options
-  postsByClick() {}
+      this.tags.forEach(tag => {
+        this.tagNames.push(tag.name);
+      });
+    });
 
-  // ------------ Methods for Comments ------------//
+    this.filteredTags = this.tagEntry.valueChanges.pipe(
+      startWith(''),
+      map(value => this.myFilter(value))
+    );
+  }
+
+  private myFilter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.tagNames.filter(user => user.toLowerCase().includes(filterValue));
+  }
+
+  addTag() {
+    let newTag = new Tag();
+
+    if(this.tagNames.includes(this.tagEntry.value)){
+      newTag.name = this.tagEntry.value;
+      this.addedTags.push(newTag);
+      console.log("Existing Tag Found, Added to Filter List");
+    }else{
+      newTag.name = this.tagEntry.value;
+      this.tagService.createTag(newTag);
+      this.addedTags.push(newTag);
+      console.log("New Tag Created and Pushed to DB!");
+    }
+  }
+
 }
 
 class postWithMeta extends Post {
