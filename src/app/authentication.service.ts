@@ -36,9 +36,7 @@ export class AuthenticationService {
         }
       } else {
         this.userDetails = null;
-        this.ngZone.run(() => {
-          this.router.navigate(['/login']);
-        });
+        this.router.navigate(['/login']);
         this.loggedInPreviously = false;
       }
     });

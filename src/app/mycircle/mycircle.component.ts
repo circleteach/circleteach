@@ -175,52 +175,66 @@ export class MycircleComponent implements OnInit {
               this.skills = this.info.skills;
               this.certifications = this.info.certifications;
               this.educationList = this.info.education;
-            }
-            // Loop through Educations (only 1 right now)
-            for (let entry in this.educationList) {
-              // Education Fields
-              this.institution = this.educationList[entry].location;
-              this.fieldsOfStudy = this.educationList[entry].fieldOfStudy;
-              this.educationDescription = this.educationList[entry].description;
-              if (
-                this.educationDescription !== "" &&
-                this.educationDescription !== undefined
-              ) {
-                this.eduEmpty = false;
-              }
-              this.educationStart = this.educationList[entry].startTime;
-              this.educationEnd = this.educationList[entry].endTime;
-              if (this.educationStart !== undefined) {
+              this.jobList = this.info.jobHistory;
+              // Loop through Educations (only 1 right now)
+              for (let entry in this.educationList) {
+                // Education Fields
+                this.institution = this.educationList[entry].location;
+                this.fieldsOfStudy = this.educationList[entry].fieldOfStudy;
+                this.educationDescription = this.educationList[
+                  entry
+                ].description;
+                if (
+                  this.educationDescription !== "" &&
+                  this.educationDescription !== undefined
+                ) {
+                  this.eduEmpty = false;
+                }
+                this.educationStart = this.educationList[entry].startTime;
+                this.educationEnd = this.educationList[entry].endTime;
                 this.educationDates = this.educationStart.concat(
                   " - ",
                   this.educationEnd
                 );
-              } else {
-                this.educationStart = "";
               }
-            }
-            if (this.info !== undefined) {
-              this.jobList = this.info.jobHistory;
-            }
-            // Loop through Experiences (only 1 right now)
-            for (let entry in this.jobList) {
-              // Experience Fields
-              this.jobTitle = this.jobList[entry].position;
-              this.jobLocation = this.jobList[entry].location;
-              this.jobDescription = this.jobList[entry].description;
-              if (
-                this.jobDescription !== "" &&
-                this.jobDescription !== undefined
-              ) {
-                this.jobEmpty = false;
-              }
-              this.jobStart = this.jobList[entry].startTime;
-              this.jobEnd = this.jobList[entry].endTime;
-              if (this.jobStart !== undefined) {
+              // Loop through Experiences (only 1 right now)
+              for (let entry in this.jobList) {
+                // Experience Fields
+                this.jobTitle = this.jobList[entry].position;
+                this.jobLocation = this.jobList[entry].location;
+                this.jobDescription = this.jobList[entry].description;
+                if (
+                  this.jobDescription !== "" &&
+                  this.jobDescription !== undefined
+                ) {
+                  this.jobEmpty = false;
+                }
+                this.jobStart = this.jobList[entry].startTime;
+                this.jobEnd = this.jobList[entry].endTime;
                 this.jobDates = this.jobStart.concat(" - ", this.jobEnd);
-              } else {
-                this.jobDates = "";
               }
+              if (this.info.education === undefined) {
+                this.educationList = null;
+                this.institution = null;
+                this.fieldsOfStudy = null;
+                this.educationDescription = null;
+                this.eduEmpty = true;
+                this.educationStart = null;
+                this.educationEnd = null;
+                this.educationDates = null;
+              }
+              if (this.info.jobHistory === undefined) {
+                this.jobTitle = null;
+                this.jobLocation = null;
+                this.jobDescription = null;
+                this.jobEmpty = true;
+                this.jobStart = null;
+                this.jobEnd = null;
+                this.jobDates = null;
+              }
+            } else {
+              this.skills = null;
+              this.certifications = null;
             }
           });
       }
