@@ -17,7 +17,7 @@ import { map, startWith } from 'rxjs/operators';
   styleUrls: ["./posts.component.scss"]
 })
 export class PostsComponent implements OnInit {
-  
+
 
   posts: postWithMeta[]; // Stores list of posts
   comments: Comment[]; // Stores list of comments per each post
@@ -27,6 +27,9 @@ export class PostsComponent implements OnInit {
   private tags: Tag[] = []; //Array for tags to be added to a post
   addedTags: Tag[] = [];
   tagNames = new Array();
+
+  firstLoad = true;
+  repeatGuard = true;
 
   filteredTags: Observable<string[]>;
 
@@ -47,8 +50,12 @@ export class PostsComponent implements OnInit {
   ) {
   }
 
-  // Gets unfiltered list of all posts, proof of concept for subscribing to collection
+  
   ngOnInit() {
+    this.getPosts();
+  }
+
+  getPosts(){ // Gets unfiltered list of all posts, proof of concept for subscribing to collection
     this.postService.getPosts().subscribe(data => {
       // This is how to get data from a collection
       this.posts = data.map(e => {
@@ -63,10 +70,21 @@ export class PostsComponent implements OnInit {
       this.posts.forEach(post => {
         this.getPostUser(post);
       });
-    });
 
-    this.tagService.currentTags.subscribe(tags => this.selectedTags = tags); //SUBSCRIBES TO TAGS
-    this.loadTags();
+      this.tagService.currentTags.subscribe(tags => {//SUBSCRIBES TO TAGS
+        this.selectedTags = tags;
+        if(!this.firstLoad){
+          if(tags[0].name != "EMPTY"){
+            this.filterByTags();
+          }else if(tags[0].name == "EMPTY" && this.repeatGuard){
+            this.getPosts();
+            this.repeatGuard = false;
+          }
+        }
+      });
+      this.loadTags();
+      this.firstLoad = false;
+    });
   }
 
   getPostUser(post: postWithMeta) {
@@ -102,7 +120,7 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  
+
 
   // TODO downloads content of post
   downloadClick() {
@@ -110,15 +128,15 @@ export class PostsComponent implements OnInit {
   }
 
   // TODO Navigate to user page on profile image or name click
-  profileClick() {}
+  profileClick() { }
 
   // TODO after tag functionality is built
-  tagClick() {}
+  tagClick() { }
 
   // Methods for Post Creation
 
   // TODO Allows content to be uploaded to post
-  uploadClick() {}
+  uploadClick() { }
 
   // Validates content and creates a new post for the user
   // TODO: Linke to User, Tags
@@ -139,12 +157,12 @@ export class PostsComponent implements OnInit {
   }
 
   // TODO toggles the sort by options
-  sortClick() {}
+  sortClick() { }
 
   // TODO toggles the posts by options
-  postsByClick() {}
+  postsByClick() { }
 
-    // ------------ Methods for Comments ------------//
+  // ------------ Methods for Comments ------------//
 
   // Allows viewing of comments, opens comment creation UI
   commentClick(post: Post) {
@@ -173,7 +191,7 @@ export class PostsComponent implements OnInit {
     }
   }
 
- // ------------ Methods for Adding Tags ------------//
+  // ------------ Methods for Adding Tags ------------//
 
   remove(tag: Tag): void {
     const index = this.addedTags.indexOf(tag);
@@ -183,10 +201,10 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  private loadTags(){
+  private loadTags() {
     this.tagService.getTags().subscribe(data => {
       this.tags = data.map(e => {
-        return{
+        return {
           id: e.payload.doc.id,
           ...e.payload.doc.data()
         } as Tag;
@@ -211,11 +229,11 @@ export class PostsComponent implements OnInit {
   addTag() {
     let newTag = new Tag();
 
-    if(this.tagNames.includes(this.tagEntry.value)){
+    if (this.tagNames.includes(this.tagEntry.value)) {
       newTag.name = this.tagEntry.value;
       this.addedTags.push(newTag);
       console.log("Existing Tag Found, Added to Filter List");
-    }else{
+    } else {
       newTag.name = this.tagEntry.value;
       this.tagService.createTag(newTag);
       this.addedTags.push(newTag);
@@ -223,6 +241,23 @@ export class PostsComponent implements OnInit {
     }
   }
 
+  //Filters Posts when a new tag is added
+  private filterByTags() {
+    let newPosts: postWithMeta[] = [];
+
+        this.posts.forEach(post => {
+          post.tags.forEach(tag => {
+            this.selectedTags.forEach(tagS => {
+              if (tag.name == tagS.name) {
+                newPosts.push(post);
+              }
+            })
+          })
+        });
+
+        this.posts = newPosts;
+        this.repeatGuard = true;
+  }
 }
 
 class postWithMeta extends Post {

@@ -64,7 +64,16 @@ export class TagsearchComponent implements OnInit {
       console.log("New Tag Created and Pushed to DB!");
     }
 
-    this.tagService.changeTags(this.selectedTags);
+    if(this.selectedTags.length > 0){
+      this.tagService.changeTags(this.selectedTags);
+    }
+    else{
+      let dummyArr: Tag[] = [];
+      let dummyTag: Tag = new Tag();
+      dummyTag.name = "EMPTY";
+      dummyArr.push(dummyTag);
+      this.tagService.changeTags(dummyArr);
+    }
   }
 
 
@@ -75,6 +84,16 @@ export class TagsearchComponent implements OnInit {
       this.selectedTags.splice(index, 1);
     }
 
-    this.tagService.changeTags(this.selectedTags);
+    if(this.selectedTags.length > 0){
+      this.tagService.changeTags(this.selectedTags);
+    }
+    else{
+      console.log("I'm firing");
+      let dummyArr: Tag[] = [];
+      let dummyTag: Tag = new Tag();
+      dummyTag.name = "EMPTY";
+      dummyArr.push(dummyTag);
+      this.tagService.changeTags(dummyArr);
+    }
   }
 }
