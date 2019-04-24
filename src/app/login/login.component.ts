@@ -61,8 +61,9 @@ export class LoginComponent implements OnInit {
   }
 
   doSignup() {
-    this.auth.signup(this.signupEmail.value, this.signupPassword.value, this.signupName.value);
-    this.signupFailed = !this.auth.isLoggedIn();
+    this.auth.signup(this.signupEmail.value, this.signupPassword.value, this.signupName.value).then(result => {
+      this.signupFailed = !this.auth.isLoggedIn();
+    });
   }
 
 }
