@@ -1,20 +1,20 @@
 <div fxLayoutAlign="center">
-  <input 
-    class="inputBox" 
-    [(ngModel)]="currTag"
-    type="text" 
-    placeholder="Search Tags" 
-    (keydown.enter)="addTag()"
-  >
+  <mat-form-field appearance="legacy" class="searchInp">
+  <input matInput [formControl]="tagEntry" type="text" placeholder="Search Tags" [matAutocomplete]="auto" (keydown.enter)="addTag()" />
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addTag()">
+      <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+        {{tag}}
+      </mat-option>
+  </mat-autocomplete>
+  </mat-form-field>
 </div>
 <div fxLayoutAlign="center">
   <mat-chip-list class="mat-chip-list-stacked">
-      <mat-basic-chip *ngFor="let tag of tags" (removed)="remove(tag)">
-        <mat-icon matChipRemove>cancel</mat-icon>
-        <div class="vert">
-          {{tag}}
-        </div>
-      </mat-basic-chip>
+    <mat-basic-chip *ngFor="let tag of selectedTags" (removed)="remove(tag)">
+      <mat-icon matChipRemove>cancel</mat-icon>
+      <div class="vert">
+        {{tag.name}}
+      </div>
+    </mat-basic-chip>
   </mat-chip-list>
 </div>
-
