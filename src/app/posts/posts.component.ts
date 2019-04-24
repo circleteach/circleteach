@@ -37,8 +37,6 @@ export class PostsComponent implements OnInit {
     private postService: PostsService,
     private authService: AuthenticationService
   ) {
-    console.log(this.canWritePost);
-    console.log(this.activityLogView);
   }
 
   // Gets unfiltered list of all posts, proof of concept for subscribing to collection

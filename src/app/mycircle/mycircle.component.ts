@@ -120,8 +120,8 @@ export class MycircleComponent implements OnInit {
         .pipe(toArray())
         .subscribe(connections => {
           this.connections = connections;
-          console.log(connections);
-          console.log(this.connectionsList);
+          // console.log(connections);
+          // console.log(this.connectionsList);
         });
 
       // // Get ProfessionalInfo About Connections
@@ -216,7 +216,11 @@ export class MycircleComponent implements OnInit {
               }
               this.jobStart = this.jobList[entry].startTime;
               this.jobEnd = this.jobList[entry].endTime;
-              this.jobDates = this.jobStart.concat(" - ", this.jobEnd);
+              if (this.jobStart !== undefined) {
+                this.jobDates = this.jobStart.concat(" - ", this.jobEnd);
+              } else {
+                this.jobDates = "";
+              }
             }
           });
       }
