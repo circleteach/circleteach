@@ -190,10 +190,14 @@ export class MycircleComponent implements OnInit {
               }
               this.educationStart = this.educationList[entry].startTime;
               this.educationEnd = this.educationList[entry].endTime;
-              this.educationDates = this.educationStart.concat(
-                " - ",
-                this.educationEnd
-              );
+              if (this.educationStart !== undefined) {
+                this.educationDates = this.educationStart.concat(
+                  " - ",
+                  this.educationEnd
+                );
+              } else {
+                this.educationStart = "";
+              }
             }
             if (this.info !== undefined) {
               this.jobList = this.info.jobHistory;
