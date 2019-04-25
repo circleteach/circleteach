@@ -165,6 +165,7 @@ export class PostsComponent implements OnInit {
       this.postService.createPost(newPost);
       console.log("Uploaded Post");
       this.newPostInp = "";
+      this.addedTags = [];
     }
   }
 
