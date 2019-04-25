@@ -22,6 +22,7 @@ export class PostsComponent implements OnInit {
 
   userID;
   profileImg = "../../assets/img/default-profile-picture.png";
+  postImg = "../../assets/img/default-profile-picture.png";
 
   posts: postWithMeta[]; // Stores list of posts
   comments: Comment[]; // Stores list of comments per each post
@@ -107,12 +108,11 @@ export class PostsComponent implements OnInit {
         map(action => {
           // This is how to get data from a document
           user = action.payload.data() as Users;
-          // user.id = action.payload.id;
         })
       )
       .subscribe(f => {
         if (user !== undefined) {
-          post.name = user.name;
+          post.name = user.name;      
         }
       });
   }
