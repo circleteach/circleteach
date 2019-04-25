@@ -176,6 +176,10 @@ ul.a {
   padding: 0px;
 }
 
+#profImgContainer {
+  position: relative;
+}
+
 // for connections area
 #personalInfoCont {
   border-radius: 50px;
@@ -197,7 +201,7 @@ ul.a {
   margin-top: 20px;
 }
 #userInfo {
-  margin-right: 7px;
+  padding-right: 7px;
   margin-top: 50px;
   .user-name {
     font-size: 24px;
@@ -216,6 +220,28 @@ ul.a {
   }
 }
 
+#connectionInfo {
+  margin-top: 40px;
+  .connection-name {
+    font-size: 24px;
+    color: whitesmoke;
+    color: black;
+    font-weight: lighter;
+    text-align: center;
+  }
+  .connections-title {
+    text-align: center;
+    font-size: 17px;
+    color: whitesmoke;
+    color: darkgrey;
+    font-weight: lighter;
+    margin-top: 5px;
+    margin-bottom: 7px;
+    padding-bottom: 15px;
+    text-align: center;
+  }
+}
+
 #profImg {
   border-radius: 100%;
   border-style: solid;
@@ -223,6 +249,15 @@ ul.a {
   margin-top: 16px;
   margin-left: 30px;
   margin-right: 30px;
+  margin-bottom: 16px;
+}
+#connectionsprofImg {
+  border-radius: 100%;
+  border-style: solid;
+  border-color: mat-color($app-accent, 500);
+  margin-top: 16px;
+  margin-left: 30px;
+  margin-right: 10px;
   margin-bottom: 16px;
 }
 .wrapper * {

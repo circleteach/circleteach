@@ -19,6 +19,7 @@ import { StorageService } from "../storage.service";
 export class MycircleComponent implements OnInit {
   // Data Fields
   info: ProfileDetails = new ProfileDetails();
+  connectionsInfo: ProfileDetails = new ProfileDetails();
   job: Job = new Job();
   job_test: Job = new Job();
   user: Users = new Users();
@@ -56,10 +57,14 @@ export class MycircleComponent implements OnInit {
   toggle = true;
   eduEmpty = true;
   jobEmpty = true;
+  connectionEmpty = false;
   loggedInUser = false;
   profileImg = "../../assets/img/default-profile-picture.png";
   profileImage;
   connectionsList = new Array();
+  connectionsPositions = [];
+  connectionsLocations = [];
+  connectionsProfilePics = [];
 
   constructor(
     private authService: AuthenticationService,
@@ -80,6 +85,12 @@ export class MycircleComponent implements OnInit {
       this.id = routeParams.id;
       // Checks if that ID is that of the logged in user
       this.isLoggedInUser(this.id);
+      // Reset Connections Lists
+      this.connectionsList = new Array();
+      this.connectionsLocations = [];
+      this.connectionsPositions = [];
+      this.connectionsProfilePics = [];
+      this.connections = [];
       // Get Display Name
       this.usersService.getDisplayName(this.id).then(result => {
         if (result != null) {
@@ -101,7 +112,9 @@ export class MycircleComponent implements OnInit {
         )
         .pipe(
           flatMap(user => {
-            return from(user.connections);
+            if (user !== undefined) {
+              return from(user.connections);
+            }
           })
         )
         .pipe(
@@ -112,7 +125,9 @@ export class MycircleComponent implements OnInit {
               .pipe(first())
               .pipe(
                 map(doc => {
-                  return (doc.payload.data() as Users).name;
+                  if ((doc.payload.data() as Users) !== undefined) {
+                    return (doc.payload.data() as Users).name;
+                  }
                 })
               );
           })
@@ -120,46 +135,126 @@ export class MycircleComponent implements OnInit {
         .pipe(toArray())
         .subscribe(connections => {
           this.connections = connections;
-          // console.log(connections);
-          // console.log(this.connectionsList);
         });
 
-      // // Get ProfessionalInfo About Connections
-      // this.usersService
-      //   .getBasicInfo(this.id)
-      //   .pipe(first())
-      //   .pipe(
-      //     map(doc => {
-      //       this.user = doc.payload.data() as Users;
-      //       return this.user;
-      //     })
-      //   )
-      //   .pipe(
-      //     flatMap(user => {
-      //       return from(user.connections);
-      //     })
-      //   )
-      //   .pipe(
-      //     flatMap(userId => {
-      //       console.log(userId);
-      //       this.connectionsList.push(userId);
-      //       return this.usersService
-      //         .getProfessionalInfo(userId)
-      //         .pipe(first())
-      //         .pipe(
-      //           map(doc => {
-      //             return (doc.payload.data() as Users).name;
-      //           })
-      //         );
-      //     })
-      //   );
-      // console.log(this.connectionsList);
+      // Get Connections Profile Pictures
+      this.usersService
+        .getBasicInfo(this.id)
+        .pipe(first())
+        .pipe(
+          map(doc => {
+            this.user = doc.payload.data() as Users;
+            return this.user;
+          })
+        )
+        .pipe(
+          flatMap(user => {
+            if (user !== undefined) {
+              return from(user.connections);
+            }
+          })
+        )
+        .pipe(
+          flatMap(userId => {
+            return this.usersService
+              .getBasicInfo(userId)
+              .pipe(first())
+              .pipe(
+                map(doc => {
+                  if ((doc.payload.data() as Users) !== undefined) {
+                    return (doc.payload.data() as Users).profileImage;
+                  }
+                })
+              );
+          })
+        )
+        .pipe(toArray())
+        .subscribe(images => {
+          this.connectionsProfilePics = images;
+          for (let i = 0; i < this.connectionsProfilePics.length; i++) {
+            if (
+              this.connectionsProfilePics[i] === undefined ||
+              this.connectionsProfilePics[i] === "" ||
+              this.connectionsProfilePics[i] === null
+            ) {
+              this.connectionsProfilePics[i] = this.profileImg;
+            }
+          }
+        });
 
-      // .pipe(toArray())
-      // .subscribe(connections => {
-      //   this.connections = connections;
-      //   console.log(connections);
-      // });
+      // Get Connections Job Titles
+      this.usersService
+        .getBasicInfo(this.id)
+        .pipe(first())
+        .pipe(
+          map(doc => {
+            this.user = doc.payload.data() as Users;
+            return this.user;
+          })
+        )
+        .pipe(
+          flatMap(user => {
+            return from(user.connections);
+          })
+        )
+        .pipe(
+          flatMap(userId => {
+            return this.usersService
+              .getProfessionalInfo(userId)
+              .pipe(first())
+              .pipe(
+                map(doc => {
+                  if (doc.payload.data() !== undefined) {
+                    return (doc.payload.data() as ProfileDetails).jobHistory[0]
+                      .position;
+                  }
+                })
+              );
+          })
+        )
+        .pipe(toArray())
+        .subscribe(positions => {
+          // copy array
+          this.connectionsPositions = positions.slice(0);
+          this.connectionsPositions = this.fixOrder(this.connectionsPositions);
+        });
+
+      // Get Connections Job Locations
+      this.usersService
+        .getBasicInfo(this.id)
+        .pipe(first())
+        .pipe(
+          map(doc => {
+            this.user = doc.payload.data() as Users;
+            return this.user;
+          })
+        )
+        .pipe(
+          flatMap(user => {
+            return from(user.connections);
+          })
+        )
+        .pipe(
+          flatMap(userId => {
+            return this.usersService
+              .getProfessionalInfo(userId)
+              .pipe(first())
+              .pipe(
+                map(doc => {
+                  if (doc.payload.data() !== undefined) {
+                    return (doc.payload.data() as ProfileDetails).jobHistory[0]
+                      .location;
+                  }
+                })
+              );
+          })
+        )
+        .pipe(toArray())
+        .subscribe(locations => {
+          // copy array
+          this.connectionsLocations = locations.slice(0);
+          this.connectionsLocations = this.fixOrder(this.connectionsLocations);
+        });
 
       // Get Skills and Certifications
       const snapshot = this.usersService.getProfessionalInfo(this.id);
@@ -176,43 +271,6 @@ export class MycircleComponent implements OnInit {
               this.certifications = this.info.certifications;
               this.educationList = this.info.education;
               this.jobList = this.info.jobHistory;
-              // Loop through Educations (only 1 right now)
-              for (let entry in this.educationList) {
-                // Education Fields
-                this.institution = this.educationList[entry].location;
-                this.fieldsOfStudy = this.educationList[entry].fieldOfStudy;
-                this.educationDescription = this.educationList[
-                  entry
-                ].description;
-                if (
-                  this.educationDescription !== "" &&
-                  this.educationDescription !== undefined
-                ) {
-                  this.eduEmpty = false;
-                }
-                this.educationStart = this.educationList[entry].startTime;
-                this.educationEnd = this.educationList[entry].endTime;
-                this.educationDates = this.educationStart.concat(
-                  " - ",
-                  this.educationEnd
-                );
-              }
-              // Loop through Experiences (only 1 right now)
-              for (let entry in this.jobList) {
-                // Experience Fields
-                this.jobTitle = this.jobList[entry].position;
-                this.jobLocation = this.jobList[entry].location;
-                this.jobDescription = this.jobList[entry].description;
-                if (
-                  this.jobDescription !== "" &&
-                  this.jobDescription !== undefined
-                ) {
-                  this.jobEmpty = false;
-                }
-                this.jobStart = this.jobList[entry].startTime;
-                this.jobEnd = this.jobList[entry].endTime;
-                this.jobDates = this.jobStart.concat(" - ", this.jobEnd);
-              }
               if (this.info.education === undefined) {
                 this.educationList = null;
                 this.institution = null;
@@ -222,6 +280,28 @@ export class MycircleComponent implements OnInit {
                 this.educationStart = null;
                 this.educationEnd = null;
                 this.educationDates = null;
+              } else {
+                // Loop through Educations (only 1 right now)
+                for (let entry in this.educationList) {
+                  // Education Fields
+                  this.institution = this.educationList[entry].location;
+                  this.fieldsOfStudy = this.educationList[entry].fieldOfStudy;
+                  this.educationDescription = this.educationList[
+                    entry
+                  ].description;
+                  if (
+                    this.educationDescription !== "" &&
+                    this.educationDescription !== undefined
+                  ) {
+                    this.eduEmpty = false;
+                  }
+                  this.educationStart = this.educationList[entry].startTime;
+                  this.educationEnd = this.educationList[entry].endTime;
+                  this.educationDates = this.educationStart.concat(
+                    " - ",
+                    this.educationEnd
+                  );
+                }
               }
               if (this.info.jobHistory === undefined) {
                 this.jobTitle = null;
@@ -231,10 +311,42 @@ export class MycircleComponent implements OnInit {
                 this.jobStart = null;
                 this.jobEnd = null;
                 this.jobDates = null;
+              } else {
+                // Loop through Experiences (only 1 right now)
+                for (let entry in this.jobList) {
+                  // Experience Fields
+                  this.jobTitle = this.jobList[entry].position;
+                  this.jobLocation = this.jobList[entry].location;
+                  this.jobDescription = this.jobList[entry].description;
+                  if (
+                    this.jobDescription !== "" &&
+                    this.jobDescription !== undefined
+                  ) {
+                    this.jobEmpty = false;
+                  }
+                  this.jobStart = this.jobList[entry].startTime;
+                  this.jobEnd = this.jobList[entry].endTime;
+                  this.jobDates = this.jobStart.concat(" - ", this.jobEnd);
+                }
               }
             } else {
               this.skills = null;
               this.certifications = null;
+              this.jobTitle = null;
+              this.jobLocation = null;
+              this.jobDescription = null;
+              this.jobEmpty = true;
+              this.jobStart = null;
+              this.jobEnd = null;
+              this.jobDates = null;
+              this.educationList = null;
+              this.institution = null;
+              this.fieldsOfStudy = null;
+              this.educationDescription = null;
+              this.eduEmpty = true;
+              this.educationStart = null;
+              this.educationEnd = null;
+              this.educationDates = null;
             }
           });
       }
@@ -272,6 +384,23 @@ export class MycircleComponent implements OnInit {
     }
   }
   getFirstName(fullName: string) {
-    return fullName.substr(0, fullName.indexOf(" "));
+    if (fullName.substr(0, fullName.indexOf(" ")) === "") {
+      return fullName;
+    } else {
+      return fullName.substr(0, fullName.indexOf(" "));
+    }
+  }
+
+  // ** Workaround function ** (Temporarily fixes connectionsLocations bug where order gets messed up after adding a connection who does not have an associated job location)
+  fixOrder(information: string[]): string[] {
+    for (let i = 0; i < information.length; i++) {
+      if (information[i] === undefined || information[i] === null) {
+        this.connectionEmpty = true;
+        information.push(information.shift());
+        return information;
+      } else {
+        return information;
+      }
+    }
   }
 }

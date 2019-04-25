@@ -1,4 +1,4 @@
-import * as firebase from 'firebase';
+import * as firebase from "firebase";
 
 export class Users {
   public id: string;
@@ -8,4 +8,5 @@ export class Users {
   public posts: firebase.firestore.DocumentReference[];
   public professionalInfo: firebase.firestore.DocumentReference;
   public starredPosts: firebase.firestore.DocumentReference[];
+  public profileImage: string[];
 }
