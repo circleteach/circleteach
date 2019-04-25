@@ -23,6 +23,7 @@ export class MycircleComponent implements OnInit {
   job: Job = new Job();
   job_test: Job = new Job();
   user: Users = new Users();
+  user1: Users = new Users();
   skills: string[];
   certifications: string[];
   connections: string[];
@@ -65,6 +66,8 @@ export class MycircleComponent implements OnInit {
   connectionsPositions = [];
   connectionsLocations = [];
   connectionsProfilePics = [];
+  connectionPositionIDs = [];
+  connectionLocationIDs = [];
 
   constructor(
     private authService: AuthenticationService,
@@ -91,6 +94,9 @@ export class MycircleComponent implements OnInit {
       this.connectionsPositions = [];
       this.connectionsProfilePics = [];
       this.connections = [];
+      // Used to workaround Firebase retrieval order inconsistencies
+      this.connectionPositionIDs = [];
+      this.connectionLocationIDs = [];
       // Get Display Name
       this.usersService.getDisplayName(this.id).then(result => {
         if (result != null) {
@@ -205,6 +211,7 @@ export class MycircleComponent implements OnInit {
               .pipe(
                 map(doc => {
                   if (doc.payload.data() !== undefined) {
+                    this.connectionPositionIDs.push(doc.payload.id);
                     return (doc.payload.data() as ProfileDetails).jobHistory[0]
                       .position;
                   }
@@ -214,9 +221,22 @@ export class MycircleComponent implements OnInit {
         )
         .pipe(toArray())
         .subscribe(positions => {
-          // copy array
           this.connectionsPositions = positions.slice(0);
-          this.connectionsPositions = this.fixOrder(this.connectionsPositions);
+          // Put Positions into Consistent Order with other info
+          for (let i = 0; i < this.connectionsList.length; i++) {
+            var person = this.connectionsList[i];
+            for (let j = 0; j < this.connectionPositionIDs.length; j++) {
+              if (this.connectionPositionIDs[j] === person) {
+                // Swap IDs in Positions Array
+                var temp = this.connectionPositionIDs[i];
+                var realTemp = this.connectionsPositions[i];
+                this.connectionPositionIDs[i] = this.connectionPositionIDs[j];
+                this.connectionsPositions[i] = this.connectionsPositions[j];
+                this.connectionPositionIDs[j] = temp;
+                this.connectionsPositions[j] = realTemp;
+              }
+            }
+          }
         });
 
       // Get Connections Job Locations
@@ -242,6 +262,7 @@ export class MycircleComponent implements OnInit {
               .pipe(
                 map(doc => {
                   if (doc.payload.data() !== undefined) {
+                    this.connectionLocationIDs.push(doc.payload.id);
                     return (doc.payload.data() as ProfileDetails).jobHistory[0]
                       .location;
                   }
@@ -253,7 +274,21 @@ export class MycircleComponent implements OnInit {
         .subscribe(locations => {
           // copy array
           this.connectionsLocations = locations.slice(0);
-          this.connectionsLocations = this.fixOrder(this.connectionsLocations);
+          // Put Locations into Consistent Order with other info
+          for (let i = 0; i < this.connectionsList.length; i++) {
+            var person = this.connectionsList[i];
+            for (let j = 0; j < this.connectionLocationIDs.length; j++) {
+              if (this.connectionLocationIDs[j] === person) {
+                // Swap IDs in Locations Array
+                var temp = this.connectionLocationIDs[i];
+                var realTemp = this.connectionsLocations[i];
+                this.connectionLocationIDs[i] = this.connectionLocationIDs[j];
+                this.connectionsLocations[i] = this.connectionsLocations[j];
+                this.connectionLocationIDs[j] = temp;
+                this.connectionsLocations[j] = realTemp;
+              }
+            }
+          }
         });
 
       // Get Skills and Certifications
@@ -392,15 +427,15 @@ export class MycircleComponent implements OnInit {
   }
 
   // ** Workaround function ** (Temporarily fixes connectionsLocations bug where order gets messed up after adding a connection who does not have an associated job location)
-  fixOrder(information: string[]): string[] {
-    for (let i = 0; i < information.length; i++) {
-      if (information[i] === undefined || information[i] === null) {
-        this.connectionEmpty = true;
-        information.push(information.shift());
-        return information;
-      } else {
-        return information;
-      }
-    }
-  }
+  // fixOrder(information: string[]): string[] {
+  //   for (let i = 0; i < information.length; i++) {
+  //     if (information[i] === undefined || information[i] === null) {
+  //       this.connectionEmpty = true;
+  //       information.push(information.shift());
+  //       return information;
+  //     } else {
+  //       return information;
+  //     }
+  //   }
+  // }
 }
