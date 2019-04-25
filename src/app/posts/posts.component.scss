@@ -12,21 +12,16 @@
   margin-left: 3vw;
   margin-top: 2vh;
 }
-#writePostCont {
-  margin-top: 2vh;
-  border-radius: 80px;
-  border-style: solid;
-  border-color: black;
-  border-width: 1px;
-  margin-left: -10%;
-  width: 100%;
-  background-color: rgb(250, 250, 250);
+
+#writePost {
+  margin-left: -20%;
 }
+
 #postInp {
   border-radius: 50px;
   border-style: none;
   background-color: white;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   padding-left: 1vw;
   width: 80%;
   height: 70%;
@@ -42,7 +37,7 @@
 #uploadBtn {
   width: 90%;
   height: 90%;
-  margin-left: 1vw;
+  margin-left: 0vw;
   border-radius: 50px;
   border-style: solid;
   border-color: mat-color($app-primary, 500);
@@ -107,7 +102,7 @@
 }
 
 #tagsCont {
-  margin-left: 3vw;
+  margin-left: 2vw;
   border-radius: 50px;
   border-style: solid;
   border-color: mat-color($app-primary, 500);
@@ -205,14 +200,19 @@ a:active {
 //Tags Style
 .mat-basic-chip {
   text-align: center;
+  vertical-align: center;
   margin-top: 5%;
   margin-left: 10px;
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   background-color: mat-color($app-primary, 500);
   border-radius: 50px;
 
   p{
     margin-top: -5%;
+  }
+
+  .tagtext{
+    font-size: 70%
   }
 }
