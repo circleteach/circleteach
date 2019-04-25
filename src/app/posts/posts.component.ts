@@ -7,9 +7,11 @@ import { Comment } from "../models/comment.model";
 import { Timestamp } from "rxjs/internal/operators/timestamp";
 import { AuthenticationService } from "../authentication.service";
 import { Users } from "../models/users.model";
+import { UsersService } from "../users.service";
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { StorageService } from "../storage.service";
 
 @Component({
   selector: "app-posts",
@@ -18,6 +20,8 @@ import { map, startWith } from 'rxjs/operators';
 })
 export class PostsComponent implements OnInit {
 
+  userID;
+  profileImg = "../../assets/img/default-profile-picture.png";
 
   posts: postWithMeta[]; // Stores list of posts
   comments: Comment[]; // Stores list of comments per each post
@@ -46,13 +50,21 @@ export class PostsComponent implements OnInit {
   constructor(
     private postService: PostsService,
     private authService: AuthenticationService,
-    private tagService: TagsService
+    private usersService: UsersService,
+    private tagService: TagsService,
+    private storage: StorageService,
   ) {
   }
 
   
   ngOnInit() {
     this.getPosts();
+    this.userID = this.authService.getUserId();
+    this.usersService.getProfileImage(this.userID).then(result => {
+      this.storage.getStorageFromLink(result).then(r => {
+        this.profileImg = r;
+      });
+    });
   }
 
   getPosts(){ // Gets unfiltered list of all posts, proof of concept for subscribing to collection

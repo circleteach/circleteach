@@ -1,14 +1,19 @@
 <!--Write Posts Component-->
-<div *ngIf="canWritePost" gdAreas=" proImg postWrite postWrite postWrite | sortByTxt sortByBtn postsByTxt postsByBtn"
-  gdGap="10px">
-  <div gdArea="proImg">
-    <img id="proImg" src="../../assets/uwath2018.png" style="background-color: blue" alt="Profile Image" height="100px"
-      width="100px" />
+<div *ngIf="canWritePost" 
+    id="postCont" 
+    gdAreas="proImg postWrite postWrite postWrite| addTags tags uploadBtn postBtn"
+>
+
+  <div gdArea="proImg" id="profImgContainer">
+    <img id="proImg" src="{{ profileImg }}" style="background-color: blue" alt="Profile Image" height="70px"
+      width="70px" />
+  </div>
+  
+  <div gdArea="postWrite" id="writePost">
+    <input id="postInp" type="text" placeholder="Write new post..." [(ngModel)]="newPostInp" />
   </div>
 
-  <div id="writePostCont" gdArea="postWrite" gdAreas="postTxtBox postTxtBox postTxtBox | addTags uploadBtn postBtn | tags tags tags">
-    <input gdArea="postTxtBox" id="postInp" type="text" placeholder="Write new post..." [(ngModel)]="newPostInp" />
-
+  <div gdArea="addTags">
     <mat-form-field appearance="legacy" id="tagsInp">
       <input matInput [formControl]="tagEntry" type="text" placeholder="Add Tags" [matAutocomplete]="auto"
         (keydown.enter)="addTag()" />
@@ -18,23 +23,27 @@
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
-
-    <div gdArea="tags" id="tagsCont" style="width: 200px; height: 75px;" gdArea="tags">
-        <mat-chip-list class="mat-chip-list">
-          <mat-basic-chip *ngFor="let tag of addedTags" (removed)="remove(tag)">
-            <mat-icon matChipRemove>cancel</mat-icon>
-            <p>{{tag.name}}</p>
-          </mat-basic-chip>
-        </mat-chip-list>
-      </div>
-
-    <button gdArea="uploadBtn" id="uploadBtn" class="filterBtn" mat-button (click)="uploadClick()">
-      Upload
-    </button>
-    <button gdArea="postBtn" id="postBtn" class="filterBtn" mat-button (click)="postClick()">
-      Post
-    </button>
   </div>
+
+  <div gdArea="tags" id="tagsCont" style="width: 300px; height: 75px;" gdArea="tags">
+    <mat-chip-list class="mat-chip-list">
+      <mat-basic-chip *ngFor="let tag of addedTags" (removed)="remove(tag)">
+        <mat-icon matChipRemove>cancel</mat-icon>
+          <p class="tagtext">{{tag.name}}</p>
+        </mat-basic-chip>
+    </mat-chip-list>
+  </div>
+
+  <button gdArea="uploadBtn" id="uploadBtn" class="filterBtn" mat-button (click)="uploadClick()">
+    Upload
+  </button>
+  <button gdArea="postBtn" id="postBtn" class="filterBtn" mat-button (click)="postClick()">
+    Post
+  </button>
+
+</div>
+<hr>
+<div *ngIf="canWritePost" gdAreas="sortByTxt sortByBtn postsByTxt postsByBtn">
 
   <p id="sortByDisp" gdArea="sortByTxt">Sort By:</p>
   <button gdArea="sortByBtn" class="filterBtn" mat-button (click)="sortClick()">
@@ -44,7 +53,10 @@
   <button gdArea="postsByBtn" class="filterBtn" mat-button (click)="postsByClick()">
     All
   </button>
+
 </div>
+<hr>
+
 
 <!--Actual List of Posts-->
 <div id="postsList" *ngFor="let post of posts">
