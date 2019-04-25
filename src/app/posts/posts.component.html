@@ -25,7 +25,7 @@
     </mat-form-field>
   </div>
 
-  <div gdArea="tags" id="tagsCont" style="width: 300px; height: 75px;" gdArea="tags">
+  <div gdArea="tags" id="tagsCont" style="width: 300px; height: 80px;" >
     <mat-chip-list class="mat-chip-list">
       <mat-basic-chip *ngFor="let tag of addedTags" (removed)="remove(tag)">
         <mat-icon matChipRemove>cancel</mat-icon>
@@ -42,7 +42,7 @@
   </button>
 
 </div>
-<hr>
+<hr style="margin-top: 15px; margin-right: 15px;">
 <div *ngIf="canWritePost" gdAreas="sortByTxt sortByBtn postsByTxt postsByBtn">
 
   <p id="sortByDisp" gdArea="sortByTxt">Sort By:</p>
@@ -55,7 +55,7 @@
   </button>
 
 </div>
-<hr>
+<hr style="margin-right: 15px;">
 
 
 <!--Actual List of Posts-->
@@ -65,7 +65,7 @@
     gdAreas="profImage userInfo userInfo postAge  | content content content content  | tags  postInfo postInfo postInfo | comment comment comment comment">
     <div id="profImgContainer" gdArea="profImage">
       <a routerLink="/profile/{{ post.user }}">
-        <img id="profImg" src="../../assets/uwath2018.png" onmouseover=""
+        <img id="profImg" src="{{ postImg }}" onmouseover=""
           style="background-color: blue; cursor: pointer" alt="Profile Image" height="70px" width="70px" />
       </a>
     </div>
@@ -76,7 +76,7 @@
           {{ post.name }}
         </h2>
         <p>
-          {{ userTitle }}
+          {{ userTitle }} + usertitle
         </p>
       </a>
     </div>
@@ -89,10 +89,10 @@
       <p>{{ post.content }}</p>
     </div>
 
-    <div id="tagsCont" style="width: 200px; height: 75px;" gdArea="tags">
+    <div id="tagsCont" style="width: 200px; height: 80px;" gdArea="tags">
       <mat-chip-list class="mat-chip-list">
         <mat-basic-chip *ngFor="let tag of post.tags" >
-          <p>{{tag.name}}</p>
+          <p class="tagtextPost">{{tag.name}}</p>
         </mat-basic-chip>
       </mat-chip-list>
     </div>

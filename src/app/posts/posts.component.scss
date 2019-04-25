@@ -29,6 +29,7 @@
   margin-top: 1vh;
 }
 #tagsInp {
+  margin-top: 15px;
   border-radius: 50px;
   border-color: mat-color($app-primary, 500);
   height: 70%;
@@ -103,6 +104,7 @@
 
 #tagsCont {
   margin-left: 2vw;
+  margin-top: 5px;
   border-radius: 50px;
   border-style: solid;
   border-color: mat-color($app-primary, 500);
@@ -200,9 +202,8 @@ a:active {
 //Tags Style
 .mat-basic-chip {
   text-align: center;
-  vertical-align: center;
-  margin-top: 5%;
-  margin-left: 10px;
+  margin-top: 6%;
+  margin-left: 15px;
   width: 50px;
   height: 50px;
   background-color: mat-color($app-primary, 500);
@@ -213,6 +214,12 @@ a:active {
   }
 
   .tagtext{
+    vertical-align: middle;
     font-size: 70%
+  }
+
+  .tagtextPost{
+    font-size: 70%;
+    padding-top: 20px;
   }
 }
