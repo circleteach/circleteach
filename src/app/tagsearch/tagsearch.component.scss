@@ -18,8 +18,15 @@
   margin-top: 20px;
   width: 100px;
   height: 100px;
-  background-color: mat-color($app-primary, 500);
+  background-color: mat-color($app-primary, 700);
   border-radius: 50px;
+}
+.mat-basic-chip:focus,
+input:focus {
+  outline: none;
+}
+.mat-basic-chip:hover {
+  cursor: pointer;
 }
 
 .vert {

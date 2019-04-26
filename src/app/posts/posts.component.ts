@@ -8,9 +8,9 @@ import { Timestamp } from "rxjs/internal/operators/timestamp";
 import { AuthenticationService } from "../authentication.service";
 import { Users } from "../models/users.model";
 import { UsersService } from "../users.service";
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { FormControl } from "@angular/forms";
+import { Observable } from "rxjs";
+import { map, startWith } from "rxjs/operators";
 import { StorageService } from "../storage.service";
 
 @Component({
@@ -19,7 +19,6 @@ import { StorageService } from "../storage.service";
   styleUrls: ["./posts.component.scss"]
 })
 export class PostsComponent implements OnInit {
-
   userID;
   profileImg = "../../assets/img/default-profile-picture.png";
   postImg = "../../assets/img/default-profile-picture.png";
@@ -47,17 +46,14 @@ export class PostsComponent implements OnInit {
 
   private tagsInp; // Bound text filed for input of tags with post
 
-
   constructor(
     private postService: PostsService,
     private authService: AuthenticationService,
     private usersService: UsersService,
     private tagService: TagsService,
-    private storage: StorageService,
-  ) {
-  }
+    private storage: StorageService
+  ) {}
 
-  
   ngOnInit() {
     this.getPosts();
     this.userID = this.authService.getUserId();
@@ -68,7 +64,8 @@ export class PostsComponent implements OnInit {
     });
   }
 
-  getPosts(){ // Gets unfiltered list of all posts, proof of concept for subscribing to collection
+  getPosts() {
+    // Gets unfiltered list of all posts, proof of concept for subscribing to collection
     this.postService.getPosts().subscribe(data => {
       // This is how to get data from a collection
       this.posts = data.map(e => {
@@ -84,12 +81,13 @@ export class PostsComponent implements OnInit {
         this.getPostUser(post);
       });
 
-      this.tagService.currentTags.subscribe(tags => {//SUBSCRIBES TO TAGS
+      this.tagService.currentTags.subscribe(tags => {
+        //SUBSCRIBES TO TAGS
         this.selectedTags = tags;
-        if(!this.firstLoad){
-          if(tags[0].name != "EMPTY"){
+        if (!this.firstLoad) {
+          if (tags[0].name != "EMPTY") {
             this.filterByTags();
-          }else if(tags[0].name == "EMPTY" && this.repeatGuard){
+          } else if (tags[0].name == "EMPTY" && this.repeatGuard) {
             this.getPosts();
             this.repeatGuard = false;
           }
@@ -112,7 +110,7 @@ export class PostsComponent implements OnInit {
       )
       .subscribe(f => {
         if (user !== undefined) {
-          post.name = user.name;      
+          post.name = user.name;
         }
       });
   }
@@ -132,23 +130,21 @@ export class PostsComponent implements OnInit {
     }
   }
 
-
-
   // TODO downloads content of post
   downloadClick() {
     console.log(this.selectedTags);
   }
 
   // TODO Navigate to user page on profile image or name click
-  profileClick() { }
+  profileClick() {}
 
   // TODO after tag functionality is built
-  tagClick() { }
+  tagClick() {}
 
   // Methods for Post Creation
 
   // TODO Allows content to be uploaded to post
-  uploadClick() { }
+  uploadClick() {}
 
   // Validates content and creates a new post for the user
   // TODO: Linke to User, Tags
@@ -170,10 +166,10 @@ export class PostsComponent implements OnInit {
   }
 
   // TODO toggles the sort by options
-  sortClick() { }
+  sortClick() {}
 
   // TODO toggles the posts by options
-  postsByClick() { }
+  postsByClick() {}
 
   // ------------ Methods for Comments ------------//
 
@@ -229,14 +225,16 @@ export class PostsComponent implements OnInit {
     });
 
     this.filteredTags = this.tagEntry.valueChanges.pipe(
-      startWith(''),
+      startWith(""),
       map(value => this.myFilter(value))
     );
   }
 
   private myFilter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.tagNames.filter(user => user.toLowerCase().includes(filterValue));
+    return this.tagNames.filter(user =>
+      user.toLowerCase().includes(filterValue)
+    );
   }
 
   addTag() {
@@ -258,18 +256,18 @@ export class PostsComponent implements OnInit {
   private filterByTags() {
     let newPosts: postWithMeta[] = [];
 
-        this.posts.forEach(post => {
-          post.tags.forEach(tag => {
-            this.selectedTags.forEach(tagS => {
-              if (tag.name == tagS.name) {
-                newPosts.push(post);
-              }
-            })
-          })
+    this.posts.forEach(post => {
+      post.tags.forEach(tag => {
+        this.selectedTags.forEach(tagS => {
+          if (tag.name == tagS.name) {
+            newPosts.push(post);
+          }
         });
+      });
+    });
 
-        this.posts = newPosts;
-        this.repeatGuard = true;
+    this.posts = newPosts;
+    this.repeatGuard = true;
   }
 }
 
