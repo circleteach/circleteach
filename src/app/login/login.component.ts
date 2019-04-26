@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   signupPassHide = true;
   signupEmail = new FormControl('', [Validators.required, Validators.email]);
   signupPassword = new FormControl('', [Validators.required, Validators.minLength(6)]);
-  signupName = new FormControl('', [Validators.required, Validators.minLength(2)]);
+  signupName = new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(70)]);
 
   constructor(private auth: AuthenticationService) { }
 
@@ -28,7 +28,9 @@ export class LoginComponent implements OnInit {
     if (this.signupName.hasError('required')) {
       return 'You must enter an name!';
     } else if (this.signupName.hasError('minlength')) {
-      return 'Your name must be at least two characters long!';
+      return 'Your name must be at least 2 characters long!';
+    } else if (this.signupName.hasError('maxlength')) {
+      return 'Your name must be no longer than 70 characters long!';
     } else if (this.signupName.errors != null) {
       return 'There was a problem with your display name!';
     } else {

@@ -158,6 +158,14 @@ export class EditprofileComponent implements OnInit {
       this.displayname = new FormControl();
       return;
     }
+
+    if (this.displayname.value.length > 70) {
+      this.snackbar.open('Your new display name must be no longer than 70 characters long!', 'X', {
+        duration: 3000
+      });
+      this.displayname = new FormControl();
+      return;
+    }
     this.profile.name = this.displayname.value;
     // update it to be displayed immediately
     this.userName = this.profile.name;
