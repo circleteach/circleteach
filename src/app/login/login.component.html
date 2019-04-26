@@ -62,13 +62,13 @@
           <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
             <input matInput placeholder="Enter your email" [formControl]="signupEmail">
-            <mat-error *ngIf="signupName.invalid">{{getEmailErrorMessage()}}</mat-error>
+            <mat-error *ngIf="signupEmail.invalid">{{getEmailErrorMessage()}}</mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
             <input matInput placeholder="Enter your password" [type]="signupPassHide ? 'password' : 'text'" [formControl]="signupPassword">
             <mat-icon matSuffix (click)="signupPassHide = !signupPassHide">{{signupPassHide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            <mat-error *ngIf="signupName.invalid">{{getPasswordErrorMessage()}}</mat-error>
+            <mat-error *ngIf="signupPassword.invalid">{{getPasswordErrorMessage()}}</mat-error>
           </mat-form-field>
 
           <div class="button-row">
