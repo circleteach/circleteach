@@ -175,6 +175,13 @@ export class EditprofileComponent implements OnInit {
     this.displayname = new FormControl();
   }
   updateCertifications() {
+    if (this.new_certification.value == null || this.new_certification.value.length < 1) {
+      this.snackbar.open('Your new certification must not be empty!', 'X', {
+        duration: 2000
+      });
+      this.new_certification = new FormControl();
+      return;
+    }
     // adds it to certifications array to display
     this.certifications.push(this.new_certification.value);
     // make sure profileDetails object is updated
@@ -185,6 +192,14 @@ export class EditprofileComponent implements OnInit {
     this.new_certification = new FormControl();
   }
   updateSkills() {
+    if (this.new_skill.value == null || this.new_skill.value.length < 1) {
+      this.snackbar.open('Your new skill must not be empty!', 'X', {
+        duration: 2000
+      });
+      this.new_skill = new FormControl();
+      return;
+    }
+
     // adds it to skills array to display
     this.skills.push(this.new_skill.value);
     // make sure profileDetails object is updated
@@ -196,6 +211,12 @@ export class EditprofileComponent implements OnInit {
   }
   // update firebase with info from education form
   updateEducation(form: FormGroup) {
+    if (form.value.institution_attended == null || form.value.institution_attended < 1) {
+      this.snackbar.open('Your new education must at least have a location!', 'X', {
+        duration: 2000
+      });
+      return;
+    }
     this.job.location = form.value.institution_attended;
     this.job.fieldOfStudy = form.value.fields_of_study;
     this.job.startTime = form.value.date_started;
@@ -203,7 +224,7 @@ export class EditprofileComponent implements OnInit {
     this.job.description = form.value.description;
     console.log(this.job);
     if (this.job !== undefined) {
-      this.info.education = new Array();
+      this.info.education = [];
       this.info.education.push(this.job);
     } else {
       console.log("job object undefined");
@@ -221,6 +242,12 @@ export class EditprofileComponent implements OnInit {
   }
   // update firebase with info from experience form
   updateExperience(form: FormGroup) {
+    if (form.value.jobTitle == null || form.value.jobTitle < 1) {
+      this.snackbar.open('Your new experience must at least have a title!', 'X', {
+        duration: 2000
+      });
+      return;
+    }
     this.job.position = form.value.jobTitle;
     this.job.location = form.value.jobLocation;
     this.job.startTime = form.value.jobStart;
