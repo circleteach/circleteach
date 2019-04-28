@@ -21,8 +21,8 @@ export class EditprofileComponent implements OnInit {
   info: ProfileDetails = new ProfileDetails();
   job: Job = new Job();
   profile: Users = new Users();
-  skills = new Array();
-  certifications = new Array();
+  skills = [];
+  certifications = [];
   profileImg = "../../assets/img/default-profile-picture.png";
 
   institution = "";
@@ -46,8 +46,8 @@ export class EditprofileComponent implements OnInit {
   orderForm: FormGroup;
   items: FormArray;
 
-  new_certification = new FormControl();
-  new_skill = new FormControl();
+  newCertification = new FormControl();
+  newSkill = new FormControl();
   displayname = new FormControl();
 
   id;
@@ -175,39 +175,39 @@ export class EditprofileComponent implements OnInit {
     this.displayname = new FormControl();
   }
   updateCertifications() {
-    if (this.new_certification.value == null || this.new_certification.value.length < 1) {
+    if (this.newCertification.value == null || this.newCertification.value.length < 1) {
       this.snackbar.open('Your new certification must not be empty!', 'X', {
         duration: 2000
       });
-      this.new_certification = new FormControl();
+      this.newCertification = new FormControl();
       return;
     }
     // adds it to certifications array to display
-    this.certifications.push(this.new_certification.value);
+    this.certifications.push(this.newCertification.value);
     // make sure profileDetails object is updated
     this.info.certifications = this.certifications;
     // push new certification to firestore
     this.usersService.updateProfessionalInfo(this.info, this.id);
     // re-initializes the form
-    this.new_certification = new FormControl();
+    this.newCertification = new FormControl();
   }
   updateSkills() {
-    if (this.new_skill.value == null || this.new_skill.value.length < 1) {
+    if (this.newSkill.value == null || this.newSkill.value.length < 1) {
       this.snackbar.open('Your new skill must not be empty!', 'X', {
         duration: 2000
       });
-      this.new_skill = new FormControl();
+      this.newSkill = new FormControl();
       return;
     }
 
     // adds it to skills array to display
-    this.skills.push(this.new_skill.value);
+    this.skills.push(this.newSkill.value);
     // make sure profileDetails object is updated
     this.info.skills = this.skills;
     // push new skill to firestore
     this.usersService.updateProfessionalInfo(this.info, this.id);
     // re-initializes the form
-    this.new_skill = new FormControl();
+    this.newSkill = new FormControl();
   }
   // update firebase with info from education form
   updateEducation(form: FormGroup) {
@@ -255,7 +255,7 @@ export class EditprofileComponent implements OnInit {
     this.job.description = form.value.jobDescription;
     console.log(this.job);
     if (this.job !== undefined) {
-      this.info.jobHistory = new Array();
+      this.info.jobHistory = [];
       this.info.jobHistory.push(this.job);
     } else {
       console.log("job object undefined");

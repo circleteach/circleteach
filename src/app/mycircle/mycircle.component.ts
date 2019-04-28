@@ -332,10 +332,12 @@ export class MycircleComponent implements OnInit {
                   }
                   this.educationStart = this.educationList[entry].startTime;
                   this.educationEnd = this.educationList[entry].endTime;
-                  this.educationDates = this.educationStart.concat(
-                    " - ",
-                    this.educationEnd
-                  );
+                  if (this.educationStart !== undefined) {
+                    this.educationDates = this.educationStart.concat(
+                      " - ",
+                      this.educationEnd
+                    );
+                  }
                 }
               }
               if (this.info.jobHistory === undefined) {
@@ -361,7 +363,9 @@ export class MycircleComponent implements OnInit {
                   }
                   this.jobStart = this.jobList[entry].startTime;
                   this.jobEnd = this.jobList[entry].endTime;
-                  this.jobDates = this.jobStart.concat(" - ", this.jobEnd);
+                  if (this.jobStart !== undefined) {
+                    this.jobDates = this.jobStart.concat(" - ", this.jobEnd);
+                  }
                 }
               }
             } else {
