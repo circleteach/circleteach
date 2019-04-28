@@ -20,13 +20,13 @@ export class TagsService {
     return this.firestore.collection("tags").snapshotChanges();
   }
 
-  //CRUD Create
+  // CRUD Create
   createTag(tag: Tag) {
     const param = JSON.parse(JSON.stringify(tag));
     return this.firestore.collection("tags").add(param);
   }
 
-  //RXJS Pipe for sending shit to posts component
+  // RXJS Pipe for sending shit to posts component
   changeTags(tags: Tag[]) {
     this.tagsSource.next(tags)
   }

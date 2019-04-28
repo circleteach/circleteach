@@ -82,7 +82,7 @@ export class PostsComponent implements OnInit {
       });
 
       this.tagService.currentTags.subscribe(tags => {
-        //SUBSCRIBES TO TAGS
+        // SUBSCRIBES TO TAGS
         this.selectedTags = tags;
         if (!this.firstLoad) {
           if (tags[0].name != "EMPTY") {
@@ -189,8 +189,8 @@ export class PostsComponent implements OnInit {
 
   // TODO Uploads comment given body and user info
   submitCommentClick(post: Post) {
-    if (this.newCommentInp != "" && this.newCommentInp != null) {
-      let newComment: Comment = new Comment();
+    if (this.newCommentInp !== "" && this.newCommentInp != null) {
+      const newComment: Comment = new Comment();
       newComment.content = this.newCommentInp;
       newComment.user = "Example User";
 
@@ -238,7 +238,7 @@ export class PostsComponent implements OnInit {
   }
 
   addTag() {
-    let newTag = new Tag();
+    const newTag = new Tag();
 
     if (this.tagNames.includes(this.tagEntry.value)) {
       newTag.name = this.tagEntry.value;
@@ -252,9 +252,9 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  //Filters Posts when a new tag is added
+  // Filters Posts when a new tag is added
   private filterByTags() {
-    let newPosts: postWithMeta[] = [];
+    const newPosts: postWithMeta[] = [];
 
     this.posts.forEach(post => {
       post.tags.forEach(tag => {

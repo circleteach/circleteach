@@ -62,7 +62,7 @@ export class MycircleComponent implements OnInit {
   loggedInUser = false;
   profileImg = "../../assets/img/default-profile-picture.png";
   profileImage;
-  connectionsList = new Array();
+  connectionsList = [];
   connectionsPositions = [];
   connectionsLocations = [];
   connectionsProfilePics = [];
@@ -89,7 +89,7 @@ export class MycircleComponent implements OnInit {
       // Checks if that ID is that of the logged in user
       this.isLoggedInUser(this.id);
       // Reset Connections Lists
-      this.connectionsList = new Array();
+      this.connectionsList = [];
       this.connectionsLocations = [];
       this.connectionsPositions = [];
       this.connectionsProfilePics = [];
@@ -224,12 +224,12 @@ export class MycircleComponent implements OnInit {
           this.connectionsPositions = positions.slice(0);
           // Put Positions into Consistent Order with other info
           for (let i = 0; i < this.connectionsList.length; i++) {
-            var person = this.connectionsList[i];
+            const person = this.connectionsList[i];
             for (let j = 0; j < this.connectionPositionIDs.length; j++) {
               if (this.connectionPositionIDs[j] === person) {
                 // Swap IDs in Positions Array
-                var temp = this.connectionPositionIDs[i];
-                var realTemp = this.connectionsPositions[i];
+                const temp = this.connectionPositionIDs[i];
+                const realTemp = this.connectionsPositions[i];
                 this.connectionPositionIDs[i] = this.connectionPositionIDs[j];
                 this.connectionsPositions[i] = this.connectionsPositions[j];
                 this.connectionPositionIDs[j] = temp;
@@ -276,12 +276,12 @@ export class MycircleComponent implements OnInit {
           this.connectionsLocations = locations.slice(0);
           // Put Locations into Consistent Order with other info
           for (let i = 0; i < this.connectionsList.length; i++) {
-            var person = this.connectionsList[i];
+            const person = this.connectionsList[i];
             for (let j = 0; j < this.connectionLocationIDs.length; j++) {
               if (this.connectionLocationIDs[j] === person) {
                 // Swap IDs in Locations Array
-                var temp = this.connectionLocationIDs[i];
-                var realTemp = this.connectionsLocations[i];
+                const temp = this.connectionLocationIDs[i];
+                const realTemp = this.connectionsLocations[i];
                 this.connectionLocationIDs[i] = this.connectionLocationIDs[j];
                 this.connectionsLocations[i] = this.connectionsLocations[j];
                 this.connectionLocationIDs[j] = temp;
@@ -317,7 +317,7 @@ export class MycircleComponent implements OnInit {
                 this.educationDates = null;
               } else {
                 // Loop through Educations (only 1 right now)
-                for (let entry in this.educationList) {
+                for (const entry in this.educationList) {
                   // Education Fields
                   this.institution = this.educationList[entry].location;
                   this.fieldsOfStudy = this.educationList[entry].fieldOfStudy;
@@ -350,7 +350,7 @@ export class MycircleComponent implements OnInit {
                 this.jobDates = null;
               } else {
                 // Loop through Experiences (only 1 right now)
-                for (let entry in this.jobList) {
+                for (const entry in this.jobList) {
                   // Experience Fields
                   this.jobTitle = this.jobList[entry].position;
                   this.jobLocation = this.jobList[entry].location;
@@ -406,7 +406,7 @@ export class MycircleComponent implements OnInit {
   }
   setCorrectID() {
     this.activeRoute.params.subscribe(params => {
-      if (this.authService.getUserId() == params["id"]) {
+      if (this.authService.getUserId() === params["id"]) {
         this.id = this.authService.getUserId();
       } else {
         this.id = params["id"];
@@ -415,8 +415,8 @@ export class MycircleComponent implements OnInit {
   }
   // Checks if a users profile page is being viewed by themselves
   isLoggedInUser(id: string) {
-    var logged_in = this.authService.getUserId();
-    if (id === logged_in) {
+    const loggedIn = this.authService.getUserId();
+    if (id === loggedIn) {
       this.loggedInUser = true;
     } else {
       this.loggedInUser = false;
@@ -430,7 +430,8 @@ export class MycircleComponent implements OnInit {
     }
   }
 
-  // ** Workaround function ** (Temporarily fixes connectionsLocations bug where order gets messed up after adding a connection who does not have an associated job location)
+  // ** Workaround function ** (Temporarily fixes connectionsLocations bug where order gets messed
+  // up after adding a connection who does not have an associated job location)
   // fixOrder(information: string[]): string[] {
   //   for (let i = 0; i < information.length; i++) {
   //     if (information[i] === undefined || information[i] === null) {

@@ -15,7 +15,7 @@ export class TagsearchComponent implements OnInit {
   tagEntry = new FormControl();
   tags: Tag[];
   selectedTags: Tag[] = [];
-  tagNames = new Array();
+  tagNames = [];
 
   filteredTags: Observable<string[]>;
 
@@ -25,7 +25,7 @@ export class TagsearchComponent implements OnInit {
     this.loadTags();
   }
 
-  private loadTags(){
+  private loadTags() {
     this.tagService.getTags().subscribe(data => {
       this.tags = data.map(e => {
         return{
@@ -51,25 +51,24 @@ export class TagsearchComponent implements OnInit {
   }
 
   addTag() {
-    let newTag = new Tag();
+    const newTag = new Tag();
 
-    if(this.tagNames.includes(this.tagEntry.value)){
+    if (this.tagNames.includes(this.tagEntry.value)) {
       newTag.name = this.tagEntry.value;
       this.selectedTags.push(newTag);
       console.log("Existing Tag Found, Added to Filter List");
-    }else{
+    } else {
       newTag.name = this.tagEntry.value;
       this.tagService.createTag(newTag);
       this.selectedTags.push(newTag);
       console.log("New Tag Created and Pushed to DB!");
     }
 
-    if(this.selectedTags.length > 0){
+    if (this.selectedTags.length > 0) {
       this.tagService.changeTags(this.selectedTags);
-    }
-    else{
-      let dummyArr: Tag[] = [];
-      let dummyTag: Tag = new Tag();
+    } else {
+      const dummyArr: Tag[] = [];
+      const dummyTag: Tag = new Tag();
       dummyTag.name = "EMPTY";
       dummyArr.push(dummyTag);
       this.tagService.changeTags(dummyArr);
@@ -84,13 +83,12 @@ export class TagsearchComponent implements OnInit {
       this.selectedTags.splice(index, 1);
     }
 
-    if(this.selectedTags.length > 0){
+    if (this.selectedTags.length > 0) {
       this.tagService.changeTags(this.selectedTags);
-    }
-    else{
-      console.log("I'm firing");
-      let dummyArr: Tag[] = [];
-      let dummyTag: Tag = new Tag();
+    } else {
+      console.log("Adding in the empty signal tag.");
+      const dummyArr: Tag[] = [];
+      const dummyTag: Tag = new Tag();
       dummyTag.name = "EMPTY";
       dummyArr.push(dummyTag);
       this.tagService.changeTags(dummyArr);
