@@ -82,11 +82,7 @@ export class PostsComponent implements OnInit {
       this.posts.forEach(post => {
         this.getPostUser(post);
         this.getPostProfessionalInfo(post);
-<<<<<<< HEAD
         this.updatePostDates(post);
-=======
-        // this.getPostProfilePic(post);
->>>>>>> dev
       });
 
       this.tagService.currentTags.subscribe(tags => {
