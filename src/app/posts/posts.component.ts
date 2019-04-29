@@ -58,6 +58,7 @@ export class PostsComponent implements OnInit {
 
   ngOnInit() {
     this.getPosts();
+    this.loadTags();
     this.userID = this.authService.getUserId();
     this.usersService.getProfileImage(this.userID).then(result => {
       this.storage.getStorageFromLink(result).then(r => {
@@ -97,7 +98,7 @@ export class PostsComponent implements OnInit {
           }
         }
       });
-      this.loadTags();
+      //this.loadTags();
       this.firstLoad = false;
     });
   }
