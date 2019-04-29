@@ -15,7 +15,7 @@ export class LoggedOutGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.auth.isLoggedIn()) {
-      return this.router.parseUrl('home');
+      return this.router.navigate(['/home']);
     } else {
       return true;
     }

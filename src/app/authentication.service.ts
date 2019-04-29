@@ -5,6 +5,7 @@ import * as firebase from "firebase/app";
 import { Router } from "@angular/router";
 import { UsersService } from "./users.service";
 import { log } from "util";
+import {User} from "firebase";
 
 @Injectable({
   providedIn: "root"
@@ -182,5 +183,9 @@ export class AuthenticationService {
 
   getDisplayName(): string {
     return this.userDetails.displayName;
+  }
+
+  getCurrentUser(): Observable<User | null> {
+    return this.firebaseAuth.authState;
   }
 }
