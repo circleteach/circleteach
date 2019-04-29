@@ -27,12 +27,12 @@ export class PostsComponent implements OnInit {
 
   posts: postWithMeta[]; // Stores list of posts
   comments: Comment[]; // Stores list of comments per each post
-  selectedTags: Tag[] = []; //TAGS FROM THE TAGS COMPONENT
+  selectedTags: Tag[] = []; // TAGS FROM THE TAGS COMPONENT
 
   tagEntry = new FormControl();
-  private tags: Tag[] = []; //Array for tags to be added to a post
+  private tags: Tag[] = []; // Array for tags to be added to a post
   addedTags: Tag[] = [];
-  tagNames = new Array();
+  tagNames = [];
 
   firstLoad = true;
   repeatGuard = true;
@@ -82,16 +82,20 @@ export class PostsComponent implements OnInit {
       this.posts.forEach(post => {
         this.getPostUser(post);
         this.getPostProfessionalInfo(post);
+<<<<<<< HEAD
         this.updatePostDates(post);
+=======
+        // this.getPostProfilePic(post);
+>>>>>>> dev
       });
 
       this.tagService.currentTags.subscribe(tags => {
         // SUBSCRIBES TO TAGS
         this.selectedTags = tags;
         if (!this.firstLoad) {
-          if (tags[0].name != "EMPTY") {
+          if (tags[0].name !== "EMPTY") {
             this.filterByTags();
-          } else if (tags[0].name == "EMPTY" && this.repeatGuard) {
+          } else if (tags[0].name === "EMPTY" && this.repeatGuard) {
             this.getPosts();
             this.repeatGuard = false;
           }
@@ -110,7 +114,6 @@ export class PostsComponent implements OnInit {
         map(action => {
           // This is how to get data from a document
           user = action.payload.data() as Users;
-          console.log(user);
         })
       )
       .subscribe(f => {

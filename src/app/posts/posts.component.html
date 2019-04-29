@@ -34,7 +34,7 @@
         [matAutocomplete]="auto"
         (keydown.enter)="addTag()"
       />
-      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addTag()">
+      <mat-autocomplete matAutocompleteOrigin #auto="matAutocomplete" (optionSelected)="addTag()">
         <mat-option *ngFor="let tag of (filteredTags | async)" [value]="tag">
           {{ tag }}
         </mat-option>
@@ -145,10 +145,10 @@
     <div id="postInfo" gdArea="postInfo" gdAreas="star starDisp comm down">
       <div gdArea="star" class="postInfoEle" id="starBtn">
         <button *ngIf="isStared" mat-button (click)="starClick(post)">
-          <mat-icon class="gold-icon">star_border</mat-icon>
+          <mat-icon class="gold-icon">star</mat-icon>
         </button>
         <button *ngIf="!isStared" mat-button (click)="starClick(post)">
-          <mat-icon class="gold-icon">star</mat-icon>
+          <mat-icon class="gold-icon">star_border</mat-icon>
         </button>
       </div>
 

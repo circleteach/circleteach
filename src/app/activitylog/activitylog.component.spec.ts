@@ -5,10 +5,11 @@ import {PostsComponent} from '../posts/posts.component';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../environments/environment';
 import {AngularFirestore, AngularFirestoreModule} from '@angular/fire/firestore';
-import {MatButtonToggleModule, MatInputModule} from '@angular/material';
+import {MatAutocompleteModule, MatButtonModule, MatButtonToggleModule, MatInputModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/auth';
 import {RouterTestingModule} from '@angular/router/testing';
+import {MockComponent} from "ng-mocks";
 
 describe('ActivitylogComponent', () => {
   let component: ActivitylogComponent;
@@ -22,12 +23,14 @@ describe('ActivitylogComponent', () => {
         AngularFireAuthModule,
         MatInputModule,
         FormsModule,
+        MatButtonModule,
+        MatAutocompleteModule,
         MatButtonToggleModule,
         RouterTestingModule,
       ],
       declarations: [
         ActivitylogComponent,
-        PostsComponent
+        MockComponent(PostsComponent),
       ],
       providers: [AngularFirestore, AngularFireAuth]
     })
