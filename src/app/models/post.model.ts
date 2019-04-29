@@ -10,4 +10,5 @@ export class Post {
   public time: string;
   public user: string;
   public showComments: boolean;
+  public starredUsers: string[];
 }

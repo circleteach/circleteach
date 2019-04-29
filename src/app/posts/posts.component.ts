@@ -9,7 +9,7 @@ import { AuthenticationService } from "../authentication.service";
 import { Users } from "../models/users.model";
 import { UsersService } from "../users.service";
 import { FormControl } from "@angular/forms";
-import { Observable } from "rxjs";
+import { Observable, empty } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import { StorageService } from "../storage.service";
 import { ProfileDetails } from "../models/profileDetails.model";
@@ -84,6 +84,7 @@ export class PostsComponent implements OnInit {
         this.getPostUser(post);
         this.getPostProfessionalInfo(post);
         this.updatePostDates(post);
+        //this.setStar(post);
       });
 
       this.tagService.currentTags.subscribe(tags => {
@@ -149,13 +150,36 @@ export class PostsComponent implements OnInit {
 
   // ----------- Methods for Post Body ------------//
 
+  // Sets star value for each post
+  // setStar(post: postWithMeta) {
+  //   if (
+  //     post.starredUsers !== undefined &&
+  //     post.starredUsers !== null &&
+  //     post.starredUsers.includes(this.userID)
+  //   ) {
+  //     this.isStared = true;
+  //   } else {
+  //     this.isStared = false;
+  //   }
+  // }
   // Adds or removes from posts star count, changes Icon appearance
   starClick(post: Post) {
+    // star post
     if (!this.isStared) {
+      // // add auth user to starredUsers
+      // post.starredUsers.push(this.userID);
       post.stars += 1;
       this.postService.updatePost(post);
       this.isStared = true;
+      // unstar post
     } else if (this.isStared) {
+      // // remove auth user from starredUsers
+      // for (var i = post.starredUsers.length - 1; i >= 0; i--) {
+      //   if (post.starredUsers[i] === this.userID) {
+      //     post.starredUsers.splice(i, 1);
+      //     break;
+      //   }
+      // }
       post.stars -= 1;
       this.postService.updatePost(post);
       this.isStared = false;
@@ -190,7 +214,8 @@ export class PostsComponent implements OnInit {
       newPost.showComments = false;
       newPost.stars = 0;
       newPost.tags = this.addedTags;
-
+      // creates the field in firebase at least
+      newPost.starredUsers.push("");
       this.postService.createPost(newPost);
       console.log("Uploaded Post");
       this.newPostInp = "";
