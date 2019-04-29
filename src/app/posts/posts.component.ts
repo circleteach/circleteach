@@ -25,7 +25,6 @@ export class PostsComponent implements OnInit {
   postImg = "../../assets/img/default-profile-picture.png";
 
   posts: postWithMeta[]; // Stores list of posts
-  comments: Comment[]; // Stores list of comments per each post
   selectedTags: Tag[] = []; // TAGS FROM THE TAGS COMPONENT
 
   tagEntry = new FormControl();
@@ -82,7 +81,18 @@ export class PostsComponent implements OnInit {
         this.getPostUser(post);
         console.log(post);
         this.getPostProfessionalInfo(post);
+        post.showComments = false;
         // this.getPostProfilePic(post);
+
+        //Load in Comments
+        this.postService.getComments(post).subscribe(data => {
+          post.comments = data.map(e => {
+            return {
+              id: e.payload.doc.id,
+              ...e.payload.doc.data()
+            } as Comment;
+          });
+        });
       });
 
       this.tagService.currentTags.subscribe(tags => {
@@ -98,7 +108,9 @@ export class PostsComponent implements OnInit {
         }
       });
       this.loadTags();
-      this.firstLoad = false;
+      this.firstLoad = false;      
+
+
     });
   }
 
@@ -203,15 +215,6 @@ export class PostsComponent implements OnInit {
   // Allows viewing of comments, opens comment creation UI
   commentClick(post: Post) {
     post.showComments = !post.showComments;
-
-    this.postService.getComments(post).subscribe(data => {
-      this.comments = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          ...e.payload.doc.data()
-        } as Comment;
-      });
-    });
   }
 
   // TODO Uploads comment given body and user info
@@ -310,4 +313,6 @@ class postWithMeta extends Post {
   public name: string;
   public profImg;
   public profInfo;
+  public showComments;
+  public comments: Comment[] = [];
 }
