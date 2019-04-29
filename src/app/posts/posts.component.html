@@ -188,7 +188,7 @@
           id="comment"
           gdAreas="img name | cont cont"
         >
-          <img
+          <!-- <img
             gdArea="img"
             id="profImg"
             src="../../assets/uwath2018.png"
@@ -196,6 +196,16 @@
             alt="Profile Image"
             height="45px"
             width="45px"
+          /> -->
+          <!-- TODO: associate comment with correct user -->
+          <img
+            id="profImg"
+            src="{{ comment.profileImg }}"
+            onmouseover=""
+            style="background-color: blue; cursor: pointer"
+            alt="Profile Image"
+            height="70px"
+            width="70px"
           />
           <h3 id="commentUserName" gdArea="name">{{ comment.user }}</h3>
           <p gdArea="cont">{{ comment.content }}</p>

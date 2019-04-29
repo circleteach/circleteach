@@ -220,8 +220,16 @@ export class PostsComponent implements OnInit {
     if (this.newCommentInp !== "" && this.newCommentInp != null) {
       const newComment: Comment = new Comment();
       newComment.content = this.newCommentInp;
-      newComment.user = "Example User";
-
+      // authenticated user
+      newComment.user = this.authService.getDisplayName();
+      if (
+        this.authService.getIconUrl() !== null &&
+        this.authService.getIconUrl() !== undefined
+      ) {
+        newComment.profileImg = this.authService.getIconUrl();
+      } else {
+        newComment.profileImg = "../../assets/img/default-profile-picture.png";
+      }
       this.postService.createComments(newComment, post);
       console.log("Uploaded new Comment");
       this.newCommentInp = "";
