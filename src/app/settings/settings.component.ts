@@ -41,6 +41,7 @@ export class SettingsComponent implements OnInit {
     this.usersService.deleteUserDoc(this.id);
     // delete there professional doc
     this.usersService.deleteProfessionalInfo(this.id);
+
   }
 
   changePass() {
