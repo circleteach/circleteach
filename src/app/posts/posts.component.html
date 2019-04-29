@@ -144,10 +144,10 @@
 
     <div id="postInfo" gdArea="postInfo" gdAreas="star starDisp comm down">
       <div gdArea="star" class="postInfoEle" id="starBtn">
-        <button *ngIf="isStared" mat-button (click)="starClick(post)">
+        <button *ngIf="post.isStarredByUser" mat-button (click)="starClick(post)">
           <mat-icon class="gold-icon">star</mat-icon>
         </button>
-        <button *ngIf="!isStared" mat-button (click)="starClick(post)">
+        <button *ngIf="!post.isStarredByUser" mat-button (click)="starClick(post)">
           <mat-icon class="gold-icon">star_border</mat-icon>
         </button>
       </div>
@@ -331,7 +331,7 @@
           </button>
         </div>
         <div
-          *ngFor="let comment of comments"
+          *ngFor="let comment of post.comments"
           id="comment"
           gdAreas="img name | cont cont"
         >

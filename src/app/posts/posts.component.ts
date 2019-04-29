@@ -41,7 +41,7 @@ export class PostsComponent implements OnInit {
   @Input("canwritepost") canWritePost: boolean; // Toggles write posts section
   @Input("activitylogview") activityLogView: boolean; // Toggles Activity log view
 
-  private isStared = false; // Have you starred the post
+  //private isStared = false; // Have you starred the post
   private newPostInp; // Bound text field for write post
   private newCommentInp; // Bound text field for write comment
 
@@ -162,16 +162,28 @@ export class PostsComponent implements OnInit {
   // ----------- Methods for Post Body ------------//
 
   // Adds or removes from posts star count, changes Icon appearance
-  starClick(post: Post) {
-    if (!this.isStared) {
-      post.stars += 1;
-      this.postService.updatePost(post);
-      this.isStared = true;
-    } else if (this.isStared) {
-      post.stars -= 1;
-      this.postService.updatePost(post);
-      this.isStared = false;
-    }
+  starClick(post: postWithMeta) {
+    post.stars += (post.isStarredByUser) ? -1 : 1;
+    post.isStarredByUser = !post.isStarredByUser;
+
+    const newPost = new Post();
+    newPost.content = post.content;
+    newPost.time = post.time;
+    newPost.user = post.user;
+    newPost.showComments = post.showComments;
+    newPost.stars = post.stars;
+    newPost.tags = post.tags;
+    this.postService.updatePost(newPost);
+
+    // if (!this.isStared) {
+    //   post.stars += 1;
+    //   this.postService.updatePost(post);
+    //   this.isStared = true;
+    // } else if (this.isStared) {
+    //   post.stars -= 1;
+    //   this.postService.updatePost(post);
+    //   this.isStared = false;
+    // }
   }
 
   // TODO downloads content of post
@@ -319,6 +331,7 @@ class postWithMeta extends Post {
   public name: string;
   public profImg;
   public profInfo;
+  public isStarredByUser;
   public showComments;
   public comments: Comment[] = [];
 }
