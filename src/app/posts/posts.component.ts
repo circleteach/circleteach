@@ -56,6 +56,7 @@ export class PostsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+
     this.getPosts();
     this.loadTags();
     this.userID = this.authService.getUserId();
@@ -64,6 +65,8 @@ export class PostsComponent implements OnInit {
         this.profileImg = r;
       });
     });
+
+    console.log(this.canWritePost + " " + this.activityLogView);
   }
 
   getPosts() {

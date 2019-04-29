@@ -1,39 +1,18 @@
 <!--Write Posts Component-->
-<div
-  *ngIf="canWritePost"
-  id="postCont"
-  gdAreas="proImg postWrite postWrite postWrite| addTags tags uploadBtn postBtn"
->
+<div *ngIf="canWritePost" id="postCont" gdAreas="proImg postWrite postWrite postWrite| addTags tags uploadBtn postBtn">
   <div gdArea="proImg" id="profImgContainer">
-    <img
-      id="proImg"
-      src="{{ profileImg }}"
-      style="background-color: blue"
-      alt="Profile Image"
-      height="70px"
-      width="70px"
-    />
+    <img id="proImg" src="{{ profileImg }}" style="background-color: blue" alt="Profile Image" height="70px"
+      width="70px" />
   </div>
 
   <div gdArea="postWrite" id="writePost">
-    <input
-      id="postInp"
-      type="text"
-      placeholder="Write new post..."
-      [(ngModel)]="newPostInp"
-    />
+    <input id="postInp" type="text" placeholder="Write new post..." [(ngModel)]="newPostInp" />
   </div>
 
   <div gdArea="addTags">
     <mat-form-field appearance="legacy" id="tagsInp">
-      <input
-        matInput
-        [formControl]="tagEntry"
-        type="text"
-        placeholder="Add Tags"
-        [matAutocomplete]="auto"
-        (keydown.enter)="addTag()"
-      />
+      <input matInput [formControl]="tagEntry" type="text" placeholder="Add Tags" [matAutocomplete]="auto"
+        (keydown.enter)="addTag()" />
       <mat-autocomplete matAutocompleteOrigin #auto="matAutocomplete" (optionSelected)="addTag()">
         <mat-option *ngFor="let tag of (filteredTags | async)" [value]="tag">
           {{ tag }}
@@ -51,23 +30,11 @@
     </mat-chip-list>
   </div>
 
-  <button
-    gdArea="uploadBtn"
-    id="uploadBtn"
-    class="filterBtn"
-    mat-button
-    (click)="uploadClick()"
-  >
+  <button gdArea="uploadBtn" id="uploadBtn" class="filterBtn" mat-button (click)="uploadClick()">
     <mat-icon>cloud_upload</mat-icon>
     Upload
   </button>
-  <button
-    gdArea="postBtn"
-    id="postBtn"
-    class="filterBtn"
-    mat-button
-    (click)="postClick()"
-  >
+  <button gdArea="postBtn" id="postBtn" class="filterBtn" mat-button (click)="postClick()">
     Post
   </button>
 </div>
@@ -79,12 +46,7 @@
     Top
   </button>
   <p>Posts By:</p>
-  <button
-    gdArea="postsByBtn"
-    class="filterBtn"
-    mat-button
-    (click)="postsByClick()"
-  >
+  <button gdArea="postsByBtn" class="filterBtn" mat-button (click)="postsByClick()">
     All
   </button>
 </div>
@@ -93,22 +55,12 @@
 <!--Actual List of Posts-->
 <div id="postsList" *ngFor="let post of posts">
   <!--Version of Posts that displayus when NOT the activity log-->
-  <div
-    *ngIf="activityLogView"
-    id="postCont"
-    gdAreas="profImage userInfo userInfo postAge  | content content content content  | tags  postInfo postInfo postInfo | comment comment comment comment"
-  >
+  <div *ngIf="activityLogView" id="postCont"
+    gdAreas="profImage userInfo userInfo postAge  | content content content content  | tags  postInfo postInfo postInfo | comment comment comment comment">
     <div id="profImgContainer" gdArea="profImage">
       <a routerLink="/profile/{{ post.user }}">
-        <img
-          id="profImg"
-          src="{{ post.profImg }}"
-          onmouseover=""
-          style="background-color: blue; cursor: pointer"
-          alt="Profile Image"
-          height="70px"
-          width="70px"
-        />
+        <img id="profImg" src="{{ post.profImg }}" onmouseover="" style="background-color: blue; cursor: pointer"
+          alt="Profile Image" height="70px" width="70px" />
       </a>
     </div>
 
@@ -211,24 +163,11 @@
   </div>
 
   <!--Version of Posts that displayus when IT IS the activity log-->
-  <div
-    style="height: 350px"
-    *ngIf="!activityLogView"
-    id="ActivityPostCont"
-    gdAreas="profImage userInfo postAge  | content content content  | tags tags tags "
-  >
+  <div style="height: 350px" *ngIf="!activityLogView" id="postCont"
+    gdAreas="profImage userInfo postAge  | content content content  | tags tags tags ">
     <div id="profImgContainer" gdArea="profImage">
-      <a routerLink="/profile/{{ post.user }}">
-        <img
-          id="profImg"
-          src="{{ post.profImg }}"
-          onmouseover=""
-          style="background-color: blue; cursor: pointer"
-          alt="Profile Image"
-          height="60px"
-          width="60px"
-        />
-      </a>
+      <img id="profImg" src="../../assets/uwath2018.png" style="background-color: blue" alt="Profile Image"
+        height="70px" width="70px" />
     </div>
 
     <div
@@ -255,10 +194,7 @@
 
     <div id="tagsCont" style="width: 50px; height: 20px;" gdArea="tags">
       <mat-chip-list class="mat-chip-list">
-        <mat-basic-chip
-          *ngFor="let tag of selectedTags"
-          (removed)="remove(tag)"
-        >
+        <mat-basic-chip *ngFor="let tag of selectedTags" (removed)="remove(tag)">
           <mat-icon matChipRemove>cancel</mat-icon>
           <div class="vert">
             {{ tag.name }}
@@ -267,8 +203,9 @@
       </mat-chip-list>
     </div>
 
-    <div id="postInfo" gdArea="postInfo" gdAreas="star starDisp comm down">
-      <!-- <div gdArea="star" class="postInfoEle" id="starBtn">
+    <div id="postInfo" *ngIf="canWritePost" gdArea="postInfo" gdAreas="star starDisp comm down">
+      <div gdArea="star" class="postInfoEle" id="starBtn">
+
         <button mat-button (click)="starClick(post)">Star</button>
       </div>
 
@@ -277,14 +214,10 @@
       </div>
 
       <div gdArea="comm" class="postInfoEle" id="commentBtn">
-
         <button mat-button (click)="commentClick(post)">Comment</button>
       </div>
 
-      <div gdArea="down" class="postInfoEle" id="downloadBtn">
-        <!--Get rid of the style once the svg is here-->
-      <!-- <button style="" mat-button (click)="downloadClick()">Download</button> -->
-      <!-- </div> -->
+
       <div gdArea="star" class="postInfoEle" id="starBtn">
         <button *ngIf="isStared" mat-button (click)="starClick(post)">
           <mat-icon class="gold-icon">star_border</mat-icon>
@@ -314,36 +247,14 @@
     <div *ngIf="post.showComments" gdArea="comment" id="commentCont">
       <ng-container>
         <div id="writeComm" gdAreas="inp inp sub">
-          <input
-            gdArea="inp"
-            id="commInp"
-            type="text"
-            placeholder="Write new comment..."
-            [(ngModel)]="newCommentInp"
-          />
-          <button
-            gdArea="sub"
-            id="commSubBtn"
-            mat-button
-            (click)="submitCommentClick(post)"
-          >
+          <input gdArea="inp" id="commInp" type="text" placeholder="Write new comment..." [(ngModel)]="newCommentInp" />
+          <button gdArea="sub" id="commSubBtn" mat-button (click)="submitCommentClick(post)">
             Submit
           </button>
         </div>
-        <div
-          *ngFor="let comment of comments"
-          id="comment"
-          gdAreas="img name | cont cont"
-        >
-          <img
-            gdArea="img"
-            id="profImg"
-            src="../../assets/uwath2018.png"
-            style="background-color: blue"
-            alt="Profile Image"
-            height="45px"
-            width="45px"
-          />
+        <div *ngFor="let comment of comments" id="comment" gdAreas="img name | cont cont">
+          <img gdArea="img" id="profImg" src="../../assets/uwath2018.png" style="background-color: blue"
+            alt="Profile Image" height="45px" width="45px" />
           <h3 id="commentUserName" gdArea="name">{{ comment.user }}</h3>
           <p gdArea="cont">{{ comment.content }}</p>
         </div>
