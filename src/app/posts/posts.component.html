@@ -34,7 +34,7 @@
         [matAutocomplete]="auto"
         (keydown.enter)="addTag()"
       />
-      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addTag()">
+      <mat-autocomplete matAutocompleteOrigin #auto="matAutocomplete" (optionSelected)="addTag()">
         <mat-option *ngFor="let tag of (filteredTags | async)" [value]="tag">
           {{ tag }}
         </mat-option>
