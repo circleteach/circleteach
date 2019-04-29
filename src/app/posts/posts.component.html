@@ -158,7 +158,7 @@
           <h3 id="commentUserName" style="margin-left: -70%;" gdArea="name">{{ comment.user }}</h3>
           <p gdArea="cont">{{ comment.content }}</p>
         </div>
-      </ng-container>
+      </ng-container>s
     </div>
   </div>
 
@@ -166,7 +166,7 @@
   <div style="height: 350px" *ngIf="!activityLogView" id="postCont"
     gdAreas="profImage userInfo postAge  | content content content  | tags tags tags ">
     <div id="profImgContainer" gdArea="profImage">
-      <img id="profImg" src="../../assets/uwath2018.png" style="background-color: blue" alt="Profile Image"
+      <img id="profImg" src="{{ post.profImg }}" style="background-color: blue" alt="Profile Image"
         height="70px" width="70px" />
     </div>
 
