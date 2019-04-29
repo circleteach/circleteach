@@ -231,6 +231,11 @@ export class EditprofileComponent implements OnInit {
     }
     // push new education or job to firestore
     this.usersService.updateProfessionalInfo(this.info, this.id);
+
+    this.snackbar.open('Updated your education info!', 'X', {
+      duration: 2000
+    });
+
     // re-initializes the form
     this.educationForm = new FormGroup({
       institution_attended: new FormControl(),
@@ -262,6 +267,10 @@ export class EditprofileComponent implements OnInit {
     }
     // push new experience or job to firestore
     this.usersService.updateProfessionalInfo(this.info, this.id);
+
+    this.snackbar.open('Updated your professional info!', 'X', {
+      duration: 2000
+    });
     // re-initializes the form
     this.experienceForm = new FormGroup({
       jobTitle: new FormControl(),
