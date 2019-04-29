@@ -287,12 +287,14 @@ export class PostsComponent implements OnInit {
       startWith(""),
       map(value => this.myFilter(value))
     );
+
+    
   }
 
   private myFilter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.tagNames.filter(user =>
-      user.toLowerCase().includes(filterValue)
+    return this.tagNames.filter(name =>
+      name.toLowerCase().includes(filterValue)
     );
   }
 
@@ -304,10 +306,12 @@ export class PostsComponent implements OnInit {
       this.addedTags.push(newTag);
       console.log("Existing Tag Found, Added to Filter List");
     } else {
-      newTag.name = this.tagEntry.value;
+      if(this.tagEntry !== null){
+        newTag.name = this.tagEntry.value;
       this.tagService.createTag(newTag);
       this.addedTags.push(newTag);
       console.log("New Tag Created and Pushed to DB!");
+      }
     }
   }
 

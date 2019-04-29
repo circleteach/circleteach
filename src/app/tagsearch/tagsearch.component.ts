@@ -58,10 +58,12 @@ export class TagsearchComponent implements OnInit {
       this.selectedTags.push(newTag);
       console.log("Existing Tag Found, Added to Filter List");
     } else {
-      newTag.name = this.tagEntry.value;
+      if(this.tagEntry != null){
+        newTag.name = this.tagEntry.value;
       this.tagService.createTag(newTag);
       this.selectedTags.push(newTag);
       console.log("New Tag Created and Pushed to DB!");
+      }
     }
 
     if (this.selectedTags.length > 0) {
