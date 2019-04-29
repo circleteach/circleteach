@@ -67,8 +67,8 @@ export class TagsearchComponent implements OnInit {
     if (this.selectedTags.length > 0) {
       this.tagService.changeTags(this.selectedTags);
     } else {
-      const dummyArr: Tag[] = [];
-      const dummyTag: Tag = new Tag();
+      let dummyArr: Tag[] = [];
+      let dummyTag: Tag = new Tag();
       dummyTag.name = "EMPTY";
       dummyArr.push(dummyTag);
       this.tagService.changeTags(dummyArr);

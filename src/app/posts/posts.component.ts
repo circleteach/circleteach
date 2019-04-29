@@ -56,6 +56,7 @@ export class PostsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+
     this.getPosts();
     this.userID = this.authService.getUserId();
     this.usersService.getProfileImage(this.userID).then(result => {
@@ -63,6 +64,8 @@ export class PostsComponent implements OnInit {
         this.profileImg = r;
       });
     });
+
+    console.log(this.canWritePost + " " + this.activityLogView);
   }
 
   getPosts() {
