@@ -59,9 +59,44 @@ export class EditprofileComponent implements OnInit {
     private usersService: UsersService,
     private storeageService: StorageService,
     private snackbar: MatSnackBar,
-  ) {}
+  ) {
+    // Education Form
+    this.educationForm = new FormGroup({
+      institution_attended: new FormControl(),
+      fields_of_study: new FormControl(),
+      date_started: new FormControl(),
+      date_ended: new FormControl(),
+      description: new FormControl()
+    });
+
+    // Experience Form
+    this.experienceForm = new FormGroup({
+      jobTitle: new FormControl(),
+      jobLocation: new FormControl(),
+      jobStart: new FormControl(),
+      jobEnd: new FormControl(),
+      jobDescription: new FormControl()
+    });
+  }
 
   ngOnInit() {
+    // Education Form
+    this.educationForm = new FormGroup({
+      institution_attended: new FormControl(),
+      fields_of_study: new FormControl(),
+      date_started: new FormControl(),
+      date_ended: new FormControl(),
+      description: new FormControl()
+    });
+
+    // Experience Form
+    this.experienceForm = new FormGroup({
+      jobTitle: new FormControl(),
+      jobLocation: new FormControl(),
+      jobStart: new FormControl(),
+      jobEnd: new FormControl(),
+      jobDescription: new FormControl()
+    });
     // Get ID from auth
     if (this.auth.getUserId() != null) {
       this.id = this.auth.getUserId();
