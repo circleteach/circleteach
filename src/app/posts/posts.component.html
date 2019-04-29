@@ -121,8 +121,13 @@
       </a>
     </div>
 
-    <div id="postAge" gdArea="postAge">
-      <p>{{ post.time.seconds * 1000 | date: "short" }}</p>
+    <div
+      style="text-align: right; margin-right: 25px"
+      id="postAge"
+      gdArea="postAge"
+    >
+      <!-- <p>{{ post.time.seconds * 1000 | date: "short" }} hi</p> -->
+      <p>{{ post.time }}</p>
     </div>
 
     <div id="content" gdArea="content">
@@ -171,7 +176,7 @@
             gdArea="inp"
             id="commInp"
             type="text"
-            placeholder="Write new comment..."
+            placeholder=" Write new comment..."
             [(ngModel)]="newCommentInp"
           />
           <button
@@ -188,24 +193,15 @@
           id="comment"
           gdAreas="img name | cont cont"
         >
-          <!-- <img
-            gdArea="img"
-            id="profImg"
-            src="../../assets/uwath2018.png"
-            style="background-color: blue"
-            alt="Profile Image"
-            height="45px"
-            width="45px"
-          /> -->
-          <!-- TODO: associate comment with correct user -->
           <img
+            gdArea="img"
             id="profImg"
             src="{{ comment.profileImg }}"
             onmouseover=""
             style="background-color: blue; cursor: pointer"
             alt="Profile Image"
-            height="70px"
-            width="70px"
+            height="55px"
+            width="55px"
           />
           <h3 id="commentUserName" gdArea="name">{{ comment.user }}</h3>
           <p gdArea="cont">{{ comment.content }}</p>
@@ -218,34 +214,46 @@
   <div
     style="height: 350px"
     *ngIf="!activityLogView"
-    id="postCont"
+    id="ActivityPostCont"
     gdAreas="profImage userInfo postAge  | content content content  | tags tags tags "
   >
     <div id="profImgContainer" gdArea="profImage">
-      <img
-        id="profImg"
-        src="../../assets/uwath2018.png"
-        style="background-color: blue"
-        alt="Profile Image"
-        height="70px"
-        width="70px"
-      />
+      <a routerLink="/profile/{{ post.user }}">
+        <img
+          id="profImg"
+          src="{{ post.profImg }}"
+          onmouseover=""
+          style="background-color: blue; cursor: pointer"
+          alt="Profile Image"
+          height="60px"
+          width="60px"
+        />
+      </a>
     </div>
 
-    <div style="margin-left: 5vw;" id="userInfo" gdArea="userInfo">
-      <h2>{{ userName }}</h2>
-      <p>{{ userTitle }}</p>
+    <div
+      style="text-align: right; margin-right: 5px"
+      id="userInfo"
+      gdArea="userInfo"
+    >
+      <a class="link" routerLink="/profile/{{ post.user }}">
+        <h2 onmouseover="">
+          {{ post.name }}
+        </h2>
+        <p>{{ post.profInfo }}</p>
+      </a>
     </div>
 
-    <div style="margin-left: 5vw;" id="postAge" gdArea="postAge">
-      <p>{{ post.time.seconds * 1000 | date: "short" }}</p>
+    <div style="margin-left: 5vw" id="postAge" gdArea="postAge">
+      <!-- <p>{{ post.time.seconds * 1000 | date: "short" }} hi</p> -->
+      <p>{{ post.time }}</p>
     </div>
 
     <div id="content" gdArea="content">
       <p>{{ post.content }}</p>
     </div>
 
-    <div id="tagsCont" style="width: 200px; height: 75px;" gdArea="tags">
+    <div id="tagsCont" style="width: 50px; height: 20px;" gdArea="tags">
       <mat-chip-list class="mat-chip-list">
         <mat-basic-chip
           *ngFor="let tag of selectedTags"
@@ -260,31 +268,7 @@
     </div>
 
     <div id="postInfo" gdArea="postInfo" gdAreas="star starDisp comm down">
-      <div gdArea="star" class="postInfoEle" id="starBtn">
-        <!-- <svg
-          width="50px"
-          height="50px"
-          id="Layer_1"
-          data-name="Layer 1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 30.13 28.86"
-        >
-          <defs>
-            <style>
-              .cls-1 {
-                fill: #fbb03b;
-                stroke: #fbb03b;
-                stroke-miterlimit: 10;
-              }
-            </style>
-          </defs>
-          <title>star-filled</title>
-          <path
-            class="cls-1"
-            d="M17.41,3l3.28,6.64a1.6,1.6,0,0,0,1.19.87l7.33,1.06a1.58,1.58,0,0,1,.88,2.69l-5.31,5.17a1.59,1.59,0,0,0-.45,1.4l1.25,7.3a1.58,1.58,0,0,1-2.29,1.67L16.73,26.3a1.57,1.57,0,0,0-1.46,0L8.71,29.75a1.58,1.58,0,0,1-2.29-1.67l1.25-7.3a1.59,1.59,0,0,0-.45-1.4L1.91,14.21a1.58,1.58,0,0,1,.88-2.69l7.33-1.06a1.6,1.6,0,0,0,1.19-.87L14.59,3A1.57,1.57,0,0,1,17.41,3Z"
-            transform="translate(-0.93 -1.57)"
-          />
-        </svg> -->
+      <!-- <div gdArea="star" class="postInfoEle" id="starBtn">
         <button mat-button (click)="starClick(post)">Star</button>
       </div>
 
@@ -293,74 +277,37 @@
       </div>
 
       <div gdArea="comm" class="postInfoEle" id="commentBtn">
-        <svg
-          width="50px"
-          height="50px"
-          id="Layer_1"
-          data-name="Layer 1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 31.05 22.08"
-        >
-          <defs>
-            <style>
-              .cls-1,
-              .cls-3 {
-                fill: #f3f3f3;
-              }
 
-              .cls-1 {
-                stroke: #010101;
-                stroke-miterlimit: 10;
-                stroke-width: 0.5px;
-              }
-
-              .cls-2 {
-                font-size: 11.68px;
-                fill: #010101;
-                font-family: MyriadPro-Regular, Myriad Pro;
-              }
-            </style>
-          </defs>
-          <title>comment</title>
-          <path
-            class="cls-1"
-            d="M10.69,23.38,2.28,25.91A1.21,1.21,0,0,1,.76,24.47l2-8.54a1.21,1.21,0,0,1,2-.6l6.39,6A1.19,1.19,0,0,1,10.69,23.38Z"
-            transform="translate(-0.47 -4.13)"
-          />
-          <ellipse class="cls-1" cx="16.2" cy="11.01" rx="14.6" ry="10.76" />
-          <text class="cls-2" transform="translate(12.17 11.88)">...</text>
-          <ellipse class="cls-3" cx="3.06" cy="15.9" rx="1.46" ry="3.13" />
-          <ellipse class="cls-3" cx="5.56" cy="17.15" rx="1.46" ry="3.13" />
-          <ellipse class="cls-3" cx="7.65" cy="16.94" rx="2.29" ry="2.92" />
-        </svg>
         <button mat-button (click)="commentClick(post)">Comment</button>
       </div>
 
       <div gdArea="down" class="postInfoEle" id="downloadBtn">
         <!--Get rid of the style once the svg is here-->
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          version="1.1"
-          id="Layer_1"
-          x="0px"
-          y="0px"
-          width="50px"
-          height="50px"
-          viewBox="0 0 512 512"
-          enable-background="new 0 0 512 512"
-          xml:space="preserve"
-        >
-          <g>
-            <path
-              d="M446.844,208.875C447.625,203.313,448,197.656,448,192c0-70.563-57.406-128-128-128   c-40.938,0-78.531,19.344-102.344,51.063C209.25,113.031,200.688,112,192,112c-61.75,0-112,50.25-112,112   c0,1.563,0.031,3.094,0.094,4.625C33.813,242.375,0,285.313,0,336c0,61.75,50.25,112,112,112h272c70.594,0,128-57.406,128-128   C512,273.344,486.344,231.188,446.844,208.875z M384,416H112c-44.188,0-80-35.813-80-80s35.813-80,80-80   c2.438,0,4.75,0.5,7.125,0.719c-4.5-10-7.125-21.031-7.125-32.719c0-44.188,35.813-80,80-80c14.438,0,27.813,4.125,39.5,10.813   C246,120.25,280.156,96,320,96c53.031,0,96,42.969,96,96c0,12.625-2.594,24.625-7.031,35.688C449.813,238.75,480,275.688,480,320   C480,373.031,437.031,416,384,416z"
-            />
-            <polygon
-              points="288,192 224,192 224,288 160,288 256,384 352,288 288,288  "
-            />
-          </g>
-        </svg>
-        <button style="" mat-button (click)="downloadClick()">Download</button>
+      <!-- <button style="" mat-button (click)="downloadClick()">Download</button> -->
+      <!-- </div> -->
+      <div gdArea="star" class="postInfoEle" id="starBtn">
+        <button *ngIf="isStared" mat-button (click)="starClick(post)">
+          <mat-icon class="gold-icon">star_border</mat-icon>
+        </button>
+        <button *ngIf="!isStared" mat-button (click)="starClick(post)">
+          <mat-icon class="gold-icon">star</mat-icon>
+        </button>
+      </div>
+
+      <div gdArea="starDisp" class="postInfoEle" id="stars">
+        <p id="starDisp">{{ post.stars }}</p>
+      </div>
+
+      <div gdArea="comm" class="postInfoEle" id="commentBtn">
+        <button mat-button (click)="commentClick(post)">
+          <mat-icon>comment</mat-icon>
+        </button>
+      </div>
+
+      <div gdArea="down" class="postInfoEle" id="downloadBtn">
+        <button mat-button (click)="downloadClick()">
+          <mat-icon>save_alt</mat-icon>
+        </button>
       </div>
     </div>
 

@@ -13,6 +13,7 @@ import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import { StorageService } from "../storage.service";
 import { ProfileDetails } from "../models/profileDetails.model";
+import * as moment from "moment";
 
 @Component({
   selector: "app-posts",
@@ -80,9 +81,8 @@ export class PostsComponent implements OnInit {
       // in this forEach loop, getting a document for each post object
       this.posts.forEach(post => {
         this.getPostUser(post);
-        console.log(post);
         this.getPostProfessionalInfo(post);
-        //this.getPostProfilePic(post);
+        this.updatePostDates(post);
       });
 
       this.tagService.currentTags.subscribe(tags => {
@@ -142,6 +142,10 @@ export class PostsComponent implements OnInit {
         }
       });
   }
+  updatePostDates(post: postWithMeta) {
+    post.time = moment(parseInt(post.time)).fromNow();
+    console.log(post.time);
+  }
 
   // ----------- Methods for Post Body ------------//
 
@@ -180,7 +184,8 @@ export class PostsComponent implements OnInit {
     if (this.newPostInp !== "" && this.newPostInp != null) {
       const newPost = new Post();
       newPost.content = this.newPostInp;
-      newPost.time = Date.now();
+      newPost.time = Date.now().toString();
+      console.log(newPost.time);
       newPost.user = this.authService.getUserId();
       newPost.showComments = false;
       newPost.stars = 0;
