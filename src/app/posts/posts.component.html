@@ -102,7 +102,7 @@
       <a routerLink="/profile/{{ post.user }}">
         <img
           id="profImg"
-          src="{{ postImg }}"
+          src="{{ post.profImg }}"
           onmouseover=""
           style="background-color: blue; cursor: pointer"
           alt="Profile Image"
@@ -117,7 +117,7 @@
         <h2 onmouseover="">
           {{ post.name }}
         </h2>
-        <p>{{ userTitle }} + usertitle</p>
+        <p>{{ post.profInfo }}</p>
       </a>
     </div>
 

@@ -1,6 +1,10 @@
 import { Injectable } from "@angular/core";
-import { AngularFirestore } from "@angular/fire/firestore";
-
+import {
+  AngularFirestore,
+  DocumentSnapshot,
+  Action
+} from "@angular/fire/firestore";
+import { EMPTY, Observable } from "rxjs";
 import { Post } from "../models/post.model";
 import { Comment } from "../models/comment.model";
 
@@ -19,9 +23,21 @@ export class PostsService {
     return this.firestore.doc("users/" + postId).snapshotChanges();
   }
 
+  getPostProfessionalInfo(
+    userID: string
+  ): Observable<Action<DocumentSnapshot<any>>> {
+    const doc = this.firestore.doc("professionalInfo/" + userID);
+    if (doc == null || doc === undefined) {
+      return EMPTY;
+    }
+    return doc.snapshotChanges();
+  }
+
   // Subcollection get comments
   getComments(post: Post) {
-    return this.firestore.collection("posts/" + post.id + "/comments").snapshotChanges();
+    return this.firestore
+      .collection("posts/" + post.id + "/comments")
+      .snapshotChanges();
   }
 
   // CRUD Create
@@ -33,7 +49,9 @@ export class PostsService {
   // Add Comment to subcollection
   createComments(comment: Comment, post: Post) {
     const param = JSON.parse(JSON.stringify(comment));
-    return this.firestore.collection("posts/" + post.id + "/comments").add(param);
+    return this.firestore
+      .collection("posts/" + post.id + "/comments")
+      .add(param);
   }
 
   // CRUD Update
@@ -45,5 +63,4 @@ export class PostsService {
   deletePost(postId: string) {
     this.firestore.doc("posts/" + postId).delete();
   }
-
 }

@@ -12,6 +12,7 @@ import { FormControl } from "@angular/forms";
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import { StorageService } from "../storage.service";
+import { ProfileDetails } from "../models/profileDetails.model";
 
 @Component({
   selector: "app-posts",
@@ -79,6 +80,9 @@ export class PostsComponent implements OnInit {
       // in this forEach loop, getting a document for each post object
       this.posts.forEach(post => {
         this.getPostUser(post);
+        console.log(post);
+        this.getPostProfessionalInfo(post);
+        //this.getPostProfilePic(post);
       });
 
       this.tagService.currentTags.subscribe(tags => {
@@ -106,11 +110,35 @@ export class PostsComponent implements OnInit {
         map(action => {
           // This is how to get data from a document
           user = action.payload.data() as Users;
+          console.log(user);
         })
       )
       .subscribe(f => {
         if (user !== undefined) {
           post.name = user.name;
+          if (user.profileImage !== undefined && user.profileImage !== null) {
+            post.profImg = user.profileImage;
+          } else {
+            post.profImg = "../../assets/img/default-profile-picture.png";
+          }
+        }
+      });
+  }
+  getPostProfessionalInfo(post: postWithMeta) {
+    let postInfo: ProfileDetails = new ProfileDetails();
+    this.postService
+      .getPostProfessionalInfo(post.user)
+      .pipe(
+        map(action => {
+          postInfo = action.payload.data() as ProfileDetails;
+        })
+      )
+      .subscribe(f => {
+        if (postInfo !== undefined) {
+          post.profInfo =
+            postInfo.jobHistory[0].position +
+            " at " +
+            postInfo.jobHistory[0].location;
         }
       });
   }
