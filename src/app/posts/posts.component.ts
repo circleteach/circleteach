@@ -9,11 +9,12 @@ import { AuthenticationService } from "../authentication.service";
 import { Users } from "../models/users.model";
 import { UsersService } from "../users.service";
 import { FormControl } from "@angular/forms";
-import { Observable, empty } from "rxjs";
+import { Observable, empty, combineLatest } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import { StorageService } from "../storage.service";
 import { ProfileDetails } from "../models/profileDetails.model";
 import * as moment from "moment";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-posts",
@@ -24,9 +25,10 @@ export class PostsComponent implements OnInit {
   userID;
   profileImg = "../../assets/img/default-profile-picture.png";
   postImg = "../../assets/img/default-profile-picture.png";
+  activityLogID;
 
   posts: postWithMeta[]; // Stores list of posts
-  myPosts: postWithMeta[];//Posts you have made
+  myPosts: postWithMeta[]; //Posts you have made
   myPostsFiltered: postWithMeta[] = [];
   selectedTags: Tag[] = []; // TAGS FROM THE TAGS COMPONENT
 
@@ -44,7 +46,6 @@ export class PostsComponent implements OnInit {
   @Input("activitylogview") activityLogView: boolean; // Toggles Activity log view
   @Input() public idProf;
 
-  //private isStared = false; // Have you starred the post
   private newPostInp; // Bound text field for write post
   private newCommentInp; // Bound text field for write comment
 
@@ -55,11 +56,17 @@ export class PostsComponent implements OnInit {
     private authService: AuthenticationService,
     private usersService: UsersService,
     private tagService: TagsService,
-    private storage: StorageService
+    private storage: StorageService,
+    private activeRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
-
+    // Combine them both into a single observable
+    const urlParams = combineLatest(
+      this.activeRoute.params,
+      this.activeRoute.queryParams,
+      (params, queryParams) => ({ ...params, ...queryParams })
+    );
     this.getPosts();
     this.loadTags();
     this.userID = this.authService.getUserId();
@@ -68,8 +75,10 @@ export class PostsComponent implements OnInit {
         this.profileImg = r;
       });
     });
-
-    this.getMyPosts();
+    urlParams.subscribe(routeParams => {
+      this.activityLogID = routeParams.id;
+      this.getMyPosts(this.activityLogID);
+    });
     console.log(this.canWritePost + " " + this.activityLogView);
   }
 
@@ -90,7 +99,8 @@ export class PostsComponent implements OnInit {
         this.getPostUser(post);
         this.getPostProfessionalInfo(post);
         post.showComments = false;
-        // this.getPostProfilePic(post);
+        // sets intitial star values for each post based on the auth user
+        this.setStar(post);
 
         //Load in Comments
         this.postService.getComments(post).subscribe(data => {
@@ -101,7 +111,7 @@ export class PostsComponent implements OnInit {
             } as Comment;
           });
         });
-        
+
         this.updatePostDates(post);
         //this.setStar(post);
       });
@@ -169,7 +179,8 @@ export class PostsComponent implements OnInit {
 
   // ------Methods for getting user posted posts -------//
 
-  getMyPosts(){
+  getMyPosts(ActivityLogID: string) {
+    this.myPostsFiltered = [];
     this.postService.getPosts().subscribe(data => {
       this.myPosts = data.map(e => {
         return {
@@ -177,10 +188,11 @@ export class PostsComponent implements OnInit {
           ...e.payload.doc.data()
         } as postWithMeta;
       });
-      
+
       this.myPosts.forEach(post => {
-        if (post.user == this.idProf){
-          this.myPostsFiltered.push(post)
+        if (post.user == ActivityLogID) {
+          console.log(this.myPostsFiltered);
+          this.myPostsFiltered.push(post);
         }
       });
 
@@ -190,47 +202,50 @@ export class PostsComponent implements OnInit {
         this.getPostProfessionalInfo(filt);
         this.updatePostDates(filt);
       });
-      
     });
   }
 
   // ----------- Methods for Post Body ------------//
 
   // Sets star value for each post
-  // setStar(post: postWithMeta) {
-  //   if (
-  //     post.starredUsers !== undefined &&
-  //     post.starredUsers !== null &&
-  //     post.starredUsers.includes(this.userID)
-  //   ) {
-  //     this.isStared = true;
-  //   } else {
-  //     this.isStared = false;
-  //   }
-  // }
+  setStar(post: postWithMeta) {
+    if (
+      post.starredUsers !== undefined &&
+      post.starredUsers !== null &&
+      post.starredUsers.includes(this.userID)
+    ) {
+      post.isStarredByUser = true;
+    } else {
+      post.isStarredByUser = false;
+    }
+  }
   // Adds or removes from posts star count, changes Icon appearance
   starClick(post: postWithMeta) {
-    post.stars += (post.isStarredByUser) ? -1 : 1;
-    post.isStarredByUser = !post.isStarredByUser;
-
-    const newPost = new Post();
-    newPost.content = post.content;
-    newPost.time = post.time;
-    newPost.user = post.user;
-    newPost.showComments = post.showComments;
-    newPost.stars = post.stars;
-    newPost.tags = post.tags;
-    this.postService.updatePost(newPost);
-
-    // if (!this.isStared) {
-    //   post.stars += 1;
-    //   this.postService.updatePost(post);
-    //   this.isStared = true;
-    // } else if (this.isStared) {
-    //   post.stars -= 1;
-    //   this.postService.updatePost(post);
-    //   this.isStared = false;
-    // }
+    // Update Displayed Star Value
+    post.stars += post.isStarredByUser ? -1 : 1;
+    if (!post.isStarredByUser) {
+      // Add User to Starred Users List
+      if (post.starredUsers !== undefined) {
+        post.starredUsers.push(this.userID);
+        this.postService.updateStarredUsers(post.id, post.starredUsers);
+        this.postService.updateStars(post.id, post.stars);
+        post.isStarredByUser = true;
+        console.log(post);
+      }
+    } else {
+      // Remove User from Starred Users List
+      if (post.starredUsers !== undefined) {
+        for (var i = post.starredUsers.length - 1; i >= 0; i--) {
+          if (post.starredUsers[i] === this.userID) {
+            post.starredUsers.splice(i, 1);
+            break;
+          }
+        }
+        this.postService.updateStarredUsers(post.id, post.starredUsers);
+        this.postService.updateStars(post.id, post.stars);
+        post.isStarredByUser = false;
+      }
+    }
   }
 
   // TODO downloads content of post
@@ -256,12 +271,12 @@ export class PostsComponent implements OnInit {
       const newPost = new Post();
       newPost.content = this.newPostInp;
       newPost.time = Date.now().toString();
-      console.log(newPost.time);
       newPost.user = this.authService.getUserId();
       newPost.showComments = false;
       newPost.stars = 0;
       newPost.tags = this.addedTags;
-      // creates the field in firebase at least
+      // Creates empty array in firebase
+      newPost.starredUsers = new Array();
       newPost.starredUsers.push("");
       this.postService.createPost(newPost);
       console.log("Uploaded Post");
@@ -332,8 +347,6 @@ export class PostsComponent implements OnInit {
       startWith(""),
       map(value => this.myFilter(value))
     );
-
-    
   }
 
   private myFilter(value: string): string[] {
@@ -351,11 +364,11 @@ export class PostsComponent implements OnInit {
       this.addedTags.push(newTag);
       console.log("Existing Tag Found, Added to Filter List");
     } else {
-      if(this.tagEntry !== null){
+      if (this.tagEntry !== null) {
         newTag.name = this.tagEntry.value;
-      this.tagService.createTag(newTag);
-      this.addedTags.push(newTag);
-      console.log("New Tag Created and Pushed to DB!");
+        this.tagService.createTag(newTag);
+        this.addedTags.push(newTag);
+        console.log("New Tag Created and Pushed to DB!");
       }
     }
   }

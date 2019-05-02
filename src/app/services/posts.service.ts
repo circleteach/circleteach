@@ -55,8 +55,21 @@ export class PostsService {
   }
 
   // CRUD Update
-  updatePost(post: Post) {
-    this.firestore.doc("posts/" + post.id).update(post);
+  // updatePost(post: Post) {
+  //   this.firestore.doc("posts/" + post.id).update(post);
+  // }
+
+  // Update StarredUsers list of a Post
+  updateStarredUsers(postID: string, starredUsers: Array<String>) {
+    return this.firestore
+      .doc("posts/" + postID)
+      .set({ starredUsers }, { merge: true });
+  }
+  // Update Star Value
+  updateStars(postID: string, stars: number) {
+    return this.firestore
+      .doc("posts/" + postID)
+      .set({ stars }, { merge: true });
   }
 
   // CRUD Delete

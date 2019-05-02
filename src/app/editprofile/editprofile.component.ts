@@ -9,7 +9,7 @@ import { Users } from "../models/users.model";
 import { map } from "rxjs/operators";
 
 import { FormGroup, FormArray, FormControl } from "@angular/forms";
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "app-editprofile",
@@ -58,7 +58,7 @@ export class EditprofileComponent implements OnInit {
     private auth: AuthenticationService,
     private usersService: UsersService,
     private storeageService: StorageService,
-    private snackbar: MatSnackBar,
+    private snackbar: MatSnackBar
   ) {
     // Education Form
     this.educationForm = new FormGroup({
@@ -100,9 +100,11 @@ export class EditprofileComponent implements OnInit {
     // Get ID from auth
     if (this.auth.getUserId() != null) {
       this.id = this.auth.getUserId();
-      this.storeageService.getStorageFromLink(this.auth.getIconUrl()).then(result => {
-        this.profileImg = result;
-      });
+      this.storeageService
+        .getStorageFromLink(this.auth.getIconUrl())
+        .then(result => {
+          this.profileImg = result;
+        });
     }
 
     if (this.id == null || this.id === undefined) {
@@ -164,40 +166,58 @@ export class EditprofileComponent implements OnInit {
       return;
     }
 
-    if (!(file && file.type.split('/')[0] === 'image')) {
-      this.snackbar.open("You can only upload an image as your profile picture!", "X", {
-        duration: 3000
-      });
+    if (!(file && file.type.split("/")[0] === "image")) {
+      this.snackbar.open(
+        "You can only upload an image as your profile picture!",
+        "X",
+        {
+          duration: 3000
+        }
+      );
       return;
     }
     const parts = file.name.split(".");
     const extension = parts[parts.length - 1];
-    this.storeageService.uploadProfilePicture(
-      'profile-pictures/' + this.auth.getUserId() + extension,
-      fileInputEvent
-    ).then(url => {
-      this.auth.updateIconUrl(url);
-      this.storeageService.getStorageFromLink(url).then(result => {
-        this.profileImg = result;
-        this.snackbar.open("Successfully uploaded your new profile picture!", "X", {
-          duration: 3000
+    this.storeageService
+      .uploadProfilePicture(
+        "profile-pictures/" + this.auth.getUserId() + extension,
+        fileInputEvent
+      )
+      .then(url => {
+        this.auth.updateIconUrl(url);
+        this.storeageService.getStorageFromLink(url).then(result => {
+          this.profileImg = result;
+          this.snackbar.open(
+            "Successfully uploaded your new profile picture!",
+            "X",
+            {
+              duration: 3000
+            }
+          );
         });
       });
-    });
   }
   updateDisplayName() {
     if (this.displayname.value == null || this.displayname.value.length < 2) {
-      this.snackbar.open("Your new display name must be at least 2 characters long!", "X", {
-        duration: 3000
-      });
+      this.snackbar.open(
+        "Your new display name must be at least 2 characters long!",
+        "X",
+        {
+          duration: 3000
+        }
+      );
       this.displayname = new FormControl();
       return;
     }
 
     if (this.displayname.value.length > 70) {
-      this.snackbar.open('Your new display name must be no longer than 70 characters long!', 'X', {
-        duration: 3000
-      });
+      this.snackbar.open(
+        "Your new display name must be no longer than 70 characters long!",
+        "X",
+        {
+          duration: 3000
+        }
+      );
       this.displayname = new FormControl();
       return;
     }
@@ -210,8 +230,11 @@ export class EditprofileComponent implements OnInit {
     this.displayname = new FormControl();
   }
   updateCertifications() {
-    if (this.newCertification.value == null || this.newCertification.value.length < 1) {
-      this.snackbar.open('Your new certification must not be empty!', 'X', {
+    if (
+      this.newCertification.value == null ||
+      this.newCertification.value.length < 1
+    ) {
+      this.snackbar.open("Your new certification must not be empty!", "X", {
         duration: 2000
       });
       this.newCertification = new FormControl();
@@ -228,7 +251,7 @@ export class EditprofileComponent implements OnInit {
   }
   updateSkills() {
     if (this.newSkill.value == null || this.newSkill.value.length < 1) {
-      this.snackbar.open('Your new skill must not be empty!', 'X', {
+      this.snackbar.open("Your new skill must not be empty!", "X", {
         duration: 2000
       });
       this.newSkill = new FormControl();
@@ -246,10 +269,17 @@ export class EditprofileComponent implements OnInit {
   }
   // update firebase with info from education form
   updateEducation(form: FormGroup) {
-    if (form.value.institution_attended == null || form.value.institution_attended < 1) {
-      this.snackbar.open('Your new education must at least have a location!', 'X', {
-        duration: 2000
-      });
+    if (
+      form.value.institution_attended == null ||
+      form.value.institution_attended < 1
+    ) {
+      this.snackbar.open(
+        "Your new education must at least have a location!",
+        "X",
+        {
+          duration: 2000
+        }
+      );
       return;
     }
     this.job.location = form.value.institution_attended;
@@ -267,7 +297,7 @@ export class EditprofileComponent implements OnInit {
     // push new education or job to firestore
     this.usersService.updateProfessionalInfo(this.info, this.id);
 
-    this.snackbar.open('Updated your education info!', 'X', {
+    this.snackbar.open("Updated your education info!", "X", {
       duration: 2000
     });
 
@@ -283,9 +313,13 @@ export class EditprofileComponent implements OnInit {
   // update firebase with info from experience form
   updateExperience(form: FormGroup) {
     if (form.value.jobTitle == null || form.value.jobTitle < 1) {
-      this.snackbar.open('Your new experience must at least have a title!', 'X', {
-        duration: 2000
-      });
+      this.snackbar.open(
+        "Your new experience must at least have a title!",
+        "X",
+        {
+          duration: 2000
+        }
+      );
       return;
     }
     this.job.position = form.value.jobTitle;
@@ -303,7 +337,7 @@ export class EditprofileComponent implements OnInit {
     // push new experience or job to firestore
     this.usersService.updateProfessionalInfo(this.info, this.id);
 
-    this.snackbar.open('Updated your professional info!', 'X', {
+    this.snackbar.open("Updated your professional info!", "X", {
       duration: 2000
     });
     // re-initializes the form
