@@ -10,7 +10,7 @@ import { combineLatest } from "rxjs";
 })
 export class ProfileComponent implements OnInit {
   editProfileButton = true;
-  id;
+  public id;
   constructor(
     private route: ActivatedRoute,
     private authService: AuthenticationService,

@@ -42,6 +42,7 @@ export class PostsComponent implements OnInit {
 
   @Input("canwritepost") canWritePost: boolean; // Toggles write posts section
   @Input("activitylogview") activityLogView: boolean; // Toggles Activity log view
+  @Input() public idProf;
 
   //private isStared = false; // Have you starred the post
   private newPostInp; // Bound text field for write post
@@ -177,7 +178,7 @@ export class PostsComponent implements OnInit {
       });
       
       this.myPosts.forEach(post => {
-        if (post.user == this.userID){
+        if (post.user == this.idProf){
           this.myPostsFiltered.push(post)
         }
       });
