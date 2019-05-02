@@ -116,6 +116,8 @@ export class AuthenticationService {
     this.userDetails
       .delete()
       .then(() => {
+        this.userDetails = null;
+        this.router.navigate(['/login']);
         console.log("User successfully deleted!");
         // User deleted.
       })

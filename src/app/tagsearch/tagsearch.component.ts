@@ -57,18 +57,20 @@ export class TagsearchComponent implements OnInit {
       newTag.name = this.tagEntry.value;
       this.selectedTags.push(newTag);
       console.log("Existing Tag Found, Added to Filter List");
-    } else {
-      newTag.name = this.tagEntry.value;
-      this.tagService.createTag(newTag);
-      this.selectedTags.push(newTag);
-      console.log("New Tag Created and Pushed to DB!");
+    // } else {
+    //   if(this.tagEntry != null){
+    //     newTag.name = this.tagEntry.value;
+    //   this.tagService.createTag(newTag);
+    //   this.selectedTags.push(newTag);
+    //   console.log("New Tag Created and Pushed to DB!");
+    //   }
     }
 
     if (this.selectedTags.length > 0) {
       this.tagService.changeTags(this.selectedTags);
     } else {
-      const dummyArr: Tag[] = [];
-      const dummyTag: Tag = new Tag();
+      let dummyArr: Tag[] = [];
+      let dummyTag: Tag = new Tag();
       dummyTag.name = "EMPTY";
       dummyArr.push(dummyTag);
       this.tagService.changeTags(dummyArr);

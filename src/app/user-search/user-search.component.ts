@@ -14,7 +14,7 @@ import {Router} from '@angular/router';
 export class UserSearchComponent implements OnInit {
   userEntry = new FormControl();
   users: Users[];
-  userNames = new Array();
+  userNames = [];
 
   filteredUsers: Observable<string[]>;
 

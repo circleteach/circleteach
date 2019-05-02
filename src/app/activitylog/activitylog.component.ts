@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { MatButtonToggleChange } from "@angular/material";
 
 @Component({
@@ -8,7 +8,7 @@ import { MatButtonToggleChange } from "@angular/material";
 })
 export class ActivitylogComponent implements OnInit {
   toggle = true;
-
+  @Input() public idProf;
   constructor() {}
 
   ngOnInit() {}
