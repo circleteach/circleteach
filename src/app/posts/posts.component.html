@@ -161,8 +161,10 @@
       </ng-container>
     </div>
   </div>
+</div>
 
   <!--Version of Posts that displayus when IT IS the activity log-->
+<div id="postsList" *ngFor="let post of myPostsFiltered">
   <div style="height: 350px" *ngIf="!activityLogView" id="postCont"
     gdAreas="profImage userInfo postAge  | content content content  | tags tags tags ">
     <div id="profImgContainer" gdArea="profImage">

@@ -26,6 +26,8 @@ export class PostsComponent implements OnInit {
   postImg = "../../assets/img/default-profile-picture.png";
 
   posts: postWithMeta[]; // Stores list of posts
+  myPosts: postWithMeta[];//Posts you have made
+  myPostsFiltered: postWithMeta[] = [];
   selectedTags: Tag[] = []; // TAGS FROM THE TAGS COMPONENT
 
   tagEntry = new FormControl();
@@ -66,6 +68,7 @@ export class PostsComponent implements OnInit {
       });
     });
 
+    this.getMyPosts();
     console.log(this.canWritePost + " " + this.activityLogView);
   }
 
@@ -160,6 +163,33 @@ export class PostsComponent implements OnInit {
   updatePostDates(post: postWithMeta) {
     post.time = moment(parseInt(post.time)).fromNow();
     console.log(post.time);
+  }
+
+  // ------Methods for getting user posted posts -------//
+
+  getMyPosts(){
+    this.postService.getPosts().subscribe(data => {
+      this.myPosts = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data()
+        } as postWithMeta;
+      });
+      
+      this.myPosts.forEach(post => {
+        if (post.user == this.userID){
+          this.myPostsFiltered.push(post)
+        }
+      });
+
+      this.myPostsFiltered.forEach(filt => {
+        filt.showComments = false;
+        this.getPostUser(filt);
+        this.getPostProfessionalInfo(filt);
+        this.updatePostDates(filt);
+      });
+      
+    });
   }
 
   // ----------- Methods for Post Body ------------//
