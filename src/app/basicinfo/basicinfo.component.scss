@@ -19,6 +19,8 @@
     font-size: 28px;
     color: whitesmoke;
     font-weight: lighter;
+    overflow: hidden;
+    white-space: pre-line;
   }
   .user-title {
     font-size: 17px;
@@ -27,6 +29,7 @@
     margin-top: 5px;
     margin-bottom: 7px;
   }
+  overflow: hidden;
 }
 
 #profImg {

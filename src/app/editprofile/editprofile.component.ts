@@ -9,7 +9,7 @@ import { Users } from "../models/users.model";
 import { map } from "rxjs/operators";
 
 import { FormGroup, FormArray, FormControl } from "@angular/forms";
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "app-editprofile",
@@ -21,8 +21,8 @@ export class EditprofileComponent implements OnInit {
   info: ProfileDetails = new ProfileDetails();
   job: Job = new Job();
   profile: Users = new Users();
-  skills = new Array();
-  certifications = new Array();
+  skills = [];
+  certifications = [];
   profileImg = "../../assets/img/default-profile-picture.png";
 
   institution = "";
@@ -46,8 +46,8 @@ export class EditprofileComponent implements OnInit {
   orderForm: FormGroup;
   items: FormArray;
 
-  new_certification = new FormControl();
-  new_skill = new FormControl();
+  newCertification = new FormControl();
+  newSkill = new FormControl();
   displayname = new FormControl();
 
   id;
@@ -58,16 +58,53 @@ export class EditprofileComponent implements OnInit {
     private auth: AuthenticationService,
     private usersService: UsersService,
     private storeageService: StorageService,
-    private snackbar: MatSnackBar,
-  ) {}
+    private snackbar: MatSnackBar
+  ) {
+    // Education Form
+    this.educationForm = new FormGroup({
+      institution_attended: new FormControl(),
+      fields_of_study: new FormControl(),
+      date_started: new FormControl(),
+      date_ended: new FormControl(),
+      description: new FormControl()
+    });
+
+    // Experience Form
+    this.experienceForm = new FormGroup({
+      jobTitle: new FormControl(),
+      jobLocation: new FormControl(),
+      jobStart: new FormControl(),
+      jobEnd: new FormControl(),
+      jobDescription: new FormControl()
+    });
+  }
 
   ngOnInit() {
+    // Education Form
+    this.educationForm = new FormGroup({
+      institution_attended: new FormControl(),
+      fields_of_study: new FormControl(),
+      date_started: new FormControl(),
+      date_ended: new FormControl(),
+      description: new FormControl()
+    });
+
+    // Experience Form
+    this.experienceForm = new FormGroup({
+      jobTitle: new FormControl(),
+      jobLocation: new FormControl(),
+      jobStart: new FormControl(),
+      jobEnd: new FormControl(),
+      jobDescription: new FormControl()
+    });
     // Get ID from auth
     if (this.auth.getUserId() != null) {
       this.id = this.auth.getUserId();
-      this.storeageService.getStorageFromLink(this.auth.getIconUrl()).then(result => {
-        this.profileImg = result;
-      });
+      this.storeageService
+        .getStorageFromLink(this.auth.getIconUrl())
+        .then(result => {
+          this.profileImg = result;
+        });
     }
 
     if (this.id == null || this.id === undefined) {
@@ -129,32 +166,58 @@ export class EditprofileComponent implements OnInit {
       return;
     }
 
-    if (!(file && file.type.split('/')[0] === 'image')) {
-      this.snackbar.open("You can only upload an image as your profile picture!", "X", {
-        duration: 3000
-      });
+    if (!(file && file.type.split("/")[0] === "image")) {
+      this.snackbar.open(
+        "You can only upload an image as your profile picture!",
+        "X",
+        {
+          duration: 3000
+        }
+      );
       return;
     }
     const parts = file.name.split(".");
     const extension = parts[parts.length - 1];
-    this.storeageService.uploadProfilePicture(
-      'profile-pictures/' + this.auth.getUserId() + extension,
-      fileInputEvent
-    ).then(url => {
-      this.auth.updateIconUrl(url);
-      this.storeageService.getStorageFromLink(url).then(result => {
-        this.profileImg = result;
-        this.snackbar.open("Successfully uploaded your new profile picture!", "X", {
-          duration: 3000
+    this.storeageService
+      .uploadProfilePicture(
+        "profile-pictures/" + this.auth.getUserId() + extension,
+        fileInputEvent
+      )
+      .then(url => {
+        this.auth.updateIconUrl(url);
+        this.storeageService.getStorageFromLink(url).then(result => {
+          this.profileImg = result;
+          this.snackbar.open(
+            "Successfully uploaded your new profile picture!",
+            "X",
+            {
+              duration: 3000
+            }
+          );
         });
       });
-    });
   }
   updateDisplayName() {
-    if (this.displayname.value == null || this.displayname.value.length < 1) {
-      this.snackbar.open("Your new display name must be at least 1 character!", "X", {
-        duration: 3000
-      });
+    if (this.displayname.value == null || this.displayname.value.length < 2) {
+      this.snackbar.open(
+        "Your new display name must be at least 2 characters long!",
+        "X",
+        {
+          duration: 3000
+        }
+      );
+      this.displayname = new FormControl();
+      return;
+    }
+
+    if (this.displayname.value.length > 70) {
+      this.snackbar.open(
+        "Your new display name must be no longer than 70 characters long!",
+        "X",
+        {
+          duration: 3000
+        }
+      );
       this.displayname = new FormControl();
       return;
     }
@@ -167,27 +230,58 @@ export class EditprofileComponent implements OnInit {
     this.displayname = new FormControl();
   }
   updateCertifications() {
+    if (
+      this.newCertification.value == null ||
+      this.newCertification.value.length < 1
+    ) {
+      this.snackbar.open("Your new certification must not be empty!", "X", {
+        duration: 2000
+      });
+      this.newCertification = new FormControl();
+      return;
+    }
     // adds it to certifications array to display
-    this.certifications.push(this.new_certification.value);
+    this.certifications.push(this.newCertification.value);
     // make sure profileDetails object is updated
     this.info.certifications = this.certifications;
     // push new certification to firestore
     this.usersService.updateProfessionalInfo(this.info, this.id);
     // re-initializes the form
-    this.new_certification = new FormControl();
+    this.newCertification = new FormControl();
   }
   updateSkills() {
+    if (this.newSkill.value == null || this.newSkill.value.length < 1) {
+      this.snackbar.open("Your new skill must not be empty!", "X", {
+        duration: 2000
+      });
+      this.newSkill = new FormControl();
+      return;
+    }
+
     // adds it to skills array to display
-    this.skills.push(this.new_skill.value);
+    this.skills.push(this.newSkill.value);
     // make sure profileDetails object is updated
     this.info.skills = this.skills;
     // push new skill to firestore
     this.usersService.updateProfessionalInfo(this.info, this.id);
     // re-initializes the form
-    this.new_skill = new FormControl();
+    this.newSkill = new FormControl();
   }
   // update firebase with info from education form
   updateEducation(form: FormGroup) {
+    if (
+      form.value.institution_attended == null ||
+      form.value.institution_attended < 1
+    ) {
+      this.snackbar.open(
+        "Your new education must at least have a location!",
+        "X",
+        {
+          duration: 2000
+        }
+      );
+      return;
+    }
     this.job.location = form.value.institution_attended;
     this.job.fieldOfStudy = form.value.fields_of_study;
     this.job.startTime = form.value.date_started;
@@ -195,13 +289,18 @@ export class EditprofileComponent implements OnInit {
     this.job.description = form.value.description;
     console.log(this.job);
     if (this.job !== undefined) {
-      this.info.education = new Array();
+      this.info.education = [];
       this.info.education.push(this.job);
     } else {
       console.log("job object undefined");
     }
     // push new education or job to firestore
     this.usersService.updateProfessionalInfo(this.info, this.id);
+
+    this.snackbar.open("Updated your education info!", "X", {
+      duration: 2000
+    });
+
     // re-initializes the form
     this.educationForm = new FormGroup({
       institution_attended: new FormControl(),
@@ -213,6 +312,16 @@ export class EditprofileComponent implements OnInit {
   }
   // update firebase with info from experience form
   updateExperience(form: FormGroup) {
+    if (form.value.jobTitle == null || form.value.jobTitle < 1) {
+      this.snackbar.open(
+        "Your new experience must at least have a title!",
+        "X",
+        {
+          duration: 2000
+        }
+      );
+      return;
+    }
     this.job.position = form.value.jobTitle;
     this.job.location = form.value.jobLocation;
     this.job.startTime = form.value.jobStart;
@@ -220,13 +329,17 @@ export class EditprofileComponent implements OnInit {
     this.job.description = form.value.jobDescription;
     console.log(this.job);
     if (this.job !== undefined) {
-      this.info.jobHistory = new Array();
+      this.info.jobHistory = [];
       this.info.jobHistory.push(this.job);
     } else {
       console.log("job object undefined");
     }
     // push new experience or job to firestore
     this.usersService.updateProfessionalInfo(this.info, this.id);
+
+    this.snackbar.open("Updated your professional info!", "X", {
+      duration: 2000
+    });
     // re-initializes the form
     this.experienceForm = new FormGroup({
       jobTitle: new FormControl(),

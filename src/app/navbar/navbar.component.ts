@@ -57,8 +57,4 @@ export class NavbarComponent implements OnInit {
   public onToggleSidenav() {
     this.sidenavToggle.emit();
   }
-
-  public showNotifications() {
-    // TODO
-  }
 }

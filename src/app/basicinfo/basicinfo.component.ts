@@ -30,7 +30,7 @@ export class BasicinfoComponent implements OnInit {
   id;
   loggedInUser;
   authenticatedID;
-  jobEmpty = false;
+  jobEmpty;
   friends;
   profileURL: string | null;
 
@@ -96,15 +96,22 @@ export class BasicinfoComponent implements OnInit {
             if (this.info !== undefined) {
               if (this.info.jobHistory === undefined) {
                 this.jobEmpty = true;
+                this.jobTitle = null;
+                this.jobLocation = null;
               } else {
+                this.jobEmpty = false;
                 this.jobList = this.info.jobHistory;
               }
-            }
-            // Loop through Experiences (only 1 right now)
-            for (const entry in this.jobList) {
-              // Get Job Title
-              this.jobTitle = this.jobList[entry].position;
-              this.jobLocation = this.jobList[entry].location;
+              // Loop through Experiences (only 1 right now)
+              for (const entry in this.jobList) {
+                // Get Job Title
+                this.jobTitle = this.jobList[entry].position;
+                this.jobLocation = this.jobList[entry].location;
+              }
+            } else {
+              this.jobEmpty = true;
+              this.jobTitle = null;
+              this.jobLocation = null;
             }
           });
       }

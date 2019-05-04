@@ -35,7 +35,7 @@ export class MessagingComponent implements OnInit {
   public messageTitle = "Example User";
   public exampleName = "Example";
   public exampleMessageSnip = "Hi there I'm an example";
-  public exDateStub ="Thur";
+  public exDateStub = "Thur";
   public messages = ["hi", "hi1", "hi2", "hi3", "hi4", "hi5", "hi6"];
   public chatList = ["Dave", "Kevin", "Brad", "Dave", "Kevin", "Brad", "Dave", "Kevin", "Brad", "Dave", "Kevin", "Brad"];
   public chatID = 0;

@@ -181,10 +181,10 @@ export class UsersService {
     return this.firestore
       .doc("professionalInfo/" + userID)
       .delete()
-      .then(function() {
+      .then(() => {
         console.log("ProfessionalInfo doc successfully deleted!");
       })
-      .catch(function(error) {
+      .catch(error => {
         console.error("Error removing ProfessionalInfo doc: ", error);
       });
   }
